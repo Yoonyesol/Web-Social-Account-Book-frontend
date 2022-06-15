@@ -1,0 +1,30 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&family=Permanent+Marker&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Montserrat", sans-serif;
+  background-color: #f8f8e5;
+  /* font-family: "Permanent Marker", cursive; */
+  /* font-family: 'Gowun Batang', serif; */
+}
+
+/* ::-webkit-scrollbar {
+  background-color: black;
+  width: 0.4vw;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #ffc107;
+} */
+
+.show {
+  opacity: 1 !important;
+  visibility: visible !important;
+  right: 0 !important;
+}

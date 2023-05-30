@@ -9,24 +9,24 @@ import googleLogo from "../img/google-logo.png";
 import githubLogo from "../img/github-logo.png";
 
 function LoginPage({ userInfo }) {
-  let location = useLocation(); //location 객체를 location 변수에 저~장
-  const history = useNavigate();
+  let location = useLocation(); //location 객체를 location 변수에 저장
+  // const history = useNavigate();
 
   // OAuth2 로그인 시 오류가 발생하면 사용자는 오류와 함께 /login 페이지로 이동
   // 오류를 표시한 다음 location에서 오류 쿼리 매개 변수를 제거
-  const componentDidMount = () => {
-    if (location.state && location.state.error) {
-      setTimeout(() => {
-        alert(location.state.error, {
-          timeout: 5000,
-        });
-        history.replace({
-          pathname: location.pathname,
-          state: {},
-        });
-      }, 100);
-    }
-  };
+  // const componentDidMount = () => {
+  //   if (location.state && location.state.error) {
+  //     setTimeout(() => {
+  //       alert(location.state.error, {
+  //         timeout: 5000,
+  //       });
+  //       history.replace({
+  //         pathname: location.pathname,
+  //         state: {},
+  //       });
+  //     }, 100);
+  //   }
+  // };
 
   if (userInfo.authenticated) {
     return (
@@ -68,8 +68,7 @@ function LoginPage({ userInfo }) {
 }
 
 function LoginForm() {
-  const history = useNavigate();
-
+  //const history = useNavigate();
   const [userInfo, setUserInfo] = useState({
     email: "",
     password: "",

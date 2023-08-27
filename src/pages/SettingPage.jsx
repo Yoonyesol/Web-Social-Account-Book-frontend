@@ -1,11 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { BsPhone } from "react-icons/bs";
-import { getCurrentUser } from "../components/util/APIUtils";
-import { API_BASE_URL } from "../components/constants";
 import { AiOutlineMail } from "react-icons/ai";
 import { MdPermIdentity } from "react-icons/md";
-import axios from "axios";
 
 export default function SettingPage({ userInfo }) {
   const [user, setUser] = useState([]);

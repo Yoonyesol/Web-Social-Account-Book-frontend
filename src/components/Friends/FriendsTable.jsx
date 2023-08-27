@@ -1,7 +1,6 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import styled from "styled-components";
 import FriendSearch from "./FriendSearch";
-import axios from "axios";
 import { BiBlock } from "react-icons/bi";
 import { myFriends } from "./FriendDummy";
 

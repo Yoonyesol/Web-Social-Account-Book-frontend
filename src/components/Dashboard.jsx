@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
-import axios from "axios";
 import Analytics from "./common/Analytics";
 import EarningPieChart from "./EarningPieChart";
 import Navbar from "./common/Navbar";

@@ -1,8 +1,8 @@
 import React, { useState, useRef } from "react";
 import styled from "styled-components";
-import { cardStyle } from "../common/CardStyles";
+import { cardStyle } from "../../common/CardStyles";
 
-import Modal from "../common/Modal";
+import Modal from "../../common/Modal";
 import AccountBookPost from "./AccountBookPost";
 import AccountBookEditPost from "./AccountBookEditPost";
 import { AccountData } from "./AccountBookDummy";

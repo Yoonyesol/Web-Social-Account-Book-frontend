@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
-import { cardStyle } from "./common/CardStyles";
+import { cardStyle } from "../../common/CardStyles";
 
 export default function CategoryExpense() {
   const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#AF19FF"];

@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { useLocation } from "react-router-dom";
-import { GOOGLE_AUTH_URL, FACEBOOK_AUTH_URL, GITHUB_AUTH_URL, ACCESS_TOKEN } from "../components/constants";
-import { login } from "../components/util/APIUtils";
+import { GOOGLE_AUTH_URL, FACEBOOK_AUTH_URL, GITHUB_AUTH_URL, ACCESS_TOKEN } from "../constants";
+import { login } from "../utils/APIUtils";
 import { Link, Navigate } from "react-router-dom";
-import fbLogo from "../img/fb-logo.png";
-import googleLogo from "../img/google-logo.png";
-import githubLogo from "../img/github-logo.png";
+import fbLogo from "../assets/img/fb-logo.png";
+import googleLogo from "../assets/img/google-logo.png";
+import githubLogo from "../assets/img/github-logo.png";
 
 function LoginPage({ userInfo }) {
   let location = useLocation(); //location 객체를 location 변수에 저장

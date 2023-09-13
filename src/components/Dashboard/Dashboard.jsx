@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
-import Analytics from "./common/Analytics";
-import EarningPieChart from "./EarningPieChart";
-import Navbar from "./common/Navbar";
-import Profile from "./Profile";
+import Analytics from "../../common/Analytics";
+import EarningPieChart from "../../common/EarningPieChart";
+import Navbar from "../../common/Navbar";
+import Profile from "../Profile/Profile";
 import CategoryExpense from "./CategoryExpense";
-import Friends from "./Friends";
+import Friends from "../Friends/Friends";
 import scrollreveal from "scrollreveal";
 
 export default function Dashboard({ userInfo }) {

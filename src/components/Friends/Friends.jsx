@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 import { HiArrowNarrowRight } from "react-icons/hi";
-import { cardStyle } from "./common/CardStyles";
+import { cardStyle } from "../../common/CardStyles";
 
 export default function Friends() {
   const friend_list = [

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { cardStyleWhite } from "../../components/common/CardStyles";
+import { cardStyleWhite } from "../../common/CardStyles";
 
 const Post = ({ onSaveData }) => {
   const [form, setForm] = useState({

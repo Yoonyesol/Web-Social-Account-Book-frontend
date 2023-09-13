@@ -1,6 +1,6 @@
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { ACCESS_TOKEN } from "../../constants";
+import { ACCESS_TOKEN } from "../constants";
 import { Navigate } from "react-router-dom";
 
 function OAuth2NavigateHandler() {

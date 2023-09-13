@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { HiOutlineLocationMarker } from "react-icons/hi";
-import { cardStyle } from "./common/CardStyles";
+import { cardStyle } from "../../common/CardStyles";
 
 export default function Profile({ user }) {
   return (

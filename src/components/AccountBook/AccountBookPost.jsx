@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
-import Modal from "../common/Modal";
+import Modal from "../../common/Modal";
 
 const AccountBookPost = ({ onSaveData, handleCancel }) => {
   // const [date, setDate] = useState(new Date());

@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { AreaChart, Area, Tooltip, ResponsiveContainer, XAxis } from "recharts";
-import { cardStyle } from "./common/CardStyles";
+import { cardStyle } from "./CardStyles";
 
 const userData = [
   {

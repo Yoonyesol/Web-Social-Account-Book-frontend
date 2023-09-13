@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { cardStylePurple } from "../common/CardStyles";
+import { cardStylePurple } from "../../common/CardStyles";
 import { FaPen } from "react-icons/fa";
-import Modal from "../common/Modal";
+import Modal from "../../common/Modal";
 import AccountBookBudgetForm from "./AccountBookBudgetForm";
 
 export default function AccountBookAnalytics() {

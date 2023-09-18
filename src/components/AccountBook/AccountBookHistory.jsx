@@ -6,8 +6,9 @@ import Modal from "../../common/Modal";
 import AccountBookPost from "./AccountBookPost";
 import AccountBookEditPost from "./AccountBookEditPost";
 import { AccountData } from "./AccountBookDummy";
-import AcntTr from "./AcntTr";
 
+import { FaPen } from "react-icons/fa";
+import { FaTrashAlt } from "react-icons/fa";
 import { FiPlusCircle } from "react-icons/fi";
 
 export default function AccountBookHistory() {
@@ -106,7 +107,23 @@ export default function AccountBookHistory() {
       </div>
       <div className="history">
         <table class="table">
-          <AcntTr acntData={acntData} handleRemove={handleRemove} handleEdit={handleEdit} />
+          <tbody>
+            {acntData.map((item) => (
+              <tr>
+                <td>{item.date}</td>
+                <td>{item.inex}</td>
+                <td>{item.category}</td>
+                <td>{item.content}</td>
+                <td>{item.account.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
+                <td>
+                  <FaPen onClick={handleEdit} />
+                </td>
+                <td>
+                  <FaTrashAlt onClick={handleRemove} />
+                </td>
+              </tr>
+            ))}
+          </tbody>
         </table>
         {editModalOn && (
           <Modal visible={editModalOn} closable={true} maskClosable={false} onClose={handleEditCancel}>

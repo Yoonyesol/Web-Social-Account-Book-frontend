@@ -4,7 +4,9 @@ import Post from "./Post";
 import Modal from "../../common/Modal";
 import { boardData } from "./BoardDummy";
 import Pagination from "./Pagination";
-import Tr from "./Tr";
+import { AiFillFolderOpen } from "react-icons/ai";
+import { FaTrashAlt } from "react-icons/fa";
+// import Tr from "./Tr";
 
 import EditPostModal from "./EditPostModal";
 
@@ -121,7 +123,22 @@ export default function CommunityBoard({ user }) {
               <th>삭제</th>
             </tr>
           </thead>
-          <Tr board={board} handleRemove={handleRemove} handleEdit={handleEdit} userInfo={user} />
+          <tbody>
+            {board.map((item) => (
+              <tr key={item.id}>
+                <td>{item.id}</td>
+                <td>{item.title}</td>
+                <td>{item.author}</td>
+                <td>{item.lastedit}</td>
+                <td>
+                  <AiFillFolderOpen onClick={handleEdit} />
+                </td>
+                <td>
+                  <FaTrashAlt onClick={handleRemove} />
+                </td>
+              </tr>
+            ))}
+          </tbody>
         </table>
         <Pagination postsPerPage={postsPerPage} totalPosts={board.length} paginate={setCurrentPage}></Pagination>
         <Post onSaveData={handleSave} userInfo={user} />

@@ -109,17 +109,17 @@ export default function AccountBookHistory() {
         <table class="table">
           <tbody>
             {acntData.map((item) => (
-              <tr>
+              <tr key={item.id}>
                 <td>{item.date}</td>
                 <td>{item.inex}</td>
                 <td>{item.category}</td>
                 <td>{item.content}</td>
                 <td>{item.account.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
                 <td>
-                  <FaPen onClick={handleEdit} />
+                  <FaPen onClick={() => handleEdit(item)} />
                 </td>
                 <td>
-                  <FaTrashAlt onClick={handleRemove} />
+                  <FaTrashAlt onClick={() => handleRemove(item.id)} />
                 </td>
               </tr>
             ))}

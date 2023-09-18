@@ -6,7 +6,8 @@ import { RecieveChatCard, SeneChatCard } from "./ChatCard";
 import Setgoal from "./SetGoal";
 
 //서버 80번 포트에 연결 요청
-const socket = io.connect("http://localhost:80");
+// const socket = io.connect("http://localhost:80");
+const socket = io.connect();
 
 export default function ChattingView({ userInfo }) {
   const [userInputMsg, setUserInputMsg] = useState("");

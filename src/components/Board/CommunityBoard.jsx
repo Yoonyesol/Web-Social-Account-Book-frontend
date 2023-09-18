@@ -131,10 +131,10 @@ export default function CommunityBoard({ user }) {
                 <td>{item.author}</td>
                 <td>{item.lastedit}</td>
                 <td>
-                  <AiFillFolderOpen onClick={handleEdit} />
+                  <AiFillFolderOpen onClick={() => handleEdit(item)} />
                 </td>
                 <td>
-                  <FaTrashAlt onClick={handleRemove} />
+                  <FaTrashAlt onClick={() => handleRemove(item.id)} />
                 </td>
               </tr>
             ))}

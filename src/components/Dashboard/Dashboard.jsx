@@ -9,8 +9,6 @@ import Friends from "../Friends/Friends";
 import scrollreveal from "scrollreveal";
 
 export default function Dashboard({ userInfo }) {
-  //const [message, setMessage] = useState("");
-
   useEffect(() => {
     const sr = scrollreveal({
       origin: "bottom",

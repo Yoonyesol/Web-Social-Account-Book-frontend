@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { useLocation, useNavigate } from "react-router-dom";
-import { GOOGLE_AUTH_URL, FACEBOOK_AUTH_URL, GITHUB_AUTH_URL, ACCESS_TOKEN } from "../constants";
-import { signup } from "../utils/APIUtils";
+import { GOOGLE_AUTH_URL, FACEBOOK_AUTH_URL, GITHUB_AUTH_URL } from "../constants";
 import { Link, Navigate } from "react-router-dom";
 import fbLogo from "../assets/img/fb-logo.png";
 import googleLogo from "../assets/img/google-logo.png";
@@ -70,17 +69,6 @@ function SignupForm() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
-    const signUpRequest = Object.assign({}, signInfo);
-
-    signup(signUpRequest)
-      .then((response) => {
-        alert("회원가입되었습니다! 로그인해주세요.");
-        history("/login");
-      })
-      .catch((error) => {
-        alert((error && error.message) || "회원가입 실패! 다시 시도해주세요.");
-      });
   };
 
   return (

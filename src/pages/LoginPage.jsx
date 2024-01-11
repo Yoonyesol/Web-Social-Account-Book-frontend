@@ -1,32 +1,14 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { useLocation } from "react-router-dom";
-import { GOOGLE_AUTH_URL, FACEBOOK_AUTH_URL, GITHUB_AUTH_URL, ACCESS_TOKEN } from "../constants";
-import { login } from "../utils/APIUtils";
+import { GOOGLE_AUTH_URL, FACEBOOK_AUTH_URL, GITHUB_AUTH_URL } from "../constants";
 import { Link, Navigate } from "react-router-dom";
 import fbLogo from "../assets/img/fb-logo.png";
 import googleLogo from "../assets/img/google-logo.png";
 import githubLogo from "../assets/img/github-logo.png";
 
 function LoginPage({ userInfo }) {
-  let location = useLocation(); //location 객체를 location 변수에 저장
-  // const history = useNavigate();
-
-  // OAuth2 로그인 시 오류가 발생하면 사용자는 오류와 함께 /login 페이지로 이동
-  // 오류를 표시한 다음 location에서 오류 쿼리 매개 변수를 제거
-  // const componentDidMount = () => {
-  //   if (location.state && location.state.error) {
-  //     setTimeout(() => {
-  //       alert(location.state.error, {
-  //         timeout: 5000,
-  //       });
-  //       history.replace({
-  //         pathname: location.pathname,
-  //         state: {},
-  //       });
-  //     }, 100);
-  //   }
-  // };
+  let location = useLocation();
 
   if (userInfo.authenticated) {
     return (
@@ -68,7 +50,6 @@ function LoginPage({ userInfo }) {
 }
 
 function LoginForm() {
-  //const history = useNavigate();
   const [userInfo, setUserInfo] = useState({
     email: "",
     password: "",
@@ -84,17 +65,6 @@ function LoginForm() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const loginRequest = Object.assign({}, userInfo);
-
-    login(loginRequest)
-      .then((response) => {
-        localStorage.setItem(ACCESS_TOKEN, response.accessToken);
-        alert("로그인 성공!");
-        window.location.replace("/main");
-      })
-      .catch((error) => {
-        alert((error && error.message) || "아이디와 비밀번호를 다시 확인해주세요.");
-      });
   };
 
   return (

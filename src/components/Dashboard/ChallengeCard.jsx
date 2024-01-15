@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { HiArrowNarrowRight } from "react-icons/hi";
 import { cardStyle } from "../../common/CardStyles";
 
-export default function Friends() {
+export default function ChallengeCard() {
   const friend_list = [
     {
       image: "https://cdn.pixabay.com/photo/2022/03/22/18/24/flowers-7085710_960_720.jpg",

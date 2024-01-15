@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { cardStyle } from "./CardStyles";
+import { cardStyle } from "../../common/CardStyles";
 import { BsFillCalendar2WeekFill } from "react-icons/bs";
 import { IoStatsChart } from "react-icons/io5";
 import { BiGroup } from "react-icons/bi";

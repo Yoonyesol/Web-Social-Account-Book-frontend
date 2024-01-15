@@ -3,9 +3,9 @@ import styled from "styled-components";
 import { cardStyle } from "../../common/CardStyles";
 
 import Modal from "../../common/Modal";
-import AccountBookPost from "./AccountBookPost";
-import AccountBookEditPost from "./AccountBookEditPost";
-import { AccountData } from "./AccountBookDummy";
+import AccountBookPost from "./TransactionPost";
+import AccountBookEditPost from "./TransactionEditor";
+import { dummy } from "./dummy";
 
 import { FaPen } from "react-icons/fa";
 import { FaTrashAlt } from "react-icons/fa";
@@ -16,7 +16,7 @@ export default function AccountBookHistory() {
   const [income, setIncome] = useState(190000);
   const [expense, setExpense] = useState(30000);
 
-  const [acntData, setAcntData] = useState(AccountData);
+  const [acntData, setAcntData] = useState(dummy);
   const [selected, setSelected] = useState("");
   const [modalOn, setModalOn] = useState(false);
   const [editModalOn, setEditModalOn] = useState(false);
@@ -29,11 +29,11 @@ export default function AccountBookHistory() {
           data.id === row.id
             ? {
                 id: data.id,
-                inex: data.inex,
+                transactionType: data.transactionType,
                 date: data.date,
                 category: data.category,
                 content: data.content,
-                account: data.inex === "수입" ? data.account : data.account * -1,
+                account: data.transactionType === "수입" ? data.account : data.account * -1,
                 memo: data.memo,
               }
             : row,
@@ -43,11 +43,11 @@ export default function AccountBookHistory() {
       setAcntData((item) =>
         item.concat({
           id: nextId.current,
-          inex: data.inex,
+          transactionType: data.transactionType,
           date: data.date,
           category: data.category,
           content: data.content,
-          account: data.inex === "수입" ? data.account : data.account * -1,
+          account: data.transactionType === "수입" ? data.account : data.account * -1,
           memo: data.memo,
         }),
       );

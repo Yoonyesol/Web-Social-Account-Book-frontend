@@ -2,16 +2,14 @@ import React, { useState, useRef } from "react";
 import styled from "styled-components";
 import Post from "./Post";
 import Modal from "../../common/Modal";
-import { boardData } from "./BoardDummy";
+import { dummy } from "./dummy";
 import Pagination from "./Pagination";
 import { AiFillFolderOpen } from "react-icons/ai";
 import { FaTrashAlt } from "react-icons/fa";
-// import Tr from "./Tr";
-
 import EditPostModal from "./EditPostModal";
 
 export default function CommunityBoard({ user }) {
-  const [board, setBoard] = useState(boardData);
+  const [board, setBoard] = useState(dummy);
   const [currentPage, setCurrentPage] = useState(1); //현재 페이지수
   const [postsPerPage] = useState(10); //한 페이지당 게시물 수
   const [selected, setSelected] = useState("");
@@ -24,19 +22,12 @@ export default function CommunityBoard({ user }) {
   //페이지 이동
   const indexOfLast = currentPage * postsPerPage;
   const indexOfFirst = indexOfLast - postsPerPage;
+
   function currentPosts(data) {
     let currentPosts = 0;
     currentPosts = data.slice(indexOfFirst, indexOfLast);
     return currentPosts;
   }
-
-  //더미 데이터 호출
-  // useEffect(() => {
-  //   axios
-  //     .get("https://jsonplaceholder.typicode.com/users")
-  //     .then((res) => setBoard(res.data))
-  //     .catch((err) => console.log(err));
-  // }, []);
 
   const setDate = () => {
     let today = new Date();
@@ -58,7 +49,7 @@ export default function CommunityBoard({ user }) {
                 title: data.title,
                 author: data.author,
                 content: data.content,
-                lastedit: setDate(),
+                LastModifiedDate: setDate(),
               }
             : row,
         ),
@@ -71,7 +62,7 @@ export default function CommunityBoard({ user }) {
           title: data.title,
           author: user.name,
           content: data.content,
-          lastedit: setDate(),
+          LastModifiedDate: setDate(),
         }),
       );
       nextId.current += 1;
@@ -92,7 +83,7 @@ export default function CommunityBoard({ user }) {
       title: item.title,
       author: item.author,
       content: item.content,
-      lastedit: item.lastedit,
+      LastModifiedDate: item.LastModifiedDate,
     };
     setSelected(selectedData);
   };
@@ -129,7 +120,7 @@ export default function CommunityBoard({ user }) {
                 <td>{item.id}</td>
                 <td>{item.title}</td>
                 <td>{item.author}</td>
-                <td>{item.lastedit}</td>
+                <td>{item.LastModifiedDate}</td>
                 <td>
                   <AiFillFolderOpen onClick={() => handleEdit(item)} />
                 </td>

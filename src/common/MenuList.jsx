@@ -2,13 +2,12 @@ import React, { useState } from "react";
 import { MdSpaceDashboard } from "react-icons/md";
 import { RiDashboard2Fill } from "react-icons/ri";
 import { AiTwotoneCalendar } from "react-icons/ai";
-import { BsFillPeopleFill } from "react-icons/bs";
 import { IoIosPeople } from "react-icons/io";
 import { BiRun } from "react-icons/bi";
 import { IoSettings } from "react-icons/io5";
 import { Link } from "react-router-dom";
 
-export default function SidebarMenu() {
+export default function MenuList() {
   const [currentLink, setCurrentLink] = useState(0);
   return (
     <ul>
@@ -20,7 +19,7 @@ export default function SidebarMenu() {
       </li>
 
       <li onClick={() => setCurrentLink(2)} className={currentLink === 2 ? "active" : "none"}>
-        <Link to="/inex">
+        <Link to="/transaction">
           <RiDashboard2Fill />
           <span> 수입/지출 내역</span>
         </Link>
@@ -29,12 +28,6 @@ export default function SidebarMenu() {
         <Link to="/calendar">
           <AiTwotoneCalendar />
           <span> 캘린더</span>
-        </Link>
-      </li>
-      <li onClick={() => setCurrentLink(4)} className={currentLink === 4 ? "active" : "none"}>
-        <Link to="/friendlist">
-          <BsFillPeopleFill />
-          <span> 친구 목록</span>
         </Link>
       </li>
       <li onClick={() => setCurrentLink(5)} className={currentLink === 5 ? "active" : "none"}>
@@ -50,7 +43,7 @@ export default function SidebarMenu() {
         </Link>
       </li>
       <li onClick={() => setCurrentLink(7)} className={currentLink === 7 ? "active" : "none"}>
-        <Link to="/setting">
+        <Link to="/profile">
           <IoSettings />
           <span> 설정</span>
         </Link>

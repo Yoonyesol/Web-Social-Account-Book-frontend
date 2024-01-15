@@ -14,7 +14,7 @@ export default function LoginPage({ userInfo }) {
     return (
       <Navigate
         to={{
-          pathname: "/main",
+          pathname: "/",
           state: { from: location },
         }}
       />

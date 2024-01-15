@@ -1,11 +1,11 @@
-export const AccountData = [
+export const dummy = [
   {
     id: 1,
     date: "2022-01-30",
     category: "교통/차량",
     content: "버스비",
     account: -4000,
-    inex: "지출",
+    transactionType: "지출",
     memo: "버스비",
   },
   {
@@ -14,7 +14,7 @@ export const AccountData = [
     category: "용돈",
     content: "용돈",
     account: 12000,
-    inex: "수입",
+    transactionType: "수입",
     memo: "",
   },
   {
@@ -23,7 +23,7 @@ export const AccountData = [
     category: "문화비",
     content: "서적구매",
     account: -25000,
-    inex: "지출",
+    transactionType: "지출",
     memo: "컴퓨터공학입문서 구입",
   },
   {
@@ -32,7 +32,7 @@ export const AccountData = [
     category: "식비",
     content: "외식비",
     account: -52000,
-    inex: "지출",
+    transactionType: "지출",
     memo: "외식",
   },
 ];

@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 
-import AccountBookHistory from "../components/AccountBook/AccountBookHistory";
-import AccountBookAnalytics from "../components/AccountBook/AccountBookAnalytics";
+import AccountBookHistory from "../components/Transaction/TransactionHistory";
+import AccountBookAnalytics from "../components/Transaction/TransactionAnalytics";
 
 export default function AccountBookPage() {
   return (

@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
-import Analytics from "../../common/Analytics";
-import EarningPieChart from "../../common/EarningPieChart";
-import Navbar from "../../common/Navbar";
-import Profile from "../Profile/Profile";
-import CategoryExpense from "./CategoryExpense";
-import Friends from "../Friends/Friends";
+import Analytics from "../components/Dashboard/Analytics";
+import EarningPieChart from "../common/EarningPieChart";
+import Navbar from "../common/Navbar";
+import Profile from "../components/Dashboard/ProfileCard";
+import CategoryExpense from "../components/Dashboard/CategoryExpense";
 import scrollreveal from "scrollreveal";
+import ChallengeCard from "../components/Dashboard/ChallengeCard";
 
 export default function Dashboard({ userInfo }) {
   useEffect(() => {
@@ -37,7 +37,7 @@ export default function Dashboard({ userInfo }) {
         </div>
         <div className="row__two">
           <EarningPieChart />
-          <Friends />
+          <ChallengeCard />
           <Profile user={userInfo} />
         </div>
       </div>

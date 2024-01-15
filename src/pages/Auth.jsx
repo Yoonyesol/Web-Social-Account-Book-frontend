@@ -7,14 +7,14 @@ import fbLogo from "../assets/img/fb-logo.png";
 import googleLogo from "../assets/img/google-logo.png";
 import githubLogo from "../assets/img/github-logo.png";
 
-function LoginPage({ userInfo }) {
+export default function Auth({ userInfo }) {
   let location = useLocation();
 
   if (userInfo.authenticated) {
     return (
       <Navigate
         to={{
-          pathname: "/main",
+          pathname: "/",
           state: { from: location },
         }}
       />
@@ -101,8 +101,6 @@ function LoginForm() {
     </Section>
   );
 }
-
-export default LoginPage;
 
 const Section = styled.section`
   .login-container {

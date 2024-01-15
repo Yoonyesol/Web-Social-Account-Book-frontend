@@ -5,7 +5,7 @@ import { FiLogOut } from "react-icons/fi";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { VscChromeClose } from "react-icons/vsc";
 import scrollreveal from "scrollreveal";
-import SidebarMenu from "./Sidebar_menu";
+import MenuList from "./MenuList";
 import { Link } from "react-router-dom";
 
 export default function Sidebar({ userInfo, logoutAction }) {
@@ -47,14 +47,14 @@ export default function Sidebar({ userInfo, logoutAction }) {
       <Section>
         <div className="top">
           <div className="brand">
-            <Link to="/main" style={{ textDecoration: "none" }}>
+            <Link to="/" style={{ textDecoration: "none" }}>
               <VscNotebook />
               <span>소셜 가계부</span>
             </Link>
           </div>
           <div className="toggle">
             {navbarState ? (
-              <VscChromeClose onClick={() => setNavbarState(false)} />
+              <VscChromeClose className="menu-btn" onClick={() => setNavbarState(false)} />
             ) : (
               <GiHamburgerMenu
                 onClick={(e) => {
@@ -65,7 +65,7 @@ export default function Sidebar({ userInfo, logoutAction }) {
             )}
           </div>
           <div className="links">
-            <SidebarMenu />
+            <MenuList />
           </div>
         </div>
 
@@ -76,7 +76,7 @@ export default function Sidebar({ userInfo, logoutAction }) {
       </Section>
       <ResponsiveNav state={navbarState} className={navbarState ? "show" : ""}>
         <div className="responsive__links">
-          <SidebarMenu />
+          <MenuList />
         </div>
         <div className="logout" onClick={handleLogout}>
           <FiLogOut />
@@ -99,6 +99,7 @@ const Section = styled.section`
   justify-content: space-between;
   padding: 2rem 0;
   gap: 2rem;
+
   .top {
     display: flex;
     flex-direction: column;
@@ -107,13 +108,19 @@ const Section = styled.section`
 
     .toggle {
       display: none;
+
+      svg {
+        cursor: pointer;
+      }
     }
+
     .brand {
       width: 100%;
       display: flex;
       justify-content: center;
       align-items: center;
       gap: 2rem;
+
       svg {
         color: #e5dae8;
         font-size: 2rem;
@@ -122,11 +129,12 @@ const Section = styled.section`
         font-size: 2rem;
         color: #e5dae8;
         font-family: "Gowun Batang", serif;
-      }
-      &:hover {
-        cursor: pointer;
+        &:hover {
+          cursor: pointer;
+        }
       }
     }
+
     .links {
       display: flex;
       justify-content: center;
@@ -175,6 +183,7 @@ const Section = styled.section`
       color: white;
     }
   }
+
   @media screen and (min-width: 280px) and (max-width: 1080px) {
     position: initial;
     width: 100%;

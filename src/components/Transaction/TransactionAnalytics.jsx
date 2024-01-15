@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { cardStylePurple } from "../../common/CardStyles";
 import { FaPen } from "react-icons/fa";
 import Modal from "../../common/Modal";
-import AccountBookBudgetForm from "./AccountBookBudgetForm";
+import AccountBookBudgetForm from "./BudgetForm";
 
 export default function AccountBookAnalytics() {
   const [budget, setBudget] = useState(300000);

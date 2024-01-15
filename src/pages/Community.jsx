@@ -1,11 +1,11 @@
 import React from "react";
 import styled from "styled-components";
-import FriendsTable from "../components/Friends/FriendsTable";
+import CommunityBoard from "../components/Community/CommunityBoard";
 
-export default function FriendListPage() {
+export default function CommunityPage({ userInfo }) {
   return (
     <Section>
-      <FriendsTable />
+      <CommunityBoard user={userInfo} />
     </Section>
   );
 }

@@ -1,29 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import FullCalendar from "@fullcalendar/react";
-import dayGridPlugin from "@fullcalendar/daygrid";
 
 export default function CalendarPage() {
-  return (
-    <Section>
-      <CalendarContainer>
-        <FullCalendar
-          aspectRatio="7"
-          contentHeight="600px"
-          defaultView="dayGridMonth"
-          height="500px"
-          plugins={[dayGridPlugin]}
-        />
-      </CalendarContainer>
-    </Section>
-  );
+  return <Section>캘린더 페이지</Section>;
 }
-
-const CalendarContainer = styled.div`
-  .fc td {
-    background: white;
-  }
-`;
 
 const Section = styled.section`
   margin-left: 18vw;

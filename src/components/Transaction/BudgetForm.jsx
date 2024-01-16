@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
-const AccountBookBudgetForm = ({ onSaveData, handleCancel }) => {
+const BudgetForm = ({ onSaveData, handleCancel }) => {
   const [form, setForm] = useState({
     budget: "",
   });
@@ -62,7 +62,7 @@ const AccountBookBudgetForm = ({ onSaveData, handleCancel }) => {
   );
 };
 
-export default AccountBookBudgetForm;
+export default BudgetForm;
 
 const Section = styled.section`
   .formItem {

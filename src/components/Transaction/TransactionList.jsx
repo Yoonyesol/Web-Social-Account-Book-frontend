@@ -1,64 +1,63 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 import { cardStyle } from "../../common/CardStyles";
-
-import Modal from "../../common/Modal";
-import AccountBookPost from "./TransactionPost";
-import AccountBookEditPost from "./TransactionEditor";
-import { dummy } from "./dummy";
-
 import { FaPen } from "react-icons/fa";
 import { FaTrashAlt } from "react-icons/fa";
-import { FiPlusCircle } from "react-icons/fi";
+import Modal from "../../common/Modal";
+import TransactionPost from "./TransactionPost";
+import TransactionEditor from "./TransactionEditor";
+import Button from "../../common/Button";
 
-export default function AccountBookHistory() {
-  const [budget, setBudget] = useState(300000);
-  const [income, setIncome] = useState(190000);
-  const [expense, setExpense] = useState(30000);
+const day = ["일", "월", "화", "수", "목", "금", "토"];
 
-  const [acntData, setAcntData] = useState(dummy);
+export default function TransactionList({ data }) {
+  const [transactionData, setTransactionData] = useState([]);
   const [selected, setSelected] = useState("");
-  const [modalOn, setModalOn] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
   const [editModalOn, setEditModalOn] = useState(false);
   const nextId = useRef(5);
 
+  useEffect(() => {
+    setTransactionData(data);
+  }, [data]);
+
   const handleSave = (data) => {
     if (data.id) {
-      setAcntData(
-        acntData.map((row) =>
+      setTransactionData(
+        transactionData.map((row) =>
           data.id === row.id
             ? {
                 id: data.id,
-                transactionType: data.transactionType,
+                type: data.type,
                 date: data.date,
                 category: data.category,
                 content: data.content,
-                account: data.transactionType === "수입" ? data.account : data.account * -1,
+                amount: data.type === "수입" ? data.amount : data.amount * -1,
                 memo: data.memo,
               }
             : row,
         ),
       );
     } else {
-      setAcntData((item) =>
+      setTransactionData((item) =>
         item.concat({
           id: nextId.current,
-          transactionType: data.transactionType,
+          type: data.type,
           date: data.date,
           category: data.category,
           content: data.content,
-          account: data.transactionType === "수입" ? data.account : data.account * -1,
+          amount: data.type === "수입" ? data.amount : data.amount * -1,
           memo: data.memo,
         }),
       );
       nextId.current += 1;
     }
-    handleCancel();
+    toggleModal();
   };
 
   const handleRemove = (id) => {
     if (window.confirm("내역을 삭제하시겠습니까?")) {
-      setAcntData((data) => data.filter((item) => item.id !== id));
+      setTransactionData((data) => data.filter((item) => item.id !== id));
       alert("삭제 완료");
     }
   };
@@ -67,11 +66,11 @@ export default function AccountBookHistory() {
     setEditModalOn(true);
     const selectedData = {
       id: item.id,
-      inex: item.inex,
+      type: item.type,
       date: item.date,
       category: item.category,
       content: item.content,
-      account: item.inex === "수입" ? item.account : item.account * -1,
+      amount: item.type === "수입" ? item.amount : item.amount * -1,
       memo: item.memo,
     };
     setSelected(selectedData);
@@ -82,13 +81,9 @@ export default function AccountBookHistory() {
     setEditModalOn(false);
   };
 
-  function openModal() {
-    setModalOn(true);
-  }
-
-  function handleCancel() {
-    setModalOn(false);
-  }
+  const toggleModal = () => {
+    setOpenModal((prev) => !prev);
+  };
 
   function handleEditCancel() {
     setEditModalOn(false);
@@ -96,27 +91,28 @@ export default function AccountBookHistory() {
 
   return (
     <Section>
+      {console.log(transactionData)}
       <div className="title">
         <h2>입출금 내역</h2>
-        <FiPlusCircle onClick={openModal} />
-        {modalOn && (
-          <Modal visible={modalOn} closable={true} maskClosable={false} onClose={handleCancel}>
-            <AccountBookPost onSaveData={handleSave} handleCancel={handleCancel} />
+        <Button text="추가" onClick={toggleModal} />
+        {openModal && (
+          <Modal visible={toggleModal} closable={true} maskClosable={false} onClose={toggleModal}>
+            <TransactionPost onSaveData={handleSave} handleCancel={toggleModal} />
           </Modal>
         )}
       </div>
       <div className="history">
         <table class="table">
           <tbody>
-            {acntData.map((item) => (
+            {transactionData.map((item) => (
               <tr key={item.id}>
-                <td>{item.date}</td>
-                <td>{item.inex}</td>
+                <td>{`${new Date(item.date).getDate()}일 (${day[new Date(item.date).getDay()]})`}</td>
+                <td>{item.type}</td>
                 <td>{item.category}</td>
                 <td>{item.content}</td>
-                <td>{item.account.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
+                <td>{item.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
                 <td>
-                  <FaPen onClick={() => handleEdit(item)} />
+                  <FaPen onClick={() => handleEdit(item.id)} />
                 </td>
                 <td>
                   <FaTrashAlt onClick={() => handleRemove(item.id)} />
@@ -127,7 +123,7 @@ export default function AccountBookHistory() {
         </table>
         {editModalOn && (
           <Modal visible={editModalOn} closable={true} maskClosable={false} onClose={handleEditCancel}>
-            <AccountBookEditPost
+            <TransactionEditor
               selectedData={selected}
               handleEditCancel={handleEditCancel}
               handleEditSubmit={handleEditSubmit}

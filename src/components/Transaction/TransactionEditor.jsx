@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
-const AccountBookEditPost = ({ selectedData, handleEditCancel, handleEditSubmit }) => {
+export default function TransactionEditor({ selectedData, handleEditCancel, handleEditSubmit }) {
   const [edited, setEdited] = useState(selectedData);
 
   const onCancel = () => {
@@ -109,9 +109,7 @@ const AccountBookEditPost = ({ selectedData, handleEditCancel, handleEditSubmit 
       </div>
     </Section>
   );
-};
-
-export default AccountBookEditPost;
+}
 
 const Section = styled.section`
   .formItem {

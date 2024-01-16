@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { cardStyleWhite } from "../../common/CardStyles";
+import Button from "../../common/Button";
 
 const Post = ({ onSaveData }) => {
   const [form, setForm] = useState({
@@ -57,9 +58,7 @@ const Post = ({ onSaveData }) => {
             />
           </div>
           <div className="btnContainer">
-            <button className="newPostBtn" type="submit">
-              작성
-            </button>
+            <Button type="submit" text="작성"></Button>
           </div>
         </form>
       </div>
@@ -113,18 +112,9 @@ const Section = styled.section`
     border-radius: 0.25rem;
   }
 
-  .newPostBtn {
+  .btnContainer {
     float: right;
-    margin-right: 1rem;
-    background-color: #5d8de6;
-    padding: 0.5rem 2rem;
-    font-size: 1rem;
-    font-family: "Gowun Batang", serif;
-    color: white;
-    border-radius: 0.5rem;
-    border: 0;
-    outline: 0;
-    cursor: pointer;
+    /* margin-right: 1rem; */
   }
 
   @media screen and (min-width: 280px) and (max-width: 1080px) {

@@ -3,9 +3,9 @@ import styled from "styled-components";
 import { cardStylePurple } from "../../common/CardStyles";
 import { FaPen } from "react-icons/fa";
 import Modal from "../../common/Modal";
-import AccountBookBudgetForm from "./BudgetForm";
+import BudgetForm from "./BudgetForm";
 
-export default function AccountBookAnalytics() {
+export default function TransactionPost() {
   const [budget, setBudget] = useState(300000);
   const [income, setIncome] = useState(190000);
   const [expense, setExpense] = useState(30000);
@@ -35,7 +35,7 @@ export default function AccountBookAnalytics() {
           </h5>
           {modalOn && (
             <Modal visible={modalOn} closable={true} maskClosable={false} onClose={handleCancel}>
-              <AccountBookBudgetForm onSaveData={handleSave} handleCancel={handleCancel} />
+              <BudgetForm onSaveData={handleSave} handleCancel={handleCancel} />
             </Modal>
           )}
           <h2>{budget.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원</h2>

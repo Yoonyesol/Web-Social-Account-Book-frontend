@@ -13,7 +13,7 @@ export default function Header({ text, leftChild, rightChild }) {
 const DateHeader = styled.header`
   display: flex;
   align-items: center;
-  padding: 20px 0px;
+  padding-bottom: 20px;
   font-size: 20px;
   font-weight: bold;
 

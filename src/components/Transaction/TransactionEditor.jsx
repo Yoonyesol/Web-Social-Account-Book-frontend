@@ -28,85 +28,83 @@ export default function TransactionEditor({ selectedData, handleEditCancel, hand
 
   return (
     <Section>
-      <div className="container">
-        <h3>내역 수정</h3>
-        <form action="/api/v1/posts" className="form" onSubmit={onSubmitEdit}>
-          <div class="formItem">
-            <label htmlFor="ocr">OCR</label>
+      <h3>내역 수정</h3>
+      <form action="/api/v1/posts" className="form" onSubmit={onSubmitEdit}>
+        <div class="formItem">
+          <label htmlFor="ocr">OCR</label>
+          <input
+            className="formInput"
+            type="file"
+            name="ocr_img"
+            placeholder="캡처화면을 업로드해주세요."
+            value={edited.ocr_img}
+            onChange={fileHandler}
+          />
+        </div>
+        <div class="formItem">
+          <label htmlFor="inex">
             <input
               className="formInput"
-              type="file"
-              name="ocr_img"
-              placeholder="캡처화면을 업로드해주세요."
-              value={edited.ocr_img}
-              onChange={fileHandler}
-            />
-          </div>
-          <div class="formItem">
-            <label htmlFor="inex">
-              <input
-                className="formInput"
-                type="radio"
-                name="inex"
-                value="지출"
-                onChange={onEditChange}
-                checked={"지출" === edited.inex}
-              />
-              지출
-            </label>
-            <label htmlFor="inex">
-              <input
-                className="formInput"
-                type="radio"
-                name="inex"
-                value="수입"
-                onChange={onEditChange}
-                checked={"수입" === edited.inex}
-              />
-              수입
-            </label>
-          </div>
-          <div class="formItem">
-            <label htmlFor="inex">수입/지출</label>
-            <input className="formInput" type="text" name="inex" value={edited.inex} onChange={onEditChange} />
-          </div>
-          <div class="formItem">
-            <label htmlFor="category">카테고리</label>
-            <input className="formInput" type="text" name="category" value={edited.category} onChange={onEditChange} />
-          </div>
-          <div class="formItem">
-            <label htmlFor="content">소비내역</label>
-            <input className="formInput" type="text" name="content" value={edited.content} onChange={onEditChange} />
-          </div>
-          <div class="formItem">
-            <label htmlFor="account">금액</label>
-            <input
-              className="formInput"
-              type="number"
-              name="account"
-              min="1"
-              value={edited.account}
+              type="radio"
+              name="inex"
+              value="지출"
               onChange={onEditChange}
+              checked={"지출" === edited.inex}
             />
-          </div>
-          <div class="formItem">
-            <label htmlFor="date">날짜</label>
-            <input className="formInput" type="date" name="date" value={edited.date} onChange={onEditChange} />
-          </div>
-          <div class="formItem">
-            <label htmlFor="memo">메모</label>
-            <input className="formInput" type="text" name="memo" value={edited.memo} onChange={onEditChange} />
-          </div>
-          <div className="BtnContainer">
-            <button type="submit" className="EditBtn">
-              수정
-            </button>
-            <button className="CancelBtn" onClick={onCancel}>
-              취소
-            </button>
-          </div>
-        </form>
-      </div>
+            지출
+          </label>
+          <label htmlFor="inex">
+            <input
+              className="formInput"
+              type="radio"
+              name="inex"
+              value="수입"
+              onChange={onEditChange}
+              checked={"수입" === edited.inex}
+            />
+            수입
+          </label>
+        </div>
+        <div class="formItem">
+          <label htmlFor="inex">수입/지출</label>
+          <input className="formInput" type="text" name="inex" value={edited.inex} onChange={onEditChange} />
+        </div>
+        <div class="formItem">
+          <label htmlFor="category">카테고리</label>
+          <input className="formInput" type="text" name="category" value={edited.category} onChange={onEditChange} />
+        </div>
+        <div class="formItem">
+          <label htmlFor="content">소비내역</label>
+          <input className="formInput" type="text" name="content" value={edited.content} onChange={onEditChange} />
+        </div>
+        <div class="formItem">
+          <label htmlFor="account">금액</label>
+          <input
+            className="formInput"
+            type="number"
+            name="account"
+            min="1"
+            value={edited.account}
+            onChange={onEditChange}
+          />
+        </div>
+        <div class="formItem">
+          <label htmlFor="date">날짜</label>
+          <input className="formInput" type="date" name="date" value={edited.date} onChange={onEditChange} />
+        </div>
+        <div class="formItem">
+          <label htmlFor="memo">메모</label>
+          <input className="formInput" type="text" name="memo" value={edited.memo} onChange={onEditChange} />
+        </div>
+        <div className="BtnContainer">
+          <button type="submit" className="EditBtn">
+            수정
+          </button>
+          <button className="CancelBtn" onClick={onCancel}>
+            취소
+          </button>
+        </div>
+      </form>
     </Section>
   );
 }

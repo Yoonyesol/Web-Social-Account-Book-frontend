@@ -1,12 +1,12 @@
 import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
-import { cardStyle } from "../../common/CardStyles";
+import { cardStyleRealWhite } from "../../common/CardStyles";
+import { CiSquarePlus } from "react-icons/ci";
 import { FaPen } from "react-icons/fa";
 import { FaTrashAlt } from "react-icons/fa";
 import Modal from "../../common/Modal";
 import TransactionPost from "./TransactionPost";
 import TransactionEditor from "./TransactionEditor";
-import Button from "../../common/Button";
 
 const day = ["일", "월", "화", "수", "목", "금", "토"];
 
@@ -18,7 +18,16 @@ export default function TransactionList({ data }) {
   const nextId = useRef(5);
 
   useEffect(() => {
-    setTransactionData(data);
+    let array = {};
+    data.forEach((it) => {
+      const dateKey = new Date(it.date).getDate().toString();
+      if (!array[dateKey]) {
+        array[dateKey] = [];
+      }
+      array[dateKey].push(it);
+    });
+
+    setTransactionData(Object.values(array));
   }, [data]);
 
   const handleSave = (data) => {
@@ -91,10 +100,9 @@ export default function TransactionList({ data }) {
 
   return (
     <Section>
-      {console.log(transactionData)}
       <div className="title">
         <h2>입출금 내역</h2>
-        <Button text="추가" onClick={toggleModal} />
+        <CiSquarePlus onClick={toggleModal} />
         {openModal && (
           <Modal visible={toggleModal} closable={true} maskClosable={false} onClose={toggleModal}>
             <TransactionPost onSaveData={handleSave} handleCancel={toggleModal} />
@@ -102,25 +110,38 @@ export default function TransactionList({ data }) {
         )}
       </div>
       <div className="history">
-        <table class="table">
+        <table className="table">
           <tbody>
-            {transactionData.map((item) => (
-              <tr key={item.id}>
-                <td>{`${new Date(item.date).getDate()}일 (${day[new Date(item.date).getDay()]})`}</td>
-                <td>{item.type}</td>
-                <td>{item.category}</td>
-                <td>{item.content}</td>
-                <td>{item.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
-                <td>
-                  <FaPen onClick={() => handleEdit(item.id)} />
-                </td>
-                <td>
-                  <FaTrashAlt onClick={() => handleRemove(item.id)} />
-                </td>
+            {transactionData.map((item, index) => (
+              <tr key={index}>
+                <div className="table-date">{`${new Date(item[0].date).getDate()}일 (${
+                  day[new Date(item[0].date).getDay()]
+                })`}</div>
+                {item.map((data) => (
+                  <td className="transaction" key={data.id}>
+                    <div className="category-description">
+                      <div className="category">{data.category}</div>
+                      <div className="description">{data.description}</div>
+                    </div>
+                    <div className="amount" style={{ color: data.amount.toString()[0] === "-" ? "#ec444c" : "green" }}>
+                      {data.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                    </div>
+                    <div className="memo">{data.memo}</div>
+                    <div className="transaction-actions">
+                      <div className="">
+                        <FaPen onClick={() => handleEdit(data.id)} />
+                      </div>
+                      <div>
+                        <FaTrashAlt onClick={() => handleRemove(data.id)} />
+                      </div>
+                    </div>
+                  </td>
+                ))}
               </tr>
             ))}
           </tbody>
         </table>
+
         {editModalOn && (
           <Modal visible={editModalOn} closable={true} maskClosable={false} onClose={handleEditCancel}>
             <TransactionEditor
@@ -136,14 +157,18 @@ export default function TransactionList({ data }) {
 }
 
 const Section = styled.section`
-  ${cardStyle}
+  ${cardStyleRealWhite}
+
   .title {
     display: flex;
     justify-content: space-between;
+
     svg {
       font-size: 1.8rem;
+      color: #3c76e0;
       cursor: pointer;
     }
+
     h2 {
       color: #3c76e0;
       font-family: "Gowun Batang", serif;
@@ -151,35 +176,84 @@ const Section = styled.section`
     }
   }
 
-  .ex {
-    color: ${(props) => props.color};
-  }
   .history {
-    margin-top: 1.5rem;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
+
     svg {
       cursor: pointer;
     }
   }
+
   .table {
     display: flex;
     justify-content: space-evenly;
-    gap: 2rem;
     align-items: center;
-    text-align: center;
-    line-height: 3.5;
-    td {
+
+    .table-date {
+      margin-top: 1.5rem;
+      font-size: 1rem;
+      font-weight: bold;
       width: 20vh;
-      vertical-align: center;
+      padding: 0.5rem;
+    }
+
+    td {
+      display: flex;
+      flex-direction: column;
       vertical-align: top;
       border-bottom: 1px solid #ccc;
+      padding: 0.5rem;
+    }
+
+    .transaction {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      gap: 2rem;
+    }
+
+    .category-description {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .category {
+      color: grey;
+      font-size: 0.7rem;
+    }
+
+    .description,
+    .memo {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: 100px;
+    }
+
+    .amount {
+      display: flex;
+      align-items: center;
+      font-weight: 550;
+    }
+
+    .memo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 200px;
     }
   }
+
+  .transaction-actions {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+    justify-content: space-around;
+  }
+
   @media screen and (min-width: 280px) and (max-width: 1080px) {
-    .info {
-      gap: 0rem;
-    }
   }
 `;

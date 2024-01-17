@@ -42,6 +42,24 @@ export const transactionList = [
     type: "지출",
     memo: "외식",
   },
+  {
+    id: 5,
+    date: 1709329633942,
+    category: "용돈",
+    description: "엄마께 용돈",
+    amount: 32000,
+    type: "수입",
+    memo: "엄마의 부업을 도와드리고 용돈을 받았다!",
+  },
+  {
+    id: 6,
+    date: 1709329633942,
+    category: "용돈",
+    description: "아빠께 용돈",
+    amount: 42000,
+    type: "수입",
+    memo: "아빠의 서재 정리를 도와드리고 용돈을 받았다",
+  },
 ];
 
 export default function Transaction() {
@@ -93,7 +111,7 @@ const Section = styled.section`
   height: 100%;
 
   .container {
-    margin: 0vw 10vw;
+    margin: 0vw 15vw;
     display: flex;
     flex-direction: column;
     height: 100%;

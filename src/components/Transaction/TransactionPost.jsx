@@ -79,115 +79,113 @@ const AccountBookPost = ({ onSaveData, handleCancel }) => {
 
   return (
     <Section>
-      <div className="container">
-        <div className="title">내역 추가</div>
-        <form action="/api/v1/posts" className="form" onSubmit={handleSubmit}>
-          <div class="formItem">
-            <label htmlFor="ocr_img">OCR</label>
+      <div className="title">내역 추가</div>
+      <form action="/api/v1/posts" className="form" onSubmit={handleSubmit}>
+        <div class="formItem">
+          <label htmlFor="ocr_img">OCR</label>
+          <input
+            className="formInput"
+            placeholder="캡처화면을 업로드해주세요."
+            type="file"
+            name="ocr_img"
+            value={form.ocr_img}
+            onChange={handleOCRChange}
+          />
+        </div>
+        <div class="formItem">
+          <label htmlFor="inex">
             <input
               className="formInput"
-              placeholder="캡처화면을 업로드해주세요."
-              type="file"
-              name="ocr_img"
-              value={form.ocr_img}
-              onChange={handleOCRChange}
-            />
-          </div>
-          <div class="formItem">
-            <label htmlFor="inex">
-              <input
-                className="formInput"
-                type="radio"
-                name="inex"
-                value="지출"
-                onChange={handleChange}
-                required
-                checked={form.inex === "지출"}
-              />
-              지출
-            </label>
-            <label htmlFor="inex">
-              <input className="formInput" type="radio" name="inex" value="수입" onChange={handleChange} />
-              수입
-            </label>
-          </div>
-          <div class="formItem">
-            <label htmlFor="category">카테고리</label>
-            <input
-              className="formInput"
-              required
-              placeholder="카테고리를 입력해주세요"
-              type="text"
-              name="category"
-              value={form.category}
+              type="radio"
+              name="inex"
+              value="지출"
               onChange={handleChange}
-            />
-          </div>
-          <div class="formItem">
-            <label htmlFor="content">소비내역</label>
-            <input
-              className="formInput"
               required
-              placeholder="소비내역을 입력해주세요"
-              type="text"
-              name="content"
-              value={form.content}
-              onChange={handleChange}
+              checked={form.inex === "지출"}
             />
-          </div>
-          <div class="formItem">
-            <label htmlFor="account">금액</label>
-            <input
-              className="formInput"
-              required
-              placeholder="금액을 입력해주세요"
-              type="number"
-              min="1"
-              name="account"
-              value={form.account}
-              onChange={handleChange}
-            />
-          </div>
-          <div class="formItem">
-            <label htmlFor="date">날짜</label>
-            {/* <MyDatePicker
+            지출
+          </label>
+          <label htmlFor="inex">
+            <input className="formInput" type="radio" name="inex" value="수입" onChange={handleChange} />
+            수입
+          </label>
+        </div>
+        <div class="formItem">
+          <label htmlFor="category">카테고리</label>
+          <input
+            className="formInput"
+            required
+            placeholder="카테고리를 입력해주세요"
+            type="text"
+            name="category"
+            value={form.category}
+            onChange={handleChange}
+          />
+        </div>
+        <div class="formItem">
+          <label htmlFor="content">소비내역</label>
+          <input
+            className="formInput"
+            required
+            placeholder="소비내역을 입력해주세요"
+            type="text"
+            name="content"
+            value={form.content}
+            onChange={handleChange}
+          />
+        </div>
+        <div class="formItem">
+          <label htmlFor="account">금액</label>
+          <input
+            className="formInput"
+            required
+            placeholder="금액을 입력해주세요"
+            type="number"
+            min="1"
+            name="account"
+            value={form.account}
+            onChange={handleChange}
+          />
+        </div>
+        <div class="formItem">
+          <label htmlFor="date">날짜</label>
+          {/* <MyDatePicker
               name="date"
               selected={date}
               dateFormat="yy.MM.dd" // 날짜 형식
               onChange={(date) => setDate(date)}
             /> */}
-            <input
-              className="formInput"
-              required
-              placeholder="금액을 입력해주세요"
-              type="date"
-              name="date"
-              pattern="\d{4}-\d{2}-\d{2}"
-              value={form.date}
-              onChange={handleChange}
-            />
-          </div>
-          <div class="formItem">
-            <label htmlFor="memo">메모</label>
-            <input
-              className="formInput"
-              placeholder="메모를 입력해주세요"
-              type="text"
-              name="memo"
-              value={form.memo}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="BtnContainer">
-            <button className="SaveBtn" type="submit">
-              저장
-            </button>
-            <button className="CancelBtn" onClick={onCancel}>
-              취소
-            </button>
-          </div>
-        </form>
-      </div>
+          <input
+            className="formInput"
+            required
+            placeholder="금액을 입력해주세요"
+            type="date"
+            name="date"
+            pattern="\d{4}-\d{2}-\d{2}"
+            value={form.date}
+            onChange={handleChange}
+          />
+        </div>
+        <div class="formItem">
+          <label htmlFor="memo">메모</label>
+          <input
+            className="formInput"
+            placeholder="메모를 입력해주세요"
+            type="text"
+            name="memo"
+            value={form.memo}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="BtnContainer">
+          <button className="SaveBtn" type="submit">
+            저장
+          </button>
+          <button className="CancelBtn" onClick={onCancel}>
+            취소
+          </button>
+        </div>
+      </form>
     </Section>
   );
 };

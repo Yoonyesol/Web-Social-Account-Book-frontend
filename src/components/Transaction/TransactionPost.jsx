@@ -1,20 +1,13 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
-import Modal from "../../common/Modal";
-
-const AccountBookPost = ({ onSaveData, handleCancel }) => {
-  // const [date, setDate] = useState(new Date());
-  // //string으로 변환
-  // const strDate = String(format(date, "yy.MM.dd"));
-  // console.log(strDate);
-
+const TransactionPost = ({ onSaveData, handleCancel }) => {
   const [form, setForm] = useState({
     ocr_img: null,
-    inex: null,
+    type: null,
     category: "",
     content: "",
-    account: null,
+    amount: null,
     date: "",
     memo: "",
   });
@@ -33,10 +26,10 @@ const AccountBookPost = ({ onSaveData, handleCancel }) => {
     console.log(form);
     setForm({
       ocr_img: null,
-      inex: null,
+      type: null,
       category: "",
       content: "",
-      account: null,
+      amount: null,
       date: "",
       memo: "",
     });
@@ -46,10 +39,10 @@ const AccountBookPost = ({ onSaveData, handleCancel }) => {
   const handleOCRChange = (e) => {
     e.preventDefault();
     setForm({
-      inex: "지출",
+      type: "지출",
       category: "",
       content: "설빙서울마곡나루점",
-      account: 11900,
+      amount: 11900,
       date: "",
       memo: "",
     });
@@ -93,20 +86,20 @@ const AccountBookPost = ({ onSaveData, handleCancel }) => {
           />
         </div>
         <div class="formItem">
-          <label htmlFor="inex">
+          <label htmlFor="type">
             <input
               className="formInput"
               type="radio"
-              name="inex"
+              name="type"
               value="지출"
               onChange={handleChange}
               required
-              checked={form.inex === "지출"}
+              checked={form.type === "지출"}
             />
             지출
           </label>
-          <label htmlFor="inex">
-            <input className="formInput" type="radio" name="inex" value="수입" onChange={handleChange} />
+          <label htmlFor="type">
+            <input className="formInput" type="radio" name="type" value="수입" onChange={handleChange} />
             수입
           </label>
         </div>
@@ -135,15 +128,15 @@ const AccountBookPost = ({ onSaveData, handleCancel }) => {
           />
         </div>
         <div class="formItem">
-          <label htmlFor="account">금액</label>
+          <label htmlFor="amount">금액</label>
           <input
             className="formInput"
             required
             placeholder="금액을 입력해주세요"
             type="number"
             min="1"
-            name="account"
-            value={form.account}
+            name="amount"
+            value={form.amount}
             onChange={handleChange}
           />
         </div>
@@ -190,7 +183,7 @@ const AccountBookPost = ({ onSaveData, handleCancel }) => {
   );
 };
 
-export default AccountBookPost;
+export default TransactionPost;
 
 // const MyDatePicker = styled(DatePicker)`
 //   width: 100%;

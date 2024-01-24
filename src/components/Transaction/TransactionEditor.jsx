@@ -17,7 +17,6 @@ export default function TransactionEditor({ selectedData, handleEditCancel, hand
 
   const onSubmitEdit = (e) => {
     e.preventDefault();
-    console.log(edited);
     handleEditSubmit(edited);
     alert("수정되었습니다!");
   };
@@ -28,8 +27,9 @@ export default function TransactionEditor({ selectedData, handleEditCancel, hand
 
   return (
     <Section>
+      {console.log(edited)}
       <h3>내역 수정</h3>
-      <form action="/api/v1/posts" className="form" onSubmit={onSubmitEdit}>
+      <form className="form" onSubmit={onSubmitEdit}>
         <div class="formItem">
           <label htmlFor="ocr">OCR</label>
           <input
@@ -42,32 +42,32 @@ export default function TransactionEditor({ selectedData, handleEditCancel, hand
           />
         </div>
         <div class="formItem">
-          <label htmlFor="inex">
+          <label htmlFor="type">
             <input
               className="formInput"
               type="radio"
-              name="inex"
+              name="type"
               value="지출"
               onChange={onEditChange}
-              checked={"지출" === edited.inex}
+              checked={"지출" === edited.type}
             />
             지출
           </label>
-          <label htmlFor="inex">
+          <label htmlFor="type">
             <input
               className="formInput"
               type="radio"
-              name="inex"
+              name="type"
               value="수입"
               onChange={onEditChange}
-              checked={"수입" === edited.inex}
+              checked={"수입" === edited.type}
             />
             수입
           </label>
         </div>
         <div class="formItem">
-          <label htmlFor="inex">수입/지출</label>
-          <input className="formInput" type="text" name="inex" value={edited.inex} onChange={onEditChange} />
+          <label htmlFor="type">수입/지출</label>
+          <input className="formInput" type="text" name="type" value={edited.type} onChange={onEditChange} />
         </div>
         <div class="formItem">
           <label htmlFor="category">카테고리</label>
@@ -78,13 +78,13 @@ export default function TransactionEditor({ selectedData, handleEditCancel, hand
           <input className="formInput" type="text" name="content" value={edited.content} onChange={onEditChange} />
         </div>
         <div class="formItem">
-          <label htmlFor="account">금액</label>
+          <label htmlFor="amount">금액</label>
           <input
             className="formInput"
             type="number"
-            name="account"
+            name="amount"
             min="1"
-            value={edited.account}
+            value={edited.amount}
             onChange={onEditChange}
           />
         </div>

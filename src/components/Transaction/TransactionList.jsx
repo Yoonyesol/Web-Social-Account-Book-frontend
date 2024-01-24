@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 import { cardStyleRealWhite } from "../../common/CardStyles";
-import { CiSquarePlus } from "react-icons/ci";
 import { FaPen } from "react-icons/fa";
+import { CiSquarePlus } from "react-icons/ci";
 import { FaTrashAlt } from "react-icons/fa";
 import Modal from "../../common/Modal";
 import TransactionPost from "./TransactionPost";
@@ -18,16 +18,7 @@ export default function TransactionList({ data }) {
   const nextId = useRef(5);
 
   useEffect(() => {
-    let array = {};
-    data.forEach((it) => {
-      const dateKey = new Date(it.date).getDate().toString();
-      if (!array[dateKey]) {
-        array[dateKey] = [];
-      }
-      array[dateKey].push(it);
-    });
-
-    setTransactionData(Object.values(array));
+    setTransactionData(data);
   }, [data]);
 
   const handleSave = (data) => {
@@ -110,38 +101,31 @@ export default function TransactionList({ data }) {
         )}
       </div>
       <div className="history">
-        <table className="table">
+        <table class="table">
           <tbody>
-            {transactionData.map((item, index) => (
-              <tr key={index}>
-                <div className="table-date">{`${new Date(item[0].date).getDate()}일 (${
-                  day[new Date(item[0].date).getDay()]
-                })`}</div>
-                {item.map((data) => (
-                  <td className="transaction" key={data.id}>
-                    <div className="category-description">
-                      <div className="category">{data.category}</div>
-                      <div className="description">{data.description}</div>
-                    </div>
-                    <div className="amount" style={{ color: data.amount.toString()[0] === "-" ? "#ec444c" : "green" }}>
-                      {data.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-                    </div>
-                    <div className="memo">{data.memo}</div>
-                    <div className="transaction-actions">
-                      <div className="">
-                        <FaPen onClick={() => handleEdit(data.id)} />
-                      </div>
-                      <div>
-                        <FaTrashAlt onClick={() => handleRemove(data.id)} />
-                      </div>
-                    </div>
-                  </td>
-                ))}
+            {transactionData.map((item) => (
+              <tr key={item.id}>
+                <td className="date-cell">{`${new Date(item.date).getDate()}일 (${
+                  day[new Date(item.date).getDay()]
+                })`}</td>
+                <td className="category-cell">
+                  <div className="category-description">
+                    <div className="category">{item.category}</div>
+                    <div className="description">{item.description}</div>
+                  </div>
+                </td>
+                <td className="memo-cell">{item.memo}</td>
+                <td className="amount-cell" style={{ color: item.amount.toString()[0] === "-" ? "#ec444c" : "green" }}>
+                  {item.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                </td>
+                <td className="action-cell">
+                  <FaPen onClick={() => handleEdit(item.id)} />
+                  <FaTrashAlt onClick={() => handleRemove(item.id)} />
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
-
         {editModalOn && (
           <Modal visible={editModalOn} closable={true} maskClosable={false} onClose={handleEditCancel}>
             <TransactionEditor
@@ -158,17 +142,14 @@ export default function TransactionList({ data }) {
 
 const Section = styled.section`
   ${cardStyleRealWhite}
-
   .title {
     display: flex;
     justify-content: space-between;
-
     svg {
       font-size: 1.8rem;
       color: #3c76e0;
       cursor: pointer;
     }
-
     h2 {
       color: #3c76e0;
       font-family: "Gowun Batang", serif;
@@ -176,84 +157,73 @@ const Section = styled.section`
     }
   }
 
+  .ex {
+    color: ${(props) => props.color};
+  }
   .history {
+    margin-top: 1.5rem;
     display: flex;
-    flex-direction: column;
     align-items: center;
-    justify-content: center;
-
+    justify-content: space-between;
     svg {
       cursor: pointer;
     }
   }
-
   .table {
     display: flex;
-    justify-content: space-evenly;
+    gap: 5rem;
     align-items: center;
-
-    .table-date {
-      margin-top: 1.5rem;
-      font-size: 1rem;
-      font-weight: bold;
-      width: 20vh;
-      padding: 0.5rem;
-    }
-
+    text-align: center;
+    line-height: 20px;
+    width: 100%;
     td {
-      display: flex;
-      flex-direction: column;
-      vertical-align: top;
+      vertical-align: center;
       border-bottom: 1px solid #ccc;
-      padding: 0.5rem;
+      text-align: center;
+      width: 100%;
     }
-
-    .transaction {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      gap: 2rem;
+    tr {
+      padding: 90px;
     }
-
     .category-description {
       display: flex;
       flex-direction: column;
+      text-align: center;
     }
-
     .category {
       color: grey;
       font-size: 0.7rem;
     }
-
-    .description,
-    .memo {
+    .description {
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      width: 100px;
+    }
+    .date-cell {
+      width: 10vh;
     }
 
-    .amount {
-      display: flex;
-      align-items: center;
-      font-weight: 550;
+    .category-cell {
+      width: 18vh;
     }
 
-    .memo {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 200px;
+    .memo-cell {
+      width: 25vh;
+      color: grey;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .amount-cell {
+      width: 15vh;
+    }
+
+    .action-cell {
+      width: 10vh;
+      gap: 1rem;
     }
   }
-
-  .transaction-actions {
-    display: flex;
-    gap: 1.5rem;
-    align-items: center;
-    justify-content: space-around;
-  }
-
   @media screen and (min-width: 280px) and (max-width: 1080px) {
   }
 `;

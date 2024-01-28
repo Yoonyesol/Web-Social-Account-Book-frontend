@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import axios from "axios";
 
-const TransactionPost = ({ onSaveData, handleCancel }) => {
+const TransactionPost = ({ handleCancel }) => {
   const [form, setForm] = useState({
-    ocr_img: null,
     type: null,
     category: "",
-    content: "",
+    title: "",
     amount: null,
-    date: "",
+    date: null,
     memo: "",
   });
 
@@ -20,51 +20,23 @@ const TransactionPost = ({ onSaveData, handleCancel }) => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onSaveData(form);
-    console.log(form);
-    setForm({
-      ocr_img: null,
-      type: null,
-      category: "",
-      content: "",
-      amount: null,
-      date: "",
-      memo: "",
-    });
+    try {
+      await axios.post("http://localhost:5000/api/transactions", {
+        uid: "u1",
+        date: new Date(form.date).getTime(),
+        category: form.category,
+        title: form.title,
+        amount: form.type === "수입" ? form.amount : form.amount * -1,
+        memo: form.memo,
+      });
+    } catch (e) {
+      console.log("HTTP request 도중 에러 발생:", e.message);
+    }
     alert("저장되었습니다!");
+    onCancel();
   };
-
-  const handleOCRChange = (e) => {
-    e.preventDefault();
-    setForm({
-      type: "지출",
-      category: "",
-      content: "설빙서울마곡나루점",
-      amount: 11900,
-      date: "",
-      memo: "",
-    });
-  };
-
-  //이미지 전송
-  //   const onSubmit = e => {
-  //     e.preventDefault();
-  //     const formData = new FormData();
-  //     formData.append("img", content);
-  //     axios
-  //       .post("/upload", formData)
-  //       .then(res => {
-  //         const { fileName } = res.data;
-  //         console.log(fileName);
-  //         setUploadedImg({ fileName, filePath: `${BASE_URL}/img/${fileName}` });
-  //         alert("The file is successfully uploaded");
-  //       })
-  //       .catch(err => {
-  //         console.error(err);
-  //       });
-  //   };
 
   const onCancel = () => {
     handleCancel();
@@ -73,18 +45,7 @@ const TransactionPost = ({ onSaveData, handleCancel }) => {
   return (
     <Section>
       <div className="title">내역 추가</div>
-      <form action="/api/v1/posts" className="form" onSubmit={handleSubmit}>
-        <div class="formItem">
-          <label htmlFor="ocr_img">OCR</label>
-          <input
-            className="formInput"
-            placeholder="캡처화면을 업로드해주세요."
-            type="file"
-            name="ocr_img"
-            value={form.ocr_img}
-            onChange={handleOCRChange}
-          />
-        </div>
+      <form className="form" onSubmit={handleSubmit}>
         <div class="formItem">
           <label htmlFor="type">
             <input
@@ -116,14 +77,14 @@ const TransactionPost = ({ onSaveData, handleCancel }) => {
           />
         </div>
         <div class="formItem">
-          <label htmlFor="content">소비내역</label>
+          <label htmlFor="title">소비내역</label>
           <input
             className="formInput"
             required
             placeholder="소비내역을 입력해주세요"
             type="text"
-            name="content"
-            value={form.content}
+            name="title"
+            value={form.title}
             onChange={handleChange}
           />
         </div>
@@ -142,12 +103,6 @@ const TransactionPost = ({ onSaveData, handleCancel }) => {
         </div>
         <div class="formItem">
           <label htmlFor="date">날짜</label>
-          {/* <MyDatePicker
-              name="date"
-              selected={date}
-              dateFormat="yy.MM.dd" // 날짜 형식
-              onChange={(date) => setDate(date)}
-            /> */}
           <input
             className="formInput"
             required
@@ -184,13 +139,6 @@ const TransactionPost = ({ onSaveData, handleCancel }) => {
 };
 
 export default TransactionPost;
-
-// const MyDatePicker = styled(DatePicker)`
-//   width: 100%;
-//   font-size: 15px;
-//   font-weight: 500;
-//   font-family: "Gowun Batang", serif;
-// `;
 
 const Section = styled.section`
   .formItem {

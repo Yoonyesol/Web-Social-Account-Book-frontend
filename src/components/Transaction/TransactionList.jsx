@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { cardStyleRealWhite } from "../../common/CardStyles";
 import { FaPen } from "react-icons/fa";
@@ -15,7 +15,6 @@ export default function TransactionList({ data }) {
   const [selected, setSelected] = useState("");
   const [openModal, setOpenModal] = useState(false);
   const [editModalOn, setEditModalOn] = useState(false);
-  const nextId = useRef(5);
 
   useEffect(() => {
     setTransactionData(data);
@@ -38,19 +37,6 @@ export default function TransactionList({ data }) {
             : row,
         ),
       );
-    } else {
-      setTransactionData((item) =>
-        item.concat({
-          id: nextId.current,
-          type: data.type,
-          date: data.date,
-          category: data.category,
-          content: data.content,
-          amount: data.type === "수입" ? data.amount : data.amount * -1,
-          memo: data.memo,
-        }),
-      );
-      nextId.current += 1;
     }
     toggleModal();
   };
@@ -96,7 +82,7 @@ export default function TransactionList({ data }) {
         <CiSquarePlus onClick={toggleModal} />
         {openModal && (
           <Modal visible={toggleModal} closable={true} maskClosable={false} onClose={toggleModal}>
-            <TransactionPost onSaveData={handleSave} handleCancel={toggleModal} />
+            <TransactionPost handleCancel={toggleModal} />
           </Modal>
         )}
       </div>

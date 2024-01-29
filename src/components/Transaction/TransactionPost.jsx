@@ -25,7 +25,7 @@ const TransactionPost = ({ handleCancel }) => {
     try {
       await axios.post("http://localhost:5000/api/transactions", {
         uid: "u1",
-        date: new Date(form.date).getTime(),
+        date: new Date(form.date),
         category: form.category,
         title: form.title,
         amount: form.type === "수입" ? form.amount : form.amount * -1,
@@ -107,7 +107,7 @@ const TransactionPost = ({ handleCancel }) => {
             className="formInput"
             required
             placeholder="금액을 입력해주세요"
-            type="date"
+            type="datetime-local"
             name="date"
             pattern="\d{4}-\d{2}-\d{2}"
             value={form.date}

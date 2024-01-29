@@ -95,9 +95,9 @@ export default function TransactionList({ data }) {
                   day[new Date(item.date).getDay()]
                 })`}</td>
                 <td className="category-cell">
-                  <div className="category-description">
+                  <div className="category-title">
                     <div className="category">{item.category}</div>
-                    <div className="description">{item.description}</div>
+                    <div className="title">{item.title}</div>
                   </div>
                 </td>
                 <td className="memo-cell">{item.memo}</td>
@@ -171,7 +171,7 @@ const Section = styled.section`
     tr {
       padding: 90px;
     }
-    .category-description {
+    .category-title {
       display: flex;
       flex-direction: column;
       text-align: center;
@@ -180,7 +180,7 @@ const Section = styled.section`
       color: grey;
       font-size: 0.7rem;
     }
-    .description {
+    .title {
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;

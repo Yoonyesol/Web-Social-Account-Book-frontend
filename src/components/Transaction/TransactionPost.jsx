@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import axios from "axios";
+import { postTransaction } from "../../utils/api";
 
 const TransactionPost = ({ handleCancel }) => {
   const [form, setForm] = useState({
@@ -22,18 +22,7 @@ const TransactionPost = ({ handleCancel }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      await axios.post("http://localhost:5000/api/transactions", {
-        uid: "u1",
-        date: new Date(form.date),
-        category: form.category,
-        title: form.title,
-        amount: form.type === "수입" ? form.amount : form.amount * -1,
-        memo: form.memo,
-      });
-    } catch (e) {
-      console.log("HTTP request 도중 에러 발생:", e.message);
-    }
+    await postTransaction(form);
     alert("저장되었습니다!");
     onCancel();
   };

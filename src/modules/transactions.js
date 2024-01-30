@@ -1,21 +1,21 @@
 /* ----------------- 액션 타입 ------------------ */
-export const ADD_TRANSACTION = "transactions/ADD_TRANSACTION";
-export const EDIT_TRANSACTION = "EDIT_TRANSACTION";
-export const REMOVE_TRANSACTION = "REMOVE_TRANSACTION";
+export const ADD = "transactions/ADD";
+export const EDIT = "transactions/EDIT";
+export const REMOVE = "transactions/REMOVE";
 
 /* ----------------- 액션 생성 함수 ------------------ */
 export const addTransaction = (transaction) => ({
-  type: ADD_TRANSACTION,
+  type: ADD,
   payload: transaction,
 });
 
 export const editTransaction = (transaction) => ({
-  type: EDIT_TRANSACTION,
+  type: EDIT,
   payload: transaction,
 });
 
 export const removeTransaction = (id) => ({
-  type: REMOVE_TRANSACTION,
+  type: REMOVE,
   payload: id,
 });
 
@@ -27,19 +27,19 @@ const initialState = {
 /* ----------------- 리듀서 ------------------ */
 const transactionReducer = (state = initialState, action) => {
   switch (action.type) {
-    case ADD_TRANSACTION:
+    case ADD:
       return {
         ...state,
         transactions: [...state.transactions, action.payload],
       };
-    case EDIT_TRANSACTION:
+    case EDIT:
       return {
         ...state,
         transactions: state.transactions.map((transaction) =>
           transaction.id === action.payload.id ? action.payload : transaction,
         ),
       };
-    case REMOVE_TRANSACTION:
+    case REMOVE:
       return {
         ...state,
         transactions: state.transactions.filter((transaction) => transaction.id !== action.payload),

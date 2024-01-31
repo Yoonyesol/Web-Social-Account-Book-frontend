@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { cardStyleRealWhite } from "../../common/CardStyles";
 import { FaPen } from "react-icons/fa";
@@ -7,7 +7,6 @@ import { FaTrashAlt } from "react-icons/fa";
 import Modal from "../../common/Modal";
 import TransactionPost from "./TransactionPost";
 import TransactionEditor from "./TransactionEditor";
-
 const day = ["일", "월", "화", "수", "목", "금", "토"];
 
 export default function TransactionList({ data }) {
@@ -15,10 +14,6 @@ export default function TransactionList({ data }) {
   const [selected, setSelected] = useState("");
   const [openModal, setOpenModal] = useState(false);
   const [editModalOn, setEditModalOn] = useState(false);
-
-  useEffect(() => {
-    setTransactionData(data);
-  }, [data]);
 
   const handleSave = (data) => {
     if (data.id) {
@@ -89,7 +84,7 @@ export default function TransactionList({ data }) {
       <div className="history">
         <table class="table">
           <tbody>
-            {transactionData.map((item) => (
+            {data.map((item) => (
               <tr key={item.id}>
                 <td className="date-cell">{`${new Date(item.date).getDate()}일 (${
                   day[new Date(item.date).getDay()]

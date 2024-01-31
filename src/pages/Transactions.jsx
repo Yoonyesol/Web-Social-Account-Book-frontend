@@ -4,10 +4,13 @@ import TransactionList from "../components/Transaction/TransactionList";
 import AccountBookAnalytics from "../components/Transaction/TransactionAnalytics";
 import Header from "../components/Transaction/Header";
 import Button from "../common/Button";
-import { fetchTransactionsByUid } from "../utils/api";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import { getTransactions } from "../modules/transactions";
 
 export default function Transactions() {
-  const [transactionList, setTransactionList] = useState([]);
+  const transactionList = useSelector((state) => state.transactions);
+  const dispatch = useDispatch();
   const [curDate, setCurDate] = useState(new Date());
   const [data, setData] = useState([]);
 
@@ -23,14 +26,16 @@ export default function Transactions() {
 
   useEffect(() => {
     const fetchData = async () => {
+      const uid = "u1";
       try {
-        const transactions = await fetchTransactionsByUid("u1");
-        setTransactionList(transactions);
+        const responseData = await axios.get(`http://localhost:5000/api/transactions/user/${uid}`);
+        const transactions = responseData.data.transactions;
+        dispatch(getTransactions(transactions));
       } catch (error) {
-        console.error("트랜잭션 데이터를 불러오는 중 에러 발생:", error.message);
+        console.log("HTTP request 도중 에러 발생:", error.message);
       }
     };
-
+    console.log(transactionList);
     fetchData();
   }, []);
 

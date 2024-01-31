@@ -1,17 +1,22 @@
 /* ----------------- 액션 타입 ------------------ */
+export const GET = "transactions/GET";
 export const ADD = "transactions/ADD";
 export const EDIT = "transactions/EDIT";
 export const REMOVE = "transactions/REMOVE";
 
 /* ----------------- 액션 생성 함수 ------------------ */
-export const addTransaction = (transaction) => ({
-  type: ADD,
-  payload: transaction,
+export const getTransactions = (transactions) => ({
+  type: GET,
+  payload: transactions,
 });
 
-export const editTransaction = (transaction) => ({
+export const addTransaction = () => ({
+  type: ADD,
+});
+
+export const editTransaction = (id) => ({
   type: EDIT,
-  payload: transaction,
+  payload: id,
 });
 
 export const removeTransaction = (id) => ({
@@ -27,6 +32,11 @@ const initialState = {
 /* ----------------- 리듀서 ------------------ */
 const transactionReducer = (state = initialState, action) => {
   switch (action.type) {
+    case GET:
+      return {
+        ...state, // 기존 state 유지
+        transactions: action.payload, // 새로운 데이터로 업데이트
+      };
     case ADD:
       return {
         ...state,

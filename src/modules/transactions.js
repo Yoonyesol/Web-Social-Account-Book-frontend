@@ -10,8 +10,9 @@ export const getTransactions = (transactions) => ({
   payload: transactions,
 });
 
-export const addTransaction = () => ({
+export const addTransaction = (transaction) => ({
   type: ADD,
+  payload: transaction,
 });
 
 export const editTransaction = (id) => ({

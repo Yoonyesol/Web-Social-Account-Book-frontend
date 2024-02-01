@@ -5,7 +5,6 @@ import AccountBookAnalytics from "../components/Transaction/TransactionAnalytics
 import Header from "../components/Transaction/Header";
 import Button from "../common/Button";
 import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
 import { getTransactions } from "../modules/transactions";
 import { fetchTransactionsByUid } from "../utils/api";
 

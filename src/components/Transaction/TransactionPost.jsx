@@ -1,8 +1,12 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { postTransaction } from "../../utils/api";
+import { useDispatch } from "react-redux";
+import { addTransaction } from "../../modules/transactions";
 
 const TransactionPost = ({ handleCancel }) => {
+  const dispatch = useDispatch();
+
   const [form, setForm] = useState({
     type: null,
     category: "",
@@ -22,9 +26,14 @@ const TransactionPost = ({ handleCancel }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await postTransaction(form);
-    alert("저장되었습니다!");
-    onCancel();
+    try {
+      await postTransaction(form);
+      dispatch(addTransaction(form));
+      alert("저장되었습니다!");
+      onCancel();
+    } catch (err) {
+      console.log("post 진행 중 오류가 발생했습니다.");
+    }
   };
 
   const onCancel = () => {

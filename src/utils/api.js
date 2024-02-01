@@ -6,7 +6,7 @@ export const fetchTransactionsByUid = async (uid) => {
     const responseData = await axios.get(`http://localhost:5000/api/transactions/user/${uid}`);
     return responseData.data.transactions;
   } catch (e) {
-    console.log(e.message);
+    console.log("HTTP request 도중 에러 발생:", e.message);
     throw e;
   }
 };

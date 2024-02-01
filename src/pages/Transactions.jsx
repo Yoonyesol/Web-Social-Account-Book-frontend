@@ -7,6 +7,7 @@ import Button from "../common/Button";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { getTransactions } from "../modules/transactions";
+import { fetchTransactionsByUid } from "../utils/api";
 
 export default function Transactions() {
   const transactionList = useSelector((state) => state.transactions);
@@ -28,14 +29,12 @@ export default function Transactions() {
     const fetchData = async () => {
       const uid = "u1";
       try {
-        const responseData = await axios.get(`http://localhost:5000/api/transactions/user/${uid}`);
-        const transactions = responseData.data.transactions;
+        const transactions = await fetchTransactionsByUid(uid);
         dispatch(getTransactions(transactions));
       } catch (error) {
-        console.log("HTTP request 도중 에러 발생:", error.message);
+        console.log("API 호출 도중 에러 발생:", error.message);
       }
     };
-    console.log(transactionList);
     fetchData();
   }, []);
 

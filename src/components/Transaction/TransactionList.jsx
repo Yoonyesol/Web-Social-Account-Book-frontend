@@ -5,10 +5,14 @@ import { FaPen, FaTrashAlt } from "react-icons/fa";
 import { CiSquarePlus } from "react-icons/ci";
 import Modal from "../../common/Modal";
 import TransactionEditor from "./TransactionEditor";
+import { deleteTransactionAPI } from "../../utils/api";
+import { useDispatch } from "react-redux";
+import { removeTransaction } from "../../modules/transactions";
 
 const day = ["일", "월", "화", "수", "목", "금", "토"];
 
 export default function TransactionList({ data }) {
+  const dispatch = useDispatch();
   const [transactionData, setTransactionData] = useState([]);
   const [selectedData, setSelectedData] = useState("");
   const [openEditor, setOpenEditor] = useState(false);
@@ -38,10 +42,15 @@ export default function TransactionList({ data }) {
     setIsEdit(false);
   }
 
-  const handleRemove = (id) => {
+  const handleRemove = async (id) => {
     if (window.confirm("내역을 삭제하시겠습니까?")) {
-      setTransactionData((data) => data.filter((item) => item.id !== id));
-      alert("삭제 완료");
+      try {
+        await deleteTransactionAPI(id);
+        dispatch(removeTransaction(id));
+        alert("삭제 완료");
+      } catch (err) {
+        console.log("삭제 중 오류가 발생했습니다.", err.message);
+      }
     }
   };
 

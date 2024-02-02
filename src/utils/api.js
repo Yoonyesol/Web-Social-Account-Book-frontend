@@ -53,3 +53,12 @@ export const editTransactionAPI = async (editedData) => {
     throw e;
   }
 };
+
+export const deleteTransactionAPI = async (tid) => {
+  try {
+    await axios.delete(`http://localhost:5000/api/transactions/${tid}`);
+  } catch (e) {
+    console.log("HTTP request 도중 에러 발생:", e.message);
+    throw e;
+  }
+};

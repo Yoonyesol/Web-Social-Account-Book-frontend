@@ -15,9 +15,9 @@ export const addTransaction = (transaction) => ({
   payload: transaction,
 });
 
-export const editTransaction = (id) => ({
+export const editTransaction = (transaction) => ({
   type: EDIT,
-  payload: id,
+  payload: transaction,
 });
 
 export const removeTransaction = (id) => ({
@@ -35,24 +35,20 @@ const transactionReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET:
       return {
-        ...state, // 기존 state 유지
         transactions: action.payload, // 새로운 데이터로 업데이트
       };
     case ADD:
       return {
-        ...state,
         transactions: [...state.transactions, action.payload],
       };
     case EDIT:
       return {
-        ...state,
         transactions: state.transactions.map((transaction) =>
           transaction.id === action.payload.id ? action.payload : transaction,
         ),
       };
     case REMOVE:
       return {
-        ...state,
         transactions: state.transactions.filter((transaction) => transaction.id !== action.payload),
       };
     default:

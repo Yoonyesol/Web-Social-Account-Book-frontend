@@ -6,7 +6,7 @@ import Header from "../components/Transaction/Header";
 import Button from "../common/Button";
 import { useDispatch, useSelector } from "react-redux";
 import { getTransactions } from "../modules/transactions";
-import { fetchTransactionsByUid } from "../utils/api";
+import { fetchTransactionsByUidAPI } from "../utils/api";
 
 export default function Transactions() {
   const transactionList = useSelector((state) => state.transactions);
@@ -28,7 +28,7 @@ export default function Transactions() {
     const fetchData = async () => {
       const uid = "u1";
       try {
-        const transactions = await fetchTransactionsByUid(uid);
+        const transactions = await fetchTransactionsByUidAPI(uid);
         dispatch(getTransactions(transactions));
       } catch (error) {
         console.log("API 호출 도중 에러 발생:", error.message);
@@ -41,9 +41,7 @@ export default function Transactions() {
     if (transactionList.length >= 1) {
       const firstDay = new Date(curDate.getFullYear(), curDate.getMonth(), 1).getTime();
       const lastDay = new Date(curDate.getFullYear(), curDate.getMonth() + 1, 0, 23, 59, 59).getTime();
-      const filteredData = transactionList.filter(
-        (item) => firstDay <= new Date(item.date).getTime() && new Date(item.date).getTime() <= lastDay,
-      );
+      const filteredData = transactionList.filter((item) => firstDay <= item.date && item.date <= lastDay);
       setData(filteredData);
     }
   }, [transactionList, curDate]);

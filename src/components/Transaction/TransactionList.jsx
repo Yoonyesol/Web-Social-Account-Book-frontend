@@ -1,40 +1,42 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { cardStyleRealWhite } from "../../common/CardStyles";
-import { FaPen } from "react-icons/fa";
+import { FaPen, FaTrashAlt } from "react-icons/fa";
 import { CiSquarePlus } from "react-icons/ci";
-import { FaTrashAlt } from "react-icons/fa";
 import Modal from "../../common/Modal";
-import TransactionPost from "./TransactionPost";
 import TransactionEditor from "./TransactionEditor";
+
 const day = ["일", "월", "화", "수", "목", "금", "토"];
 
 export default function TransactionList({ data }) {
   const [transactionData, setTransactionData] = useState([]);
-  const [selected, setSelected] = useState("");
-  const [openModal, setOpenModal] = useState(false);
-  const [editModalOn, setEditModalOn] = useState(false);
+  const [selectedData, setSelectedData] = useState("");
+  const [openEditor, setOpenEditor] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
 
-  const handleSave = (data) => {
-    if (data.id) {
-      setTransactionData(
-        transactionData.map((row) =>
-          data.id === row.id
-            ? {
-                id: data.id,
-                type: data.type,
-                date: data.date,
-                category: data.category,
-                content: data.content,
-                amount: data.type === "수입" ? data.amount : data.amount * -1,
-                memo: data.memo,
-              }
-            : row,
-        ),
-      );
-    }
-    toggleModal();
+  const handleEdit = (id) => {
+    setIsEdit(true);
+    setOpenEditor(true);
+
+    const item = data.find((transaction) => transaction.id === id);
+
+    const selected = {
+      id: item.id,
+      type: item.amount >= 0 ? "수입" : "지출",
+      date: item.date,
+      category: item.category,
+      title: item.title,
+      amount: Math.abs(item.amount),
+      memo: item.memo,
+    };
+
+    setSelectedData(selected);
   };
+
+  function handleCancelEditor() {
+    setOpenEditor(false);
+    setIsEdit(false);
+  }
 
   const handleRemove = (id) => {
     if (window.confirm("내역을 삭제하시겠습니까?")) {
@@ -43,41 +45,14 @@ export default function TransactionList({ data }) {
     }
   };
 
-  const handleEdit = (item) => {
-    setEditModalOn(true);
-    const selectedData = {
-      id: item.id,
-      type: item.type,
-      date: item.date,
-      category: item.category,
-      content: item.content,
-      amount: item.type === "수입" ? item.amount : item.amount * -1,
-      memo: item.memo,
-    };
-    setSelected(selectedData);
-  };
-
-  const handleEditSubmit = (item) => {
-    handleSave(item);
-    setEditModalOn(false);
-  };
-
-  const toggleModal = () => {
-    setOpenModal((prev) => !prev);
-  };
-
-  function handleEditCancel() {
-    setEditModalOn(false);
-  }
-
   return (
     <Section>
       <div className="title">
         <h2>입출금 내역</h2>
-        <CiSquarePlus onClick={toggleModal} />
-        {openModal && (
-          <Modal visible={toggleModal} closable={true} maskClosable={false} onClose={toggleModal}>
-            <TransactionPost handleCancel={toggleModal} />
+        <CiSquarePlus onClick={() => setOpenEditor(true)} />
+        {openEditor && (
+          <Modal visible={openEditor} closable={true} maskClosable={false} onClose={handleCancelEditor}>
+            <TransactionEditor isEdit={isEdit} selectedData={selectedData} closeEditor={handleCancelEditor} />
           </Modal>
         )}
       </div>
@@ -86,7 +61,7 @@ export default function TransactionList({ data }) {
           <tbody>
             {data.map((item) => (
               <tr key={item.id}>
-                <td className="date-cell">{`${new Date(item.date).getDate()}일 (${
+                <td className="date-cell">{`${new Date(item.date).getDate()}일(${
                   day[new Date(item.date).getDay()]
                 })`}</td>
                 <td className="category-cell">
@@ -107,15 +82,6 @@ export default function TransactionList({ data }) {
             ))}
           </tbody>
         </table>
-        {editModalOn && (
-          <Modal visible={editModalOn} closable={true} maskClosable={false} onClose={handleEditCancel}>
-            <TransactionEditor
-              selectedData={selected}
-              handleEditCancel={handleEditCancel}
-              handleEditSubmit={handleEditSubmit}
-            />
-          </Modal>
-        )}
       </div>
     </Section>
   );

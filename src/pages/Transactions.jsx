@@ -56,7 +56,7 @@ export default function Transactions() {
         />
         <div className="transaction">
           <div className="analytics">
-            <AccountBookAnalytics />
+            <AccountBookAnalytics data={data} />
           </div>
           <div className="list">
             <TransactionList data={data} />

@@ -1,16 +1,30 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { cardStylePurple } from "../../common/CardStyles";
 import { FaPen } from "react-icons/fa";
 import Modal from "../../common/Modal";
 import BudgetForm from "./BudgetForm";
 
-export default function TransactionPost() {
-  const [budget, setBudget] = useState(300000);
-  const [income, setIncome] = useState(190000);
-  const [expense, setExpense] = useState(30000);
-
+export default function TransactionPost({ data }) {
+  const [budget, setBudget] = useState(30000);
+  const [income, setIncome] = useState(0);
+  const [expense, setExpense] = useState(0);
   const [modalOn, setModalOn] = useState(false);
+
+  useEffect(() => {
+    if (data) {
+      const totalExpense = data
+        .filter((transaction) => transaction.amount < 0)
+        .reduce((total, transaction) => parseInt(total) + parseInt(transaction.amount), 0);
+
+      const totalIncome = data
+        .filter((transaction) => transaction.amount > 0)
+        .reduce((total, transaction) => parseInt(total) + parseInt(transaction.amount), 0);
+
+      setIncome(totalIncome);
+      setExpense(totalExpense);
+    }
+  }, [data]);
 
   const handleSave = (data) => {
     setBudget(data.budget);
@@ -37,16 +51,16 @@ export default function TransactionPost() {
             <BudgetForm onSaveData={handleSave} handleCancel={handleCancel} />
           </Modal>
         )}
-        <h2>{budget.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원</h2>
+        <h2>{budget.toLocaleString("ko-KR")}원</h2>
       </div>
 
       <div className="analytic income">
         <h4>수입</h4>
-        <h2>{income.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원</h2>
+        <h2>{income.toLocaleString("ko-KR")}원</h2>
       </div>
       <div className="analytic outcome">
         <h4>지출</h4>
-        <h2>{expense.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원</h2>
+        <h2>{expense.toLocaleString("ko-KR")}원</h2>
       </div>
     </Section>
   );

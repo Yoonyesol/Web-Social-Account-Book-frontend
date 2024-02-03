@@ -13,7 +13,6 @@ const day = ["일", "월", "화", "수", "목", "금", "토"];
 
 export default function TransactionList({ data }) {
   const dispatch = useDispatch();
-  const [transactionData, setTransactionData] = useState([]);
   const [selectedData, setSelectedData] = useState("");
   const [openEditor, setOpenEditor] = useState(false);
   const [isEdit, setIsEdit] = useState(false);

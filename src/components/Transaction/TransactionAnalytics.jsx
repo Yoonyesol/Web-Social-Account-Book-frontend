@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { cardStylePurple } from "../../common/CardStyles";
+import { cardStyleRealWhite } from "../../common/CardStyles";
 import { FaPen } from "react-icons/fa";
 import Modal from "../../common/Modal";
 import BudgetForm from "./BudgetForm";
@@ -42,10 +42,10 @@ export default function TransactionPost({ data }) {
   return (
     <Section>
       <div className="analytic budget">
-        <h4>
-          예산
+        <div className="title-btn">
+          <h4>예산</h4>
           <FaPen onClick={openModal} />
-        </h4>
+        </div>
         {modalOn && (
           <Modal visible={modalOn} closable={true} maskClosable={false} onClose={handleCancel}>
             <BudgetForm onSaveData={handleSave} handleCancel={handleCancel} />
@@ -55,11 +55,11 @@ export default function TransactionPost({ data }) {
       </div>
       <div className="analytic income">
         <h4>수입</h4>
-        <h2>{income.toLocaleString("ko-KR")}원</h2>
+        <h2 style={{ color: "green" }}>{income.toLocaleString("ko-KR")}원</h2>
       </div>
       <div className="analytic outcome">
         <h4>지출</h4>
-        <h2>{expense.toLocaleString("ko-KR")}원</h2>
+        <h2 style={{ color: "#ec444c" }}>{expense.toLocaleString("ko-KR")}원</h2>
       </div>
     </Section>
   );
@@ -74,17 +74,25 @@ const Section = styled.section`
   margin: 1rem 0;
 
   .analytic {
-    ${cardStylePurple}
-    padding: 1rem 1.5rem;
-    width: 90%;
+    ${cardStyleRealWhite}
+    padding: 1rem 1.5rem 2rem 1.5rem;
+    width: 100%;
 
     svg {
       cursor: pointer;
     }
+
+    .title-btn {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+
+    h2 {
+      text-align: center;
+    }
   }
 
   @media screen and (min-width: 280px) and (max-width: 1080px) {
-    flex-direction: column;
-    gap: 1rem;
   }
 `;

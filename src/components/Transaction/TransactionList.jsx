@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { cardStyleRealWhite } from "../../common/CardStyles";
+import { cardStyle, cardStyleRealWhite } from "../../common/CardStyles";
 import { FaPen, FaTrashAlt } from "react-icons/fa";
 import { CiSquarePlus } from "react-icons/ci";
 import Modal from "../../common/Modal";
@@ -65,40 +65,37 @@ export default function TransactionList({ data }) {
         )}
       </div>
       <div className="history">
-        <table class="table">
-          <tbody>
-            {data.map((item) => (
-              <tr key={item.id}>
-                <td className="date-cell">{`${new Date(item.date).getDate()}일(${
-                  day[new Date(item.date).getDay()]
-                })`}</td>
-                <td className="category-cell">
-                  <div className="category-title">
-                    <div className="category">{item.category}</div>
-                    <div className="title">{item.title}</div>
-                  </div>
-                </td>
-                <td className="memo-cell">{item.memo}</td>
-                <td className="amount-cell" style={{ color: item.transaction_type === false ? "#ec444c" : "green" }}>
-                  {item.transaction_type === false
-                    ? "-" + item.amount.toLocaleString("ko-KR")
-                    : item.amount.toLocaleString("ko-KR")}
-                </td>
-                <td className="action-cell">
-                  <FaPen onClick={() => handleEdit(item.id)} />
-                  <FaTrashAlt onClick={() => handleRemove(item.id)} />
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        {data.map((item) => (
+          <div className="card" key={item.id}>
+            <div className="content">
+              <div className="cell date">
+                <b>{`${new Date(item.date).getDate()}일 (${day[new Date(item.date).getDay()]})`}</b>
+              </div>
+              <div className="cell category-title">
+                <div className="category">{item.category}</div>
+                <div className="title">{item.title}</div>
+              </div>
+              <div className="cell memo">{item.memo}</div>
+              <div className="cell amount" style={{ color: item.transaction_type === false ? "#ec444c" : "green" }}>
+                {item.transaction_type === false
+                  ? "-" + item.amount.toLocaleString("ko-KR")
+                  : item.amount.toLocaleString("ko-KR")}
+              </div>
+              <div className="cell action">
+                <FaPen onClick={() => handleEdit(item.id)} />
+                <FaTrashAlt onClick={() => handleRemove(item.id)} />
+              </div>
+            </div>
+          </div>
+        ))}
       </div>
     </Section>
   );
 }
 
 const Section = styled.section`
-  ${cardStyleRealWhite}
+  ${cardStyle}
+
   .title {
     display: flex;
     justify-content: space-between;
@@ -114,71 +111,74 @@ const Section = styled.section`
     }
   }
 
-  .ex {
-    color: ${(props) => props.color};
-  }
   .history {
-    margin-top: 1.5rem;
+    margin: 1.5rem 0;
     display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
     align-items: center;
-    justify-content: space-between;
     svg {
       cursor: pointer;
     }
   }
-  .table {
-    display: flex;
-    gap: 5rem;
-    align-items: center;
-    text-align: center;
-    line-height: 20px;
+
+  .card {
+    ${cardStyleRealWhite}
+    padding: 1rem 2rem;
+    border: none;
     width: 100%;
-    td {
-      vertical-align: center;
-      border-bottom: 1px solid #ccc;
-      text-align: center;
-      width: 100%;
-    }
-    tr {
-      padding: 90px;
-    }
-    .category-title {
-      display: flex;
-      flex-direction: column;
-      text-align: center;
-    }
-    .category {
-      color: grey;
-      font-size: 0.7rem;
-    }
-    .title {
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .date-cell {
-      width: 10vh;
-    }
 
-    .category-cell {
-      width: 18vh;
-    }
+    .content {
+      display: grid;
+      grid-template-columns: 0.8fr 1.5fr 2fr 1fr 1fr;
+      justify-content: space-between;
+      align-items: center;
 
-    .memo-cell {
-      width: 25vh;
-      color: grey;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
+      .cell {
+        text-align: center;
+        padding: 0.5rem;
+      }
 
-    .amount-cell {
-      width: 15vh;
-    }
+      .date {
+        font-weight: bold;
+      }
 
-    .action-cell {
-      width: 10vh;
-      gap: 1rem;
+      .category-title {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        align-items: center;
+      }
+
+      .category {
+        color: grey;
+        font-size: 0.7rem;
+      }
+
+      .title {
+        font-size: 1rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .memo {
+        color: grey;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .amount {
+        color: inherit;
+      }
+
+      .action {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        gap: 1rem;
+      }
     }
   }
   @media screen and (min-width: 280px) and (max-width: 1080px) {

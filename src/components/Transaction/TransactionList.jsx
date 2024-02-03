@@ -8,6 +8,7 @@ import TransactionEditor from "./TransactionEditor";
 import { deleteTransactionAPI } from "../../utils/api";
 import { useDispatch } from "react-redux";
 import { removeTransaction } from "../../modules/transactions";
+import ControlSortType from "./ControlSortType";
 
 const day = ["일", "월", "화", "수", "목", "금", "토"];
 
@@ -16,6 +17,12 @@ export default function TransactionList({ data }) {
   const [selectedData, setSelectedData] = useState("");
   const [openEditor, setOpenEditor] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
+  const [sortType, setSortType] = useState("latest");
+
+  const sortOption = [
+    { value: "latest", name: "최신순" },
+    { value: "oldest", name: "과거순" },
+  ];
 
   const handleEdit = (id) => {
     setIsEdit(true);
@@ -53,6 +60,21 @@ export default function TransactionList({ data }) {
     }
   };
 
+  const getSortedTransactionList = () => {
+    const compare = (a, b) => {
+      if (sortType === "latest") {
+        return parseInt(b.date) - parseInt(a.date);
+      } else {
+        return parseInt(a.date) - parseInt(b.date);
+      }
+    };
+
+    const copyList = JSON.parse(JSON.stringify(data));
+    const sortedList = copyList.sort(compare);
+
+    return sortedList;
+  };
+
   return (
     <Section>
       <div className="title">
@@ -64,8 +86,9 @@ export default function TransactionList({ data }) {
           </Modal>
         )}
       </div>
+      <ControlSortType value={sortType} chooseOption={setSortType} optionList={sortOption} />
       <div className="history">
-        {data.map((item) => (
+        {getSortedTransactionList().map((item) => (
           <div className="card" key={item.id}>
             <div className="content">
               <div className="cell date">
@@ -112,7 +135,7 @@ const Section = styled.section`
   }
 
   .history {
-    margin: 1.5rem 0;
+    margin-bottom: 1.5rem;
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
@@ -167,10 +190,6 @@ const Section = styled.section`
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-      }
-
-      .amount {
-        color: inherit;
       }
 
       .action {

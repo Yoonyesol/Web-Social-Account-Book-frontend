@@ -8,7 +8,7 @@ export default function TransactionEditor({ isEdit, selectedData, closeEditor })
   const dispatch = useDispatch();
   //추가
   const [form, setForm] = useState({
-    type: "지출",
+    transaction_type: false,
     category: "",
     title: "",
     amount: null,
@@ -21,18 +21,19 @@ export default function TransactionEditor({ isEdit, selectedData, closeEditor })
   //추가
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setForm({
-      ...form,
+    setForm((prevForm) => ({
+      ...prevForm,
       [name]: value,
-    });
+    }));
   };
 
   //수정
   const onEditChange = (e) => {
-    setEdited({
-      ...edited,
-      [e.target.name]: e.target.value,
-    });
+    const { name, value } = e.target;
+    setEdited((prevEdited) => ({
+      ...prevEdited,
+      [name]: value === "true" ? true : value === "false" ? false : value,
+    }));
   };
 
   //추가(POST)
@@ -70,25 +71,29 @@ export default function TransactionEditor({ isEdit, selectedData, closeEditor })
       <h3 className="title">{isEdit ? "내역 수정" : "내역 추가"}</h3>
       <form className="form" onSubmit={isEdit ? onSubmitEdit : onSubmit}>
         <div className="formItem">
-          <label className="type">
+          <label className="transaction_type">
             <input
               className="formInput"
               type="radio"
-              name="type"
-              value="지출"
+              name="transaction_type"
+              value="false"
               onChange={isEdit ? onEditChange : handleChange}
-              checked={isEdit ? "지출" === edited.type : "지출" === form.type}
+              checked={
+                isEdit ? edited.transaction_type.toString() === "false" : form.transaction_type.toString() === "false"
+              }
             />
             지출
           </label>
-          <label className="type">
+          <label className="transaction_type">
             <input
               className="formInput"
               type="radio"
-              name="type"
-              value="수입"
+              name="transaction_type"
+              value="true"
               onChange={isEdit ? onEditChange : handleChange}
-              checked={isEdit ? "수입" === edited.type : "수입" === form.type}
+              checked={
+                isEdit ? edited.transaction_type.toString() === "true" : form.transaction_type.toString() === "true"
+              }
             />
             수입
           </label>
@@ -156,16 +161,10 @@ export default function TransactionEditor({ isEdit, selectedData, closeEditor })
           />
         </div>
         <div className="BtnContainer">
-          {isEdit ? (
-            <button type="submit" className="EditBtn">
-              수정
-            </button>
-          ) : (
-            <button type="submit" className="SaveBtn">
-              저장
-            </button>
-          )}
-          <button className="CancelBtn" onClick={onCancel}>
+          <button type="submit" className="submit-btn">
+            {isEdit ? "수정" : "저장"}
+          </button>
+          <button className="cancel-btn" onClick={onCancel}>
             취소
           </button>
         </div>
@@ -195,8 +194,7 @@ const Section = styled.section`
     font-family: "Gowun Batang", serif;
   }
 
-  .SaveBtn,
-  .EditBtn {
+  .submit-btn {
     margin-right: 1rem;
     background-color: #5d8de6;
     padding: 0.5rem 2rem;
@@ -209,7 +207,7 @@ const Section = styled.section`
     cursor: pointer;
   }
 
-  .CancelBtn {
+  .cancel-btn {
     margin-right: 1rem;
     background-color: #f75c82;
     padding: 0.5rem 2rem;

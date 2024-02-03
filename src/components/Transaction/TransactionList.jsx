@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { cardStyleRealWhite } from "../../common/CardStyles";
 import { FaPen, FaTrashAlt } from "react-icons/fa";
@@ -25,11 +25,11 @@ export default function TransactionList({ data }) {
 
     const selected = {
       id: item.id,
-      type: item.amount >= 0 ? "수입" : "지출",
+      transaction_type: item.transaction_type,
       date: item.date,
       category: item.category,
       title: item.title,
-      amount: Math.abs(item.amount),
+      amount: item.amount,
       memo: item.memo,
     };
 
@@ -79,8 +79,10 @@ export default function TransactionList({ data }) {
                   </div>
                 </td>
                 <td className="memo-cell">{item.memo}</td>
-                <td className="amount-cell" style={{ color: item.amount.toString()[0] === "-" ? "#ec444c" : "green" }}>
-                  {item.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                <td className="amount-cell" style={{ color: item.transaction_type === false ? "#ec444c" : "green" }}>
+                  {item.transaction_type === false
+                    ? "-" + item.amount.toLocaleString("ko-KR")
+                    : item.amount.toLocaleString("ko-KR")}
                 </td>
                 <td className="action-cell">
                   <FaPen onClick={() => handleEdit(item.id)} />

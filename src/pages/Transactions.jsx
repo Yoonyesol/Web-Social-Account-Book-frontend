@@ -11,6 +11,7 @@ import { fetchTransactionsByUidAPI } from "../utils/api";
 export default function Transactions() {
   const transactionList = useSelector((state) => state.transactions);
   const dispatch = useDispatch();
+
   const [curDate, setCurDate] = useState(new Date());
   const [data, setData] = useState([]);
 
@@ -35,7 +36,7 @@ export default function Transactions() {
       }
     };
     fetchData();
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     if (transactionList.length >= 1) {

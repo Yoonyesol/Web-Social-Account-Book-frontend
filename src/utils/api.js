@@ -26,9 +26,10 @@ export const postTransactionAPI = async (form) => {
     const newData = {
       uid: "u1",
       date: new Date(form.date).getTime(),
+      transaction_type: form.transaction_type,
       category: form.category,
       title: form.title,
-      amount: form.type === "수입" ? form.amount : form.amount * -1,
+      amount: form.amount,
       memo: form.memo,
     };
     await axios.post("http://localhost:5000/api/transactions", newData);
@@ -42,9 +43,10 @@ export const editTransactionAPI = async (editedData) => {
   try {
     const newData = {
       date: new Date(editedData.date).getTime(),
+      transaction_type: editedData.transaction_type,
       category: editedData.category,
       title: editedData.title,
-      amount: editedData.type === "수입" ? editedData.amount : editedData.amount * -1,
+      amount: editedData.amount,
       memo: editedData.memo,
     };
     await axios.patch(`http://localhost:5000/api/transactions/${editedData.id}`, newData);

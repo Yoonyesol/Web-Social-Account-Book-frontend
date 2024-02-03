@@ -14,11 +14,11 @@ export default function TransactionPost({ data }) {
   useEffect(() => {
     if (data) {
       const totalExpense = data
-        .filter((transaction) => transaction.amount < 0)
+        .filter((transaction) => transaction.transaction_type === false)
         .reduce((total, transaction) => parseInt(total) + parseInt(transaction.amount), 0);
 
       const totalIncome = data
-        .filter((transaction) => transaction.amount > 0)
+        .filter((transaction) => transaction.transaction_type === true)
         .reduce((total, transaction) => parseInt(total) + parseInt(transaction.amount), 0);
 
       setIncome(totalIncome);
@@ -53,7 +53,6 @@ export default function TransactionPost({ data }) {
         )}
         <h2>{budget.toLocaleString("ko-KR")}원</h2>
       </div>
-
       <div className="analytic income">
         <h4>수입</h4>
         <h2>{income.toLocaleString("ko-KR")}원</h2>

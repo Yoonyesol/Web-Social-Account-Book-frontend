@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import Button from "../common/Button";
-import { signupAPI } from "../utils/userAPI";
+import { loginAPI, signupAPI } from "../utils/userAPI";
 import { useNavigate } from "react-router-dom";
+import LoadingIndicator from "../common/LoadingIndicator";
 
 export default function Auth() {
   const nav = useNavigate();
@@ -26,14 +27,24 @@ export default function Auth() {
 
   const handleAuthSubmit = async (e) => {
     e.preventDefault();
-
+    setIsLoading(true);
     if (isLoginMode) {
+      try {
+        await loginAPI(form);
+        setIsLoading(false);
+        nav("/");
+      } catch (err) {
+        setIsLoading(false);
+        console.log("API 호출 도중 에러 발생:", err.message);
+      }
     } else {
       try {
         await signupAPI(form);
+        setIsLoading(false);
         alert("회원가입에 성공했습니다!");
         nav("/");
       } catch (err) {
+        setIsLoading(false);
         console.log("API 호출 도중 에러 발생:", err.message);
       }
     }
@@ -46,6 +57,7 @@ export default function Auth() {
   return (
     <Section>
       <div className="container">
+        {isLoading && <LoadingIndicator />}
         <h1>{isLoginMode ? "로그인" : "회원가입"}</h1>
         <form onSubmit={handleAuthSubmit}>
           {!isLoginMode && (
@@ -103,13 +115,10 @@ export default function Auth() {
 }
 
 const Section = styled.section`
-  margin-left: 18vw;
-  padding: 2rem;
-  height: 100%;
-
   .container {
-    width: 50%;
-    margin: 0 auto;
+    position: relative;
+    width: 500px;
+    margin: 50px auto;
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
@@ -138,7 +147,7 @@ const Section = styled.section`
   .form-item > input {
     font-size: 15px;
     width: 100%;
-    height: 6vh;
+    height: 35px;
     font-family: "Gowun Batang", serif;
   }
 
@@ -161,10 +170,5 @@ const Section = styled.section`
   }
 
   @media screen and (min-width: 280px) and (max-width: 1080px) {
-    margin-left: 0;
-
-    .content {
-      width: 300px;
-    }
   }
 `;

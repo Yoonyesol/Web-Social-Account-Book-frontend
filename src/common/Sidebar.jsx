@@ -172,8 +172,10 @@ const Section = styled.section`
   .logout {
     padding: 0.3rem 1rem;
     border-radius: 0.6rem;
+    cursor: pointer;
     &:hover {
-      background-color: #f75c82;
+      background-color: #6369bd;
+      color: white;
     }
     a {
       text-decoration: none;

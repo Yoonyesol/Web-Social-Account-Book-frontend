@@ -9,8 +9,11 @@ import Challenge from "../pages/Challenge";
 import Community from "../pages/Community";
 import Profile from "../pages/Profile";
 import LoadingIndicator from "../common/LoadingIndicator";
+import { useSelector } from "react-redux";
 
 function AppRouter() {
+  //로그인 시 리덕스 저장소에서 사용자 정보 가져옴
+  const userInfos = useSelector((state) => state.user.userInfo);
   const [userInfo, setuserInfo] = useState({
     authenticated: false,
     currentUser: "임시",

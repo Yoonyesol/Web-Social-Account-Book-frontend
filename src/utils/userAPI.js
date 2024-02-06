@@ -30,7 +30,8 @@ export const loginAPI = async (form) => {
       email: form.email,
       password: form.password,
     };
-    await axios.post(`http://localhost:5000/api/users/login`, user);
+    const responseData = await axios.post(`http://localhost:5000/api/users/login`, user);
+    return responseData.data.userInfo;
   } catch (e) {
     console.log("HTTP request 도중 에러 발생:", e.message);
     throw e;

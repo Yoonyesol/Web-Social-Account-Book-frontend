@@ -4,9 +4,13 @@ import Button from "../common/Button";
 import { loginAPI, signupAPI } from "../utils/userAPI";
 import { useNavigate } from "react-router-dom";
 import LoadingIndicator from "../common/LoadingIndicator";
+import { useDispatch } from "react-redux";
+import { loginSuccess, setUserInfo } from "../modules/user";
 
 export default function Auth() {
   const nav = useNavigate();
+  const dispatch = useDispatch();
+
   const [isLoginMode, setIsLoginMode] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
@@ -30,7 +34,9 @@ export default function Auth() {
     setIsLoading(true);
     if (isLoginMode) {
       try {
-        await loginAPI(form);
+        const userInfo = await loginAPI(form);
+        dispatch(loginSuccess());
+        dispatch(setUserInfo(userInfo));
         setIsLoading(false);
         nav("/");
       } catch (err) {
@@ -40,6 +46,7 @@ export default function Auth() {
     } else {
       try {
         await signupAPI(form);
+        dispatch(loginSuccess());
         setIsLoading(false);
         alert("회원가입에 성공했습니다!");
         nav("/");

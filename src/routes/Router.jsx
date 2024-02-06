@@ -13,31 +13,27 @@ import { useSelector } from "react-redux";
 
 function AppRouter() {
   //로그인 시 리덕스 저장소에서 사용자 정보 가져옴
-  const userInfos = useSelector((state) => state.user.userInfo);
-  const [userInfo, setuserInfo] = useState({
-    authenticated: false,
-    currentUser: "임시",
-    loading: false,
-  });
+  const userInfo = useSelector((state) => state.user.userInfo);
+  const loggedIn = useSelector((state) => state.user.isLoggedIn);
 
-  if (userInfo.loading) {
+  if (userInfo === null && loggedIn) {
     return <LoadingIndicator />;
   }
 
   return (
     <div>
       <Router>
-        <Sidebar userInfo={userInfo} />
+        <Sidebar />
         <Routes>
-          <Route exact path="/" element={<Dashboard userInfo={userInfo} />} />
-          <Route path="/authenticate" element={<Auth userInfo={userInfo} />} />
+          <Route exact path="/" element={<Dashboard />} />
+          <Route path="/authenticate" element={<Auth />} />
           <Route path="/calendar" element={<Calendar />} />
           <Route path="/transactions" element={<Transactions />} />
-          <Route path="/challenge" element={<Challenge userInfo={userInfo.currentUser} />} />
-          <Route path="/community" element={<Community userInfo={userInfo.currentUser} />} />
-          <Route path="/community/new" element={<Community userInfo={userInfo.currentUser} />} />
-          <Route path="/community/:cid" element={<Community userInfo={userInfo.currentUser} />} />
-          <Route path="/profile" element={<Profile userInfo={userInfo.currentUser} />} />
+          <Route path="/challenge" element={<Challenge />} />
+          <Route path="/community" element={<Community />} />
+          <Route path="/community/new" element={<Community />} />
+          <Route path="/community/:cid" element={<Community />} />
+          <Route path="/profile" element={<Profile />} />
         </Routes>
       </Router>
     </div>

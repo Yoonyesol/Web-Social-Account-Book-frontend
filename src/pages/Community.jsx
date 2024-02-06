@@ -2,10 +2,10 @@ import React from "react";
 import styled from "styled-components";
 import CommunityBoard from "../components/Community/CommunityBoard";
 
-export default function CommunityPage({ userInfo }) {
+export default function CommunityPage() {
   return (
     <Section>
-      <CommunityBoard user={userInfo} />
+      <CommunityBoard />
     </Section>
   );
 }

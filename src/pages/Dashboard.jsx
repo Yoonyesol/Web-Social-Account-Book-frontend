@@ -8,7 +8,7 @@ import CategoryExpense from "../components/Dashboard/CategoryExpense";
 import scrollreveal from "scrollreveal";
 import ChallengeCard from "../components/Dashboard/ChallengeCard";
 
-export default function Dashboard({ userInfo }) {
+export default function Dashboard() {
   useEffect(() => {
     const sr = scrollreveal({
       origin: "bottom",
@@ -29,7 +29,7 @@ export default function Dashboard({ userInfo }) {
   }, []);
   return (
     <Section>
-      <Navbar user={userInfo} />
+      <Navbar />
       <div className="grid">
         <div className="row__one">
           <Analytics />
@@ -38,7 +38,7 @@ export default function Dashboard({ userInfo }) {
         <div className="row__two">
           <EarningPieChart />
           <ChallengeCard />
-          <Profile user={userInfo} />
+          <Profile />
         </div>
       </div>
     </Section>

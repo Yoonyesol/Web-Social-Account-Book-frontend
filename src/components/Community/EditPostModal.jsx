@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 
-const EditPostModal = ({ selectedData, handleCancel, handleEditSubmit, userInfo }) => {
+const EditPostModal = ({ selectedData, handleCancel, handleEditSubmit }) => {
+  const userInfo = useSelector((state) => state.user.userInfo);
   //상위 컴포넌트에서 가져온 데이터 set
   const [edited, setEdited] = useState(selectedData);
 

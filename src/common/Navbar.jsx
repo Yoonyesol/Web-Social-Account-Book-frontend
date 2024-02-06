@@ -1,11 +1,14 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 
-export default function Navbar({ user }) {
+export default function Navbar() {
+  const userInfo = useSelector((state) => state.user.userInfo);
   return (
     <Nav>
+      {console.log(userInfo)}
       <div className="title">
-        <h4>hello {user.currentUser.name}</h4>
+        <h4>hello {userInfo.name}</h4>
         <h1>
           Welcome to <span>CASH DASHBOARD</span>
         </h1>

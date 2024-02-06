@@ -1,21 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { BsPhone } from "react-icons/bs";
 import { AiOutlineMail } from "react-icons/ai";
 import { MdPermIdentity } from "react-icons/md";
+import { useSelector } from "react-redux";
 
-export default function SettingPage({ userInfo }) {
-  const [user, setUser] = useState([]);
-
-  // useEffect(() => {
-  //   getCurrentUser()
-  //     .then((response) => {
-  //       setUser({
-  //         currentUser: response,
-  //       });
-  //     })
-  //     .catch((err) => console.log(err));
-  // }, []);
+export default function SettingPage() {
+  const userInfo = useSelector((state) => state.user.userInfo);
 
   return (
     <Section>
@@ -28,11 +19,11 @@ export default function SettingPage({ userInfo }) {
         <div className="userContainer">
           <div className="userShow">
             <div className="userShowTop">
-              {userInfo.imageUrl ? (
-                <img className="userShowImg" src={userInfo.imageUrl} alt={userInfo.name} />
+              {userInfo.image ? (
+                <img className="userShowImg" src={userInfo.image} alt={userInfo.name} />
               ) : (
                 <div className="text-avatar">
-                  <span>{userInfo.name && userInfo.name[0]}</span>
+                  <span>{userInfo.name}</span>
                 </div>
               )}
 

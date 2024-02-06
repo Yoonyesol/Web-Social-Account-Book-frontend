@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-const MsgCard = ({ item, i }) => {
+const MsgCard = ({ item }) => {
   return (
     <Card>
       <Nickname>{item.nickname}</Nickname>

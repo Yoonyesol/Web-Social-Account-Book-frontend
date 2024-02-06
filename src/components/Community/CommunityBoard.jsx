@@ -7,8 +7,10 @@ import Pagination from "./Pagination";
 import { AiFillFolderOpen } from "react-icons/ai";
 import { FaTrashAlt } from "react-icons/fa";
 import EditPostModal from "./EditPostModal";
+import { useSelector } from "react-redux";
 
-export default function CommunityBoard({ user }) {
+export default function CommunityBoard() {
+  const userInfo = useSelector((state) => state.user.userInfo);
   const [board, setBoard] = useState(dummy);
   const [currentPage, setCurrentPage] = useState(1); //현재 페이지수
   const [postsPerPage] = useState(10); //한 페이지당 게시물 수
@@ -60,7 +62,7 @@ export default function CommunityBoard({ user }) {
         item.concat({
           id: nextId.current,
           title: data.title,
-          author: user.name,
+          author: userInfo.name,
           content: data.content,
           LastModifiedDate: setDate(),
         }),
@@ -132,15 +134,10 @@ export default function CommunityBoard({ user }) {
           </tbody>
         </table>
         <Pagination postsPerPage={postsPerPage} totalPosts={board.length} paginate={setCurrentPage}></Pagination>
-        <Post onSaveData={handleSave} userInfo={user} />
+        <Post onSaveData={handleSave} />
         {modalOn && (
           <Modal visible={modalOn} closable={true} maskClosable={false} onClose={handleCancel}>
-            <EditPostModal
-              selectedData={selected}
-              handleCancel={handleCancel}
-              handleEditSubmit={handleEditSubmit}
-              userInfo={user}
-            />
+            <EditPostModal selectedData={selected} handleCancel={handleCancel} handleEditSubmit={handleEditSubmit} />
           </Modal>
         )}
       </div>

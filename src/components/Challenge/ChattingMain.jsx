@@ -2,11 +2,11 @@ import React from "react";
 import styled from "styled-components";
 import ChattingList from "./ChattingList";
 import ChattingView from "./ChattingView";
-export default function ChattingMain({ user }) {
+export default function ChattingMain() {
   return (
     <Section>
       <ChattingList />
-      <ChattingView userInfo={user} />
+      <ChattingView />
     </Section>
   );
 }

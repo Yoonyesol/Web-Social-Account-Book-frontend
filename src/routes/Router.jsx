@@ -23,10 +23,9 @@ function AppRouter() {
   return (
     <div>
       <Router>
-        <Sidebar />
+        {loggedIn && <Sidebar />}
         <Routes>
-          <Route exact path="/" element={<Dashboard />} />
-          <Route path="/authenticate" element={<Auth />} />
+          <Route exact path="/" element={loggedIn ? <Dashboard /> : <Auth />} />
           <Route path="/calendar" element={<Calendar />} />
           <Route path="/transactions" element={<Transactions />} />
           <Route path="/challenge" element={<Challenge />} />

@@ -6,7 +6,6 @@ export default function Navbar() {
   const userInfo = useSelector((state) => state.user.userInfo);
   return (
     <Nav>
-      {console.log(userInfo)}
       <div className="title">
         <h4>hello {userInfo.name}</h4>
         <h1>

@@ -8,7 +8,7 @@ import scrollreveal from "scrollreveal";
 import MenuList from "./MenuList";
 import { Link } from "react-router-dom";
 
-export default function Sidebar({ userInfo, logoutAction }) {
+export default function Sidebar({ logoutAction }) {
   const [navbarState, setNavbarState] = useState(false);
   const html = document.querySelector("html");
   html.addEventListener("click", () => setNavbarState(false));

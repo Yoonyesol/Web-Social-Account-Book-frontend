@@ -13,7 +13,7 @@ export default function Auth() {
 
   const [isLoginMode, setIsLoginMode] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState();
+  const [error, setError] = useState(null);
 
   const [form, setForm] = useState({
     name: "",
@@ -32,33 +32,28 @@ export default function Auth() {
   const handleAuthSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    if (isLoginMode) {
-      try {
+    try {
+      if (isLoginMode) {
         const userInfo = await loginAPI(form);
         dispatch(loginSuccess());
         dispatch(setUserInfo(userInfo));
-        setIsLoading(false);
-        nav("/");
-      } catch (err) {
-        setIsLoading(false);
-        console.log("API 호출 도중 에러 발생:", err.message);
-      }
-    } else {
-      try {
+      } else {
         await signupAPI(form);
         dispatch(loginSuccess());
-        setIsLoading(false);
         alert("회원가입에 성공했습니다!");
-        nav("/");
-      } catch (err) {
-        setIsLoading(false);
-        console.log("API 호출 도중 에러 발생:", err.message);
       }
+      setIsLoading(false);
+      setError(null);
+      nav("/");
+    } catch (err) {
+      setIsLoading(false);
+      setError(err.message || "회원가입 진행 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.");
     }
   };
 
   const switchModeHandler = () => {
     setIsLoginMode((prevMode) => !prevMode);
+    setError(null);
   };
 
   return (
@@ -66,6 +61,7 @@ export default function Auth() {
       <div className="container">
         {isLoading && <LoadingIndicator />}
         <h1>{isLoginMode ? "로그인" : "회원가입"}</h1>
+        {error && <ErrorMessage>{error}</ErrorMessage>}
         <form onSubmit={handleAuthSubmit}>
           {!isLoginMode && (
             <div className="form-field">
@@ -102,6 +98,7 @@ export default function Auth() {
                 type="password"
                 name="password"
                 placeholder="비밀번호"
+                minLength={6}
                 value={form.password}
                 onChange={handleInputChange}
                 required
@@ -178,4 +175,9 @@ const Section = styled.section`
 
   @media screen and (min-width: 280px) and (max-width: 1080px) {
   }
+`;
+
+const ErrorMessage = styled.div`
+  color: red;
+  margin-bottom: 10px;
 `;

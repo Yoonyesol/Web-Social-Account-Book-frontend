@@ -24,7 +24,7 @@ export const fetchTransactionsByUidAPI = async (uid) => {
 export const postTransactionAPI = async (form) => {
   try {
     const newData = {
-      uid: "u1",
+      uid: form.uid,
       date: new Date(form.date).getTime(),
       transaction_type: form.transaction_type,
       category: form.category,

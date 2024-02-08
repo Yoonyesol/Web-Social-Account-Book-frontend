@@ -10,6 +10,7 @@ import { fetchTransactionsByUidAPI } from "../utils/api";
 
 export default function Transactions() {
   const transactionList = useSelector((state) => state.transactions);
+  const userInfo = useSelector((state) => state.user.userInfo);
   const dispatch = useDispatch();
 
   const [curDate, setCurDate] = useState(new Date());
@@ -27,7 +28,7 @@ export default function Transactions() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const uid = "u1";
+      const uid = userInfo._id;
       try {
         const transactions = await fetchTransactionsByUidAPI(uid);
         dispatch(getTransactions(transactions));
@@ -36,7 +37,7 @@ export default function Transactions() {
       }
     };
     fetchData();
-  }, [dispatch]);
+  }, [dispatch, userInfo]);
 
   useEffect(() => {
     if (transactionList.length >= 1) {

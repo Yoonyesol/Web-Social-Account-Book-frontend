@@ -2,12 +2,15 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { editTransactionAPI, postTransactionAPI } from "../../utils/api";
 import { addTransaction, editTransaction } from "../../modules/transactions";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function TransactionEditor({ isEdit, selectedData, closeEditor }) {
   const dispatch = useDispatch();
+  const userId = useSelector((state) => state.user.userInfo._id);
+
   //추가
   const [form, setForm] = useState({
+    uid: userId,
     transaction_type: false,
     category: "",
     title: "",

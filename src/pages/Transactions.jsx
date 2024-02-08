@@ -9,7 +9,7 @@ import { getTransactions } from "../modules/transactions";
 import { fetchTransactionsByUidAPI } from "../utils/api";
 
 export default function Transactions() {
-  const transactionList = useSelector((state) => state.transactions);
+  const transactionList = useSelector((state) => state.transactions.transactions);
   const userInfo = useSelector((state) => state.user.userInfo);
   const dispatch = useDispatch();
 

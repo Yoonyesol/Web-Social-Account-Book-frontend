@@ -9,7 +9,7 @@ export default function Button({ text, type, onClick, color }) {
 }
 
 const CustomButton = styled.button`
-  padding: 0.5rem 2rem;
+  padding: 0.5rem 1.5rem;
   font-size: 1rem;
   font-family: "Gowun Batang", serif;
   border-radius: 0.5rem;
@@ -27,6 +27,10 @@ const CustomButton = styled.button`
         return `background-color: rgb(223, 221, 221); color: black`;
       case "red":
         return `background-color: #f75c82; color: white`;
+      case "red-black":
+        return `background-color: #f75c82; color: black`;
+      case `purple`:
+        return `background-color: #bfa5fa; color: black`;
       default:
         return `background-color: #5d8de6; color: white`;
     }

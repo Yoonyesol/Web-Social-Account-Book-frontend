@@ -1,28 +1,26 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 import Modal from "../common/Modal";
-import { dummy } from "../components/Community/dummy";
 import Pagination from "../components/Community/Pagination";
-import { FaTrashAlt } from "react-icons/fa";
 import EditPostModal from "../components/Community/ContentView";
 import { useSelector } from "react-redux";
 import Button from "../common/Button";
 import { useNavigate } from "react-router-dom";
+import { fetchAllPostsAPI } from "../utils/communityAPI";
+import LoadingIndicator from "../common/LoadingIndicator";
+import { setDate } from "../constants/constant";
 
 export default function Community() {
   const userInfo = useSelector((state) => state.user.userInfo);
+  const nav = useNavigate();
+  const nextId = useRef(11);
+
   const [isEdit, setIsEdit] = useState(false);
-  const [board, setBoard] = useState(dummy);
+  const [board, setBoard] = useState([]);
   const [currentPage, setCurrentPage] = useState(1); //현재 페이지수
   const [postsPerPage] = useState(10); //한 페이지당 게시물 수
   const [selected, setSelected] = useState("");
   const [modalOn, setModalOn] = useState(false);
-
-  const nav = useNavigate();
-
-  // 고유 값으로 사용 될 id
-  // ref 를 사용하여 변수 담기
-  const nextId = useRef(11);
 
   //페이지 이동
   const indexOfLast = currentPage * postsPerPage;
@@ -34,13 +32,21 @@ export default function Community() {
     return currentPosts;
   }
 
-  const setDate = () => {
-    let today = new Date();
-    let year = today.getFullYear();
-    let month = ("0" + (today.getMonth() + 1)).slice(-2);
-    let day = ("0" + today.getDate()).slice(-2);
-    return year + "." + month + "." + day;
-  };
+  useEffect(() => {
+    const fetchAllPosts = async () => {
+      try {
+        const posts = await fetchAllPostsAPI();
+        setBoard(posts);
+      } catch (error) {
+        console.log("API 호출 도중 에러 발생:", error.message);
+      }
+    };
+    fetchAllPosts();
+  }, []);
+
+  if (board.length === 0) {
+    return <LoadingIndicator />;
+  }
 
   const handleSave = (data) => {
     //데이터 수정
@@ -54,7 +60,7 @@ export default function Community() {
                 title: data.title,
                 writer: data.writer,
                 content: data.content,
-                date: setDate(),
+                date: data.date,
               }
             : row,
         ),
@@ -67,7 +73,7 @@ export default function Community() {
           title: data.title,
           writer: userInfo.name,
           content: data.content,
-          date: setDate(),
+          date: data.date,
         }),
       );
       nextId.current += 1;
@@ -119,24 +125,20 @@ export default function Community() {
               <th>조회</th>
               <th>공감</th>
               <th>작성일</th>
-              {/* <th>삭제</th> */}
             </tr>
           </thead>
           <tbody>
             {board.map((item, idx) => (
-              <tr key={item.id}>
+              <tr key={item._id}>
                 <td className="td-idx">{idx}</td>
                 <td className="td-category">{item.category}</td>
                 <td className="td-title" onClick={() => nav(`/community/${item.id}`)}>
                   {item.title}
                 </td>
-                <td className="td-writer">{item.writer}</td>
+                <td className="td-writer">{item.writer.name}</td>
                 <td className="td-hit">{item.hit}</td>
-                <td className="td-like">{item.like}</td>
-                <td className="td-date">{item.date}</td>
-                {/* <td>
-                  <FaTrashAlt onClick={() => handleRemove(item.id)} />
-                </td> */}
+                <td className="td-like">{item.like.length}</td>
+                <td className="td-date">{setDate(item.date, false)}</td>
               </tr>
             ))}
           </tbody>

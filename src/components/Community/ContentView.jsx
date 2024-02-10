@@ -4,17 +4,32 @@ import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { dummy } from "./dummy";
 import Button from "../../common/Button";
+import LoadingIndicator from "../../common/LoadingIndicator";
+import { fetchPostByCidAPI } from "../../utils/communityAPI";
+import { setDate } from "../../constants/constant";
 
 const ContentView = () => {
-  const userInfo = useSelector((state) => state.user.userInfo);
   const params = useParams();
   const nav = useNavigate();
-  const [selectedPost, setSelectedPost] = useState([]);
+  const userInfo = useSelector((state) => state.user.userInfo);
+
+  const [selectedPost, setSelectedPost] = useState();
 
   useEffect(() => {
-    const foundItem = dummy.find((item) => item.id === params.cid);
-    setSelectedPost(foundItem);
-  }, [params]);
+    const fetchPostByCid = async () => {
+      try {
+        const post = await fetchPostByCidAPI(params.cid);
+        setSelectedPost(post);
+      } catch (error) {
+        console.log("API 호출 도중 에러 발생:", error.message);
+      }
+    };
+    fetchPostByCid();
+  }, [params.cid]);
+
+  if (!selectedPost) {
+    return <LoadingIndicator />;
+  }
 
   return (
     <Section>
@@ -28,12 +43,12 @@ const ContentView = () => {
           </div>
           <div className="user-info">
             <p className="writer">
-              <b>{selectedPost.writer}</b>
+              <b>{selectedPost.writer.name}</b>
             </p>
-            <p className="date">작성일: {selectedPost.date} </p>
+            <p className="date">작성일: {setDate(selectedPost.date, true)} </p>
             <div style={{ margin: "10px" }}></div>
             <p className="content-info">
-              공감 {selectedPost.like} | 조회 {selectedPost.hit}
+              공감 {selectedPost.like.length} | 조회 {selectedPost.hit}
             </p>
           </div>
         </div>

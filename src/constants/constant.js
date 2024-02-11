@@ -1,3 +1,4 @@
+/* Community */
 export const categoryOption = [
   { value: "자유", name: "자유" },
   { value: "알뜰팁", name: "알뜰팁" },
@@ -6,4 +7,12 @@ export const categoryOption = [
   { value: "포인트적립", name: "포인트적립" },
   { value: "거래", name: "거래" },
   { value: "이벤트", name: "이벤트" },
+];
+
+/* Transaction */
+export const day = ["일", "월", "화", "수", "목", "금", "토"];
+
+export const sortOption = [
+  { value: "latest", name: "최신순" },
+  { value: "oldest", name: "과거순" },
 ];

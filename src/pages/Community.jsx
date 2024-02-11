@@ -1,26 +1,17 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import Modal from "../common/Modal";
-import Pagination from "../components/Community/Pagination";
-import EditPostModal from "../components/Community/ContentView";
-import { useSelector } from "react-redux";
-import Button from "../common/Button";
 import { useNavigate } from "react-router-dom";
+import Pagination from "../components/Community/Pagination";
 import { fetchAllPostsAPI } from "../utils/communityAPI";
+import Button from "../common/Button";
 import LoadingIndicator from "../common/LoadingIndicator";
 import { setDate } from "../constants/function";
 
 export default function Community() {
-  const userInfo = useSelector((state) => state.user.userInfo);
   const nav = useNavigate();
-  const nextId = useRef(11);
-
-  const [isEdit, setIsEdit] = useState(false);
   const [board, setBoard] = useState([]);
   const [currentPage, setCurrentPage] = useState(1); //현재 페이지수
   const [postsPerPage] = useState(10); //한 페이지당 게시물 수
-  const [selected, setSelected] = useState("");
-  const [modalOn, setModalOn] = useState(false);
 
   //페이지 이동
   const indexOfLast = currentPage * postsPerPage;
@@ -48,45 +39,6 @@ export default function Community() {
     return <LoadingIndicator />;
   }
 
-  const handleSave = (data) => {
-    //데이터 수정
-    if (data.id) {
-      //수정데이터에는 id존재
-      setBoard(
-        board.map((row) =>
-          data.id === row.id
-            ? {
-                id: data.id,
-                title: data.title,
-                writer: data.writer,
-                content: data.content,
-                date: data.date,
-              }
-            : row,
-        ),
-      );
-    } else {
-      //id 존재하지 않을 시, 데이터 추가
-      setBoard((item) =>
-        item.concat({
-          id: nextId.current,
-          title: data.title,
-          writer: userInfo.name,
-          content: data.content,
-          date: data.date,
-        }),
-      );
-      nextId.current += 1;
-    }
-  };
-
-  const handleRemove = (id) => {
-    if (window.confirm("글을 삭제하시겠습니까?")) {
-      setBoard((info) => info.filter((item) => item.id !== id));
-      alert("삭제 완료");
-    }
-  };
-
   const handlePostDetail = (item) => {
     nav(`/community/${item.id}`, {
       state: {
@@ -101,15 +53,6 @@ export default function Community() {
       },
     });
   };
-
-  const handleEditSubmit = (item) => {
-    handleSave(item);
-    setModalOn(false);
-  };
-
-  function handleCancel() {
-    setModalOn(false);
-  }
 
   return (
     <Section>
@@ -147,11 +90,6 @@ export default function Community() {
           </tbody>
         </table>
         <Pagination postsPerPage={postsPerPage} totalPosts={board.length} paginate={setCurrentPage}></Pagination>
-        {modalOn && (
-          <Modal visible={modalOn} closable={true} maskClosable={false} onClose={handleCancel}>
-            <EditPostModal selectedData={selected} handleCancel={handleCancel} handleEditSubmit={handleEditSubmit} />
-          </Modal>
-        )}
       </div>
     </Section>
   );

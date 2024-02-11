@@ -11,13 +11,14 @@ export const setDate = (dateString, view) => {
   const hours = date.getHours();
   const minutes = date.getMinutes();
 
-  //postView인 경우(상세보기)
+  // postView인 경우(상세보기)
   if (view) {
     return `${year}.${month < 10 ? "0" : ""}${month}.${day < 10 ? "0" : ""}${day} (${hours}:${
       minutes < 10 ? "0" : ""
     }${minutes})`;
   }
 
+  // 커뮤니티 목록
   // 오늘인 경우 시간을 반환
   if (isToday) {
     return `${hours}:${minutes < 10 ? "0" : ""}${minutes}`;

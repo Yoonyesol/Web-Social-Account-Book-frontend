@@ -9,8 +9,7 @@ import { deleteTransactionAPI } from "../../utils/api";
 import { useDispatch } from "react-redux";
 import { removeTransaction } from "../../modules/transactions";
 import ControlOption from "../../common/ControlOption";
-
-const day = ["일", "월", "화", "수", "목", "금", "토"];
+import { day, sortOption } from "../../constants/constant";
 
 export default function TransactionList({ data }) {
   const dispatch = useDispatch();
@@ -18,11 +17,6 @@ export default function TransactionList({ data }) {
   const [openEditor, setOpenEditor] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [sortType, setSortType] = useState("latest");
-
-  const sortOption = [
-    { value: "latest", name: "최신순" },
-    { value: "oldest", name: "과거순" },
-  ];
 
   const handleEdit = (id) => {
     setIsEdit(true);

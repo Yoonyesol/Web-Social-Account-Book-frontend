@@ -17,8 +17,9 @@ const ContentView = () => {
   }
 
   const handleEditPost = (item) => {
-    nav(`/community/edit/${item.id}`, {
+    nav(`/community/${item.id}/edit`, {
       state: {
+        id: item.id,
         category: item.category,
         title: item.title,
         writer: item.writer,
@@ -56,9 +57,9 @@ const ContentView = () => {
           </div>
         </div>
         <div className="btn-container">
-          {/* {userInfo.name === selectedPost.writer && ( */}
-          <Button text="수정" type="button" onClick={() => handleEditPost(selectedPost)} />
-          {/* )} */}
+          {userInfo._id === selectedPost.writer.uid && (
+            <Button text="수정" type="button" onClick={() => handleEditPost(selectedPost)} />
+          )}
           <Button text="목록" type="button" color="grey" onClick={() => nav(-1)} />
         </div>
       </div>

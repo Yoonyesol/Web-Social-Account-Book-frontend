@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { editTransactionAPI, postTransactionAPI } from "../../utils/api";
 import { addTransaction, editTransaction } from "../../modules/transactions";
 import { useDispatch, useSelector } from "react-redux";
+import Button from "../../common/Button";
 
 export default function TransactionEditor({ isEdit, selectedData, closeEditor }) {
   const dispatch = useDispatch();
@@ -163,13 +164,9 @@ export default function TransactionEditor({ isEdit, selectedData, closeEditor })
             onChange={isEdit ? onEditChange : handleChange}
           />
         </div>
-        <div className="BtnContainer">
-          <button type="submit" className="submit-btn">
-            {isEdit ? "수정" : "저장"}
-          </button>
-          <button className="cancel-btn" onClick={onCancel}>
-            취소
-          </button>
+        <div className="btn-container">
+          <Button type="submit" text={isEdit ? "수정" : "저장"} />
+          <Button type="button" onClick={onCancel} text="취소" color="red" />
         </div>
       </form>
     </Section>
@@ -185,41 +182,28 @@ const Section = styled.section`
   }
 
   .formItem > label {
-    margin-bottom: 5px;
-    font-size: 20px;
+    margin-bottom: 8px;
+    font-weight: bold;
+    font-size: 17px;
     font-family: "Gowun Batang", serif;
   }
 
   .formInput,
   .formItem > textarea[type="text"] {
-    font-size: 17px;
-    font-weight: 500;
-    font-family: "Gowun Batang", serif;
+    font-size: 14px;
+    padding: 0.25rem;
   }
 
-  .submit-btn {
-    margin-right: 1rem;
-    background-color: #5d8de6;
-    padding: 0.5rem 2rem;
-    font-size: 1rem;
-    font-family: "Gowun Batang", serif;
-    color: white;
-    border-radius: 0.5rem;
-    border: 0;
-    outline: 0;
-    cursor: pointer;
+  .formItem > input[type="date"] {
+    font-family: "Montserrat", sans-serif;
+    padding: 0.1rem;
   }
 
-  .cancel-btn {
-    margin-right: 1rem;
-    background-color: #f75c82;
-    padding: 0.5rem 2rem;
-    font-size: 1rem;
-    font-family: "Gowun Batang", serif;
-    color: white;
-    border-radius: 0.5rem;
-    border: 0;
-    outline: 0;
-    cursor: pointer;
+  .btn-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
   }
 `;

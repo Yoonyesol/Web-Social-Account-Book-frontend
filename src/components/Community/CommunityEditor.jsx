@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import Button from "../../common/Button";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import ControlOption from "../../common/ControlOption";
 import { categoryOption } from "../../constants/constant";
@@ -11,8 +11,10 @@ import LoadingIndicator from "../../common/LoadingIndicator";
 
 const CommunityEditor = () => {
   const nav = useNavigate();
+  const params = useParams();
   const location = useLocation();
   const userInfo = useSelector((state) => state.user.userInfo);
+
   const [isEdit, setIsEdit] = useState(location.state === null ? false : true);
   const [isLoading, setIsLoading] = useState(false);
   const [editedData, setEditedData] = useState({ ...location.state });
@@ -52,6 +54,7 @@ const CommunityEditor = () => {
       setIsLoading(false);
       alert("저장되었습니다!");
       nav(-1, { replace: true });
+      //nav(`/community/${item.id}`, { replace: true });
     } catch (error) {
       setIsLoading(false);
       console.log("post 진행 중 오류가 발생했습니다.", error.message);
@@ -120,13 +123,13 @@ const CommunityEditor = () => {
             />
           </div>
           {!isEdit && (
-            <div className="btnContainer">
+            <div className="btn-container">
               <Button type="submit" text="작성" />
               <Button type="button" onClick={() => nav(-1, { replace: true })} text="목록" color="red" />
             </div>
           )}
           {isEdit && (
-            <div className="BtnContainer">
+            <div className="btn-container">
               <Button type="submit" text="수정" onClick={onSubmitEdit} />
               <Button type="button" onClick={() => nav(-1, { replace: true })} text="취소" color="red" />
             </div>
@@ -173,8 +176,8 @@ const Section = styled.section`
 
   .formItem > input,
   .formItem > textarea {
-    font-size: 15px;
-    font-family: "Gowun Batang", serif;
+    font-size: 14px;
+    padding: 0.5rem;
   }
 
   .formInput {
@@ -184,15 +187,17 @@ const Section = styled.section`
   }
 
   .formArea {
+    font-family: "Montserrat", sans-serif;
     width: 35vw;
     height: 400px;
     border-radius: 0.25rem;
   }
 
-  .btnContainer {
-    float: right;
+  .btn-container {
     display: flex;
     flex-direction: row;
+    justify-content: center;
+    align-items: center;
     gap: 10px;
   }
 

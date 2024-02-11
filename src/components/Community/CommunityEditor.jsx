@@ -1,24 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Button from "../../common/Button";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import ControlOption from "../../common/ControlOption";
 import { categoryOption } from "../../constants/constant";
-import { createPostAPI } from "../../utils/communityAPI";
+import { createPostAPI, updatePostAPI } from "../../utils/communityAPI";
 import { setDate } from "../../constants/function";
 import LoadingIndicator from "../../common/LoadingIndicator";
 
 const CommunityEditor = () => {
   const nav = useNavigate();
-  const params = useParams();
   const location = useLocation();
   const userInfo = useSelector((state) => state.user.userInfo);
 
   const [isEdit, setIsEdit] = useState(location.state === null ? false : true);
   const [isLoading, setIsLoading] = useState(false);
   const [editedData, setEditedData] = useState({ ...location.state });
-  const [selectedCategory, setSelectedCategory] = useState(categoryOption[0].value);
+  const [selectedCategory, setSelectedCategory] = useState(
+    location.state === null ? categoryOption[0].value : location.state.category,
+  );
 
   const [form, setForm] = useState({
     title: "",
@@ -29,11 +30,10 @@ const CommunityEditor = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    if (isEdit === true) {
+    if (isEdit) {
       setEditedData({
         ...editedData,
         [name]: value,
-        writer: userInfo._id,
         category: selectedCategory,
       });
     } else {
@@ -46,33 +46,45 @@ const CommunityEditor = () => {
     }
   };
 
+  useEffect(() => {
+    setEditedData((prevForm) => ({
+      ...prevForm,
+      category: selectedCategory,
+    }));
+  }, [selectedCategory]);
+
   const onSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    try {
-      await createPostAPI(form);
-      setIsLoading(false);
-      alert("저장되었습니다!");
-      nav(-1, { replace: true });
-      //nav(`/community/${item.id}`, { replace: true });
-    } catch (error) {
-      setIsLoading(false);
-      console.log("post 진행 중 오류가 발생했습니다.", error.message);
-    }
-  };
-
-  const onSubmitEdit = (e) => {
-    e.preventDefault();
-    if (editedData.writer.id === userInfo._id) {
-      alert("수정되었습니다!");
-      // handleEditSubmit(editedData);
+    if (!isEdit) {
+      try {
+        const post = await createPostAPI(form);
+        setIsLoading(false);
+        alert("저장되었습니다!");
+        nav(`/community/${post._id}`, {
+          replace: true,
+        });
+      } catch (error) {
+        setIsLoading(false);
+        console.log("post 진행 중 오류가 발생했습니다.", error.message);
+      }
     } else {
-      alert("수정권한이 없습니다!");
+      try {
+        await updatePostAPI(editedData);
+        setIsLoading(false);
+        alert("수정되었습니다!");
+        nav(`/community/${editedData.id}`, { replace: true });
+      } catch (error) {
+        setIsLoading(false);
+        console.log("update 진행 중 오류가 발생했습니다.", error.message);
+      }
     }
   };
 
   return (
     <Section>
+      {console.log(selectedCategory)}
+      {console.log(editedData)}
       {isLoading && <LoadingIndicator />}
       <div className="container">
         <h3>{isEdit ? "글 수정" : "게시글 등록"}</h3>
@@ -99,15 +111,8 @@ const CommunityEditor = () => {
           </div>
           {isEdit && (
             <div class="formItem">
-              <label className="date">최종 수정일 </label>
-              <input
-                className="formInput"
-                type="text"
-                name="date"
-                value={setDate(new Date(), true)}
-                onChange={handleChange}
-                disabled
-              />
+              <label className="date">작성일</label>
+              {setDate(new Date(), true)}
             </div>
           )}
           <div className="formItem">
@@ -130,7 +135,7 @@ const CommunityEditor = () => {
           )}
           {isEdit && (
             <div className="btn-container">
-              <Button type="submit" text="수정" onClick={onSubmitEdit} />
+              <Button type="submit" text="수정" />
               <Button type="button" onClick={() => nav(-1, { replace: true })} text="취소" color="red" />
             </div>
           )}

@@ -1,16 +1,29 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import Button from "../../common/Button";
 import LoadingIndicator from "../../common/LoadingIndicator";
 import { setDate } from "../../constants/function";
+import { fetchPostByCidAPI } from "../../utils/communityAPI";
 
 const ContentView = () => {
-  const location = useLocation();
   const nav = useNavigate();
+  const params = useParams();
   const userInfo = useSelector((state) => state.user.userInfo);
-  const [selectedPost, setSelectedPost] = useState({ ...location.state });
+  const [selectedPost, setSelectedPost] = useState();
+
+  useEffect(() => {
+    const fetchPostByCid = async () => {
+      try {
+        const post = await fetchPostByCidAPI(params.cid);
+        setSelectedPost(post);
+      } catch (error) {
+        console.log("API 호출 도중 에러 발생:", error.message);
+      }
+    };
+    fetchPostByCid();
+  }, [params.cid]);
 
   if (!selectedPost) {
     return <LoadingIndicator />;
@@ -60,7 +73,7 @@ const ContentView = () => {
           {userInfo._id === selectedPost.writer.uid && (
             <Button text="수정" type="button" onClick={() => handleEditPost(selectedPost)} />
           )}
-          <Button text="목록" type="button" color="grey" onClick={() => nav(-1)} />
+          <Button text="목록" type="button" color="grey" onClick={() => nav("/community")} />
         </div>
       </div>
       <div className="comment-count">댓글 | 총 3개</div>

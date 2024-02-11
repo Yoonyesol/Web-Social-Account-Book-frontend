@@ -41,17 +41,7 @@ export default function Community() {
 
   const handlePostDetail = (item) => {
     nav(`/community/${item.id}`, {
-      state: {
-        id: item.id,
-        category: item.category,
-        title: item.title,
-        writer: item.writer,
-        content: item.content,
-        date: item.date,
-        hit: item.hit,
-        like: item.like,
-        comments: item.comments,
-      },
+      replace: true,
     });
   };
 

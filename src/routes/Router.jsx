@@ -34,6 +34,7 @@ function AppRouter() {
           <Route path="/community" element={<Community />} />
           <Route path="/community/new" element={<CommunityEditor />} />
           <Route path="/community/:cid" element={<ContentView />} />
+          <Route path="/community/edit/:cid" element={<CommunityEditor />} />
           <Route path="/profile" element={<Profile />} />
         </Routes>
       </Router>

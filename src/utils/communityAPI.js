@@ -50,6 +50,7 @@ export const createPostAPI = async (form) => {
     const newData = {
       writer: form.writer,
       date: new Date(form.date).getTime(),
+      title: form.title,
       category: form.category,
       content: form.content,
     };

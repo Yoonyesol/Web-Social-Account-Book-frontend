@@ -1,53 +1,68 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import Button from "../../common/Button";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import ControlOption from "../../common/ControlOption";
+import { categoryOption } from "../../constants/constant";
+import { createPostAPI } from "../../utils/communityAPI";
+import { setDate } from "../../constants/function";
+import LoadingIndicator from "../../common/LoadingIndicator";
 
-const CommunityEditor = ({ isEdit, onSaveData, selectedData, handleCancel, handleEditSubmit }) => {
+const CommunityEditor = () => {
   const nav = useNavigate();
+  const location = useLocation();
   const userInfo = useSelector((state) => state.user.userInfo);
+  const [isEdit, setIsEdit] = useState(location.state === null ? false : true);
+  const [isLoading, setIsLoading] = useState(false);
+  const [editedData, setEditedData] = useState({ ...location.state });
+  const [selectedCategory, setSelectedCategory] = useState(categoryOption[0].value);
+
   const [form, setForm] = useState({
     title: "",
     content: "",
+    date: new Date(),
   });
-  const [edited, setEdited] = useState(selectedData);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setForm({
-      ...form,
-      [name]: value,
-    });
+
+    if (isEdit === true) {
+      setEditedData({
+        ...editedData,
+        [name]: value,
+        writer: userInfo._id,
+        category: selectedCategory,
+      });
+    } else {
+      setForm({
+        ...form,
+        [name]: value,
+        writer: userInfo._id,
+        category: selectedCategory,
+      });
+    }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault(); //페이지 이동 방지
-    onSaveData(form);
-    console.log(form);
-    setForm({
-      title: "",
-      content: "",
-    });
-    alert("저장되었습니다!");
-  };
-
-  const onCancel = () => {
-    handleCancel();
-  };
-
-  const onEditChange = (e) => {
-    setEdited({
-      ...edited,
-      [e.target.name]: e.target.value,
-    });
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    try {
+      await createPostAPI(form);
+      setIsLoading(false);
+      alert("저장되었습니다!");
+      nav(-1, { replace: true });
+    } catch (error) {
+      setIsLoading(false);
+      console.log("post 진행 중 오류가 발생했습니다.", error.message);
+    }
   };
 
   const onSubmitEdit = (e) => {
     e.preventDefault();
-    if (edited.author === userInfo.name) {
+    if (editedData.writer.id === userInfo._id) {
       alert("수정되었습니다!");
-      handleEditSubmit(edited);
+      // handleEditSubmit(editedData);
     } else {
       alert("수정권한이 없습니다!");
     }
@@ -55,19 +70,17 @@ const CommunityEditor = ({ isEdit, onSaveData, selectedData, handleCancel, handl
 
   return (
     <Section>
+      {isLoading && <LoadingIndicator />}
       <div className="container">
         <h3>{isEdit ? "글 수정" : "게시글 등록"}</h3>
-        <form className="form" onSubmit={handleSubmit}>
+        <form className="form" onSubmit={onSubmit}>
           <div className="formItem">
             <label className="writer">작성자</label>
-            <input
-              className="formInput"
-              type="text"
-              name="writer"
-              value={isEdit ? edited.writer : "작성자"}
-              onChange={isEdit && onEditChange}
-              disabled
-            />
+            <input className="formInput" type="text" name="writer" value={userInfo.name} onChange={handleChange} />
+          </div>
+          <div className="formItem">
+            <label className="category">카테고리</label>
+            <ControlOption value={selectedCategory} chooseOption={setSelectedCategory} optionList={categoryOption} />
           </div>
           <div className="formItem">
             <label className="title">제목</label>
@@ -77,8 +90,8 @@ const CommunityEditor = ({ isEdit, onSaveData, selectedData, handleCancel, handl
               placeholder="제목을 입력해주세요."
               type="text"
               name="title"
-              value={isEdit ? edited.title : form.title}
-              onChange={isEdit && onEditChange}
+              value={isEdit ? editedData.title : form.title}
+              onChange={handleChange}
             />
           </div>
           {isEdit && (
@@ -88,8 +101,8 @@ const CommunityEditor = ({ isEdit, onSaveData, selectedData, handleCancel, handl
                 className="formInput"
                 type="text"
                 name="date"
-                value={edited.date}
-                onChange={onEditChange}
+                value={setDate(new Date(), true)}
+                onChange={handleChange}
                 disabled
               />
             </div>
@@ -102,24 +115,22 @@ const CommunityEditor = ({ isEdit, onSaveData, selectedData, handleCancel, handl
               placeholder="내용을 입력해주세요"
               type="text"
               name="content"
-              value={isEdit ? edited.content : form.content}
-              onChange={isEdit && onEditChange}
+              value={isEdit ? editedData.content : form.content}
+              onChange={handleChange}
             />
           </div>
-          <div className="btnContainer">
-            <Button type="submit" text="작성" />
-            <Button type="button" onClick={() => nav(-1, { replace: true })} text="목록" color="red" />
-            {isEdit && (
-              <div className="BtnContainer">
-                <button type="submit" className="EditBtn" onClick={onSubmitEdit}>
-                  수정
-                </button>
-                <button className="CancelBtn" onClick={onCancel}>
-                  취소
-                </button>
-              </div>
-            )}
-          </div>
+          {!isEdit && (
+            <div className="btnContainer">
+              <Button type="submit" text="작성" />
+              <Button type="button" onClick={() => nav(-1, { replace: true })} text="목록" color="red" />
+            </div>
+          )}
+          {isEdit && (
+            <div className="BtnContainer">
+              <Button type="submit" text="수정" onClick={onSubmitEdit} />
+              <Button type="button" onClick={() => nav(-1, { replace: true })} text="취소" color="red" />
+            </div>
+          )}
         </form>
       </div>
     </Section>
@@ -134,11 +145,10 @@ const Section = styled.section`
   height: 100%;
 
   .container {
-    margin: 20px auto;
+    margin: 0px auto;
     gap: 1.5rem;
     background: #fff;
-    box-shadow: 0 1px 11px rgba(0, 0, 0, 0.27);
-    border-radius: 10px;
+    border: 1px solid #ccc;
 
     padding: 2rem;
     display: flex;
@@ -156,7 +166,8 @@ const Section = styled.section`
 
   .formItem > label {
     margin-bottom: 5px;
-    font-size: 20px;
+    font-size: 15px;
+    font-weight: bold;
     font-family: "Gowun Batang", serif;
   }
 

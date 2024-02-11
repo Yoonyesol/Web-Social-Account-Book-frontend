@@ -8,7 +8,7 @@ import TransactionEditor from "./TransactionEditor";
 import { deleteTransactionAPI } from "../../utils/api";
 import { useDispatch } from "react-redux";
 import { removeTransaction } from "../../modules/transactions";
-import ControlSortType from "./ControlSortType";
+import ControlOption from "../../common/ControlOption";
 
 const day = ["일", "월", "화", "수", "목", "금", "토"];
 
@@ -86,7 +86,7 @@ export default function TransactionList({ data }) {
           </Modal>
         )}
       </div>
-      <ControlSortType value={sortType} chooseOption={setSortType} optionList={sortOption} />
+      <ControlOption value={sortType} chooseOption={setSortType} optionList={sortOption} />
       <div className="history">
         {getSortedTransactionList().map((item) => (
           <div className="card" key={item.id}>

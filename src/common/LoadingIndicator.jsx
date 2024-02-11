@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-const LoadingIndicator = (props) => {
+const LoadingIndicator = () => {
   return (
     <Indicator>
       <div className="lds-dual-ring"></div>

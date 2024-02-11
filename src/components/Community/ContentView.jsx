@@ -1,35 +1,31 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { dummy } from "./dummy";
 import Button from "../../common/Button";
 import LoadingIndicator from "../../common/LoadingIndicator";
-import { fetchPostByCidAPI } from "../../utils/communityAPI";
-import { setDate } from "../../constants/constant";
+import { setDate } from "../../constants/function";
 
 const ContentView = () => {
-  const params = useParams();
+  const location = useLocation();
   const nav = useNavigate();
   const userInfo = useSelector((state) => state.user.userInfo);
-
-  const [selectedPost, setSelectedPost] = useState();
-
-  useEffect(() => {
-    const fetchPostByCid = async () => {
-      try {
-        const post = await fetchPostByCidAPI(params.cid);
-        setSelectedPost(post);
-      } catch (error) {
-        console.log("API 호출 도중 에러 발생:", error.message);
-      }
-    };
-    fetchPostByCid();
-  }, [params.cid]);
+  const [selectedPost, setSelectedPost] = useState({ ...location.state });
 
   if (!selectedPost) {
     return <LoadingIndicator />;
   }
+
+  const handleEditPost = (item) => {
+    nav(`/community/edit/${item.id}`, {
+      state: {
+        category: item.category,
+        title: item.title,
+        writer: item.writer,
+        content: item.content,
+      },
+    });
+  };
 
   return (
     <Section>
@@ -61,7 +57,7 @@ const ContentView = () => {
         </div>
         <div className="btn-container">
           {/* {userInfo.name === selectedPost.writer && ( */}
-          <Button text="수정" type="button" />
+          <Button text="수정" type="button" onClick={() => handleEditPost(selectedPost)} />
           {/* )} */}
           <Button text="목록" type="button" color="grey" onClick={() => nav(-1)} />
         </div>

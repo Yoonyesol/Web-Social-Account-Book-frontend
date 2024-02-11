@@ -8,7 +8,7 @@ import Button from "../common/Button";
 import { useNavigate } from "react-router-dom";
 import { fetchAllPostsAPI } from "../utils/communityAPI";
 import LoadingIndicator from "../common/LoadingIndicator";
-import { setDate } from "../constants/constant";
+import { setDate } from "../constants/function";
 
 export default function Community() {
   const userInfo = useSelector((state) => state.user.userInfo);
@@ -44,7 +44,7 @@ export default function Community() {
     fetchAllPosts();
   }, []);
 
-  if (board.length === 0) {
+  if (board.length === 0 || !board) {
     return <LoadingIndicator />;
   }
 
@@ -87,16 +87,19 @@ export default function Community() {
     }
   };
 
-  const handleEdit = (item) => {
-    setModalOn(true);
-    const selectedData = {
-      category: item.category,
-      title: item.title,
-      writer: item.writer,
-      content: item.content,
-      date: item.date,
-    };
-    setSelected(selectedData);
+  const handlePostDetail = (item) => {
+    nav(`/community/${item.id}`, {
+      state: {
+        category: item.category,
+        title: item.title,
+        writer: item.writer,
+        content: item.content,
+        date: item.date,
+        hit: item.hit,
+        like: item.like,
+        comments: item.comments,
+      },
+    });
   };
 
   const handleEditSubmit = (item) => {
@@ -132,7 +135,7 @@ export default function Community() {
               <tr key={item._id}>
                 <td className="td-idx">{idx}</td>
                 <td className="td-category">{item.category}</td>
-                <td className="td-title" onClick={() => nav(`/community/${item.id}`)}>
+                <td className="td-title" onClick={() => handlePostDetail(item)}>
                   {item.title}
                 </td>
                 <td className="td-writer">{item.writer.name}</td>

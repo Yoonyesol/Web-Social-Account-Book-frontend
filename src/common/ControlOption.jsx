@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const ControlSortType = ({ value, chooseOption, optionList }) => {
+const ControlOption = ({ value, chooseOption, optionList }) => {
   return (
     <StyledSelect value={value} onChange={(e) => chooseOption(e.target.value)}>
       {optionList.map((it, idx) => (
@@ -12,10 +12,10 @@ const ControlSortType = ({ value, chooseOption, optionList }) => {
   );
 };
 
-export default ControlSortType;
+export default ControlOption;
 
 const StyledSelect = styled.select`
-  margin: 1rem 0 0.5rem 0;
+  margin: 0.2rem 0;
   background-color: #f0f0f0;
   border: 1px solid #ccc;
   padding: 0.3rem;

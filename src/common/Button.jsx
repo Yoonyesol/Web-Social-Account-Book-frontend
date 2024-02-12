@@ -23,14 +23,14 @@ const CustomButton = styled.button`
 
   ${(props) => {
     switch (props.color) {
+      case "white":
+        return `background-color: white; color: black; border:1px solid black`;
       case "grey":
         return `background-color: rgb(223, 221, 221); color: black`;
       case "red":
         return `background-color: #f75c82; color: white`;
-      case "red-black":
-        return `background-color: #f75c82; color: black`;
       case `purple`:
-        return `background-color: #bfa5fa; color: black`;
+        return `background-color: #8B8FC8; color: white`;
       default:
         return `background-color: #5d8de6; color: white`;
     }

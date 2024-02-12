@@ -5,12 +5,13 @@ import styled from "styled-components";
 import Button from "../../common/Button";
 import LoadingIndicator from "../../common/LoadingIndicator";
 import { setDate } from "../../constants/function";
-import { fetchPostByCidAPI } from "../../utils/communityAPI";
+import { deletePostAPI, fetchPostByCidAPI } from "../../utils/communityAPI";
 
 const ContentView = () => {
   const nav = useNavigate();
   const params = useParams();
   const userInfo = useSelector((state) => state.user.userInfo);
+  const [isLoading, setIsLoading] = useState(false);
   const [selectedPost, setSelectedPost] = useState();
 
   useEffect(() => {
@@ -41,8 +42,24 @@ const ContentView = () => {
     });
   };
 
+  const handleRemovePost = async () => {
+    if (window.confirm("내역을 삭제하시겠습니까?")) {
+      setIsLoading(true);
+      try {
+        await deletePostAPI(params.cid);
+        alert("삭제되었습니다!");
+        setIsLoading(false);
+        nav("/community", { replace: true });
+      } catch (error) {
+        console.log("API 호출 도중 에러 발생:", error.message);
+        setIsLoading(false);
+      }
+    }
+  };
+
   return (
     <Section>
+      {isLoading && <LoadingIndicator />}
       <div className="post-container">
         <div className="title">
           <h3>{`[${selectedPost.category}] ${selectedPost.title}`}</h3>
@@ -66,12 +83,15 @@ const ContentView = () => {
         <div class="content-view">
           <div className="content-main">{selectedPost.content}</div>
           <div className="btn-container">
-            <Button text="공감" type="button" color="red" />
+            <Button text="공감" type="button" color="purple" />
           </div>
         </div>
         <div className="btn-container">
           {userInfo._id === selectedPost.writer.uid && (
-            <Button text="수정" type="button" onClick={() => handleEditPost(selectedPost)} />
+            <>
+              <Button text="수정" type="button" onClick={() => handleEditPost(selectedPost)} />
+              <Button text="삭제" type="button" color="red" onClick={handleRemovePost} />
+            </>
           )}
           <Button text="목록" type="button" color="grey" onClick={() => nav("/community")} />
         </div>

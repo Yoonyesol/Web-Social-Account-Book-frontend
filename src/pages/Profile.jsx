@@ -36,7 +36,7 @@ export default function SettingPage() {
               <span className="userShowTitle">Account Details</span>
               <div className="userShowInfo">
                 <MdPermIdentity className="userShowIcon" />
-                <span className="userShowInfoTitle">id: {userInfo.id}</span>
+                <span className="userShowInfoTitle">id: {userInfo.userId}</span>
               </div>
               <span className="userShowTitle">Contact Details</span>
               <div className="userShowInfo">

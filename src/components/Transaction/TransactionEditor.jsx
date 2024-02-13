@@ -7,7 +7,8 @@ import Button from "../../common/Button";
 
 export default function TransactionEditor({ isEdit, selectedData, closeEditor }) {
   const dispatch = useDispatch();
-  const userId = useSelector((state) => state.user.userInfo._id);
+  const userId = useSelector((state) => state.user.userInfo.userId);
+  const token = useSelector((state) => state.user.token);
 
   //추가
   const [form, setForm] = useState({
@@ -44,7 +45,7 @@ export default function TransactionEditor({ isEdit, selectedData, closeEditor })
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
-      await postTransactionAPI(form);
+      await postTransactionAPI(form, token);
       dispatch(addTransaction(form));
       alert("저장되었습니다!");
       onCancel();
@@ -57,7 +58,7 @@ export default function TransactionEditor({ isEdit, selectedData, closeEditor })
   const onSubmitEdit = async (e) => {
     e.preventDefault();
     try {
-      await editTransactionAPI(edited);
+      await editTransactionAPI(edited, token);
       dispatch(editTransaction(edited));
       alert("수정되었습니다!");
       onCancel();
@@ -72,6 +73,7 @@ export default function TransactionEditor({ isEdit, selectedData, closeEditor })
 
   return (
     <Section>
+      {console.log(token)}
       <h3 className="title">{isEdit ? "내역 수정" : "내역 추가"}</h3>
       <form className="form" onSubmit={isEdit ? onSubmitEdit : onSubmit}>
         <div className="formItem">

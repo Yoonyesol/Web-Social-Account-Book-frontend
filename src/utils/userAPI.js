@@ -25,7 +25,8 @@ export const signupAPI = async (form) => {
       email: form.email,
       password: form.password,
     };
-    await axios.post(`http://localhost:5000/api/users/signup`, user);
+    const responseData = await axios.post(`http://localhost:5000/api/users/signup`, user);
+    return responseData.data;
   } catch (error) {
     if (error.response) {
       throw new Error(error.response.data.message);
@@ -44,7 +45,7 @@ export const loginAPI = async (form) => {
       password: form.password,
     };
     const responseData = await axios.post(`http://localhost:5000/api/users/login`, user);
-    return responseData.data.userInfo;
+    return responseData.data;
   } catch (error) {
     if (error.response) {
       throw new Error(error.response.data.message);

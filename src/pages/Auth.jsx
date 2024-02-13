@@ -5,7 +5,7 @@ import { loginAPI, signupAPI } from "../utils/userAPI";
 import { useNavigate } from "react-router-dom";
 import LoadingIndicator from "../common/LoadingIndicator";
 import { useDispatch } from "react-redux";
-import { loginSuccess, setUserInfo } from "../modules/user";
+import { loginSuccess, setToken, setUserInfo } from "../modules/user";
 
 export default function Auth() {
   const nav = useNavigate();
@@ -32,18 +32,26 @@ export default function Auth() {
   const handleAuthSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
+
+    let responseData;
     try {
       if (isLoginMode) {
-        const userInfo = await loginAPI(form);
+        responseData = await loginAPI(form);
         dispatch(loginSuccess());
-        dispatch(setUserInfo(userInfo));
       } else {
-        await signupAPI(form);
-        dispatch(loginSuccess());
-        alert("회원가입에 성공했습니다!");
+        responseData = await signupAPI(form);
       }
+      console.log(responseData);
+
+      dispatch(loginSuccess());
+      dispatch(setUserInfo(responseData.userInfo));
+      dispatch(setToken(responseData.token));
+
+      alert(`${isLoginMode ? "로그인" : "회원가입"}에 성공했습니다!`);
+
       setIsLoading(false);
       setError(null);
+
       nav("/", { replace: true });
     } catch (err) {
       setIsLoading(false);

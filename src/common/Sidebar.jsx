@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 import { VscNotebook } from "react-icons/vsc";
 import { FiLogOut } from "react-icons/fi";
@@ -6,16 +6,24 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { VscChromeClose } from "react-icons/vsc";
 import scrollreveal from "scrollreveal";
 import MenuList from "./MenuList";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { logout } from "../modules/user";
+import { useDispatch } from "react-redux";
 
-export default function Sidebar({ logoutAction }) {
+export default function Sidebar() {
+  const nav = useNavigate();
+  const dispatch = useDispatch();
+
   const [navbarState, setNavbarState] = useState(false);
+
   const html = document.querySelector("html");
   html.addEventListener("click", () => setNavbarState(false));
 
-  const handleLogout = () => {
-    logoutAction();
-  };
+  const handleLogout = useCallback(() => {
+    dispatch(logout());
+    alert("로그아웃되었습니다!");
+    nav("/");
+  }, [dispatch, nav]);
 
   useEffect(() => {
     const sr = scrollreveal({
@@ -68,19 +76,19 @@ export default function Sidebar({ logoutAction }) {
             <MenuList />
           </div>
         </div>
-
         <div className="logout" onClick={handleLogout}>
           <FiLogOut />
           <span className="logout">logout</span>
         </div>
       </Section>
+
       <ResponsiveNav state={navbarState} className={navbarState ? "show" : ""}>
         <div className="responsive__links">
           <MenuList />
         </div>
         <div className="logout" onClick={handleLogout}>
           <FiLogOut />
-          <span className="logout">logout</span>
+          logout
         </div>
       </ResponsiveNav>
     </>
@@ -172,8 +180,8 @@ const Section = styled.section`
   .logout {
     padding: 0.3rem 1rem;
     border-radius: 0.6rem;
-    cursor: pointer;
     &:hover {
+      cursor: pointer;
       background-color: #6369bd;
       color: white;
     }
@@ -264,17 +272,18 @@ const ResponsiveNav = styled.div`
   }
 
   .logout {
-    padding: 0.3rem 1rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 1rem 0;
+    padding: 0.5rem 1rem;
     border-radius: 0.6rem;
+    color: white;
     &:hover {
-      background-color: #f75c82;
-    }
-    a {
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-      color: white;
+      cursor: pointer;
+      background-color: #e1d0ff;
+      color: black;
     }
   }
 `;

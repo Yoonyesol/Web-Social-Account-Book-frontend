@@ -28,7 +28,7 @@ export default function Transactions() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const uid = userInfo._id;
+      const uid = userInfo.userId;
       try {
         const transactions = await fetchTransactionsByUidAPI(uid);
         dispatch(getTransactions(transactions));

@@ -87,7 +87,7 @@ const ContentView = () => {
           </div>
         </div>
         <div className="btn-container">
-          {userInfo._id === selectedPost.writer.uid && (
+          {userInfo.userId === selectedPost.writer.uid && (
             <>
               <Button text="수정" type="button" onClick={() => handleEditPost(selectedPost)} />
               <Button text="삭제" type="button" color="red" onClick={handleRemovePost} />

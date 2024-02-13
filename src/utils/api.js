@@ -21,7 +21,7 @@ export const fetchTransactionsByUidAPI = async (uid) => {
   }
 };
 
-export const postTransactionAPI = async (form) => {
+export const postTransactionAPI = async (form, token) => {
   try {
     const newData = {
       uid: form.uid,
@@ -32,14 +32,18 @@ export const postTransactionAPI = async (form) => {
       amount: form.amount,
       memo: form.memo,
     };
-    await axios.post("http://localhost:5000/api/transactions", newData);
+    await axios.post("http://localhost:5000/api/transactions", newData, {
+      headers: {
+        Authorization: `Bearer ${token}`, // 토큰을 Authorization 헤더에 포함
+      },
+    });
   } catch (e) {
     console.log("HTTP request 도중 에러 발생:", e.message);
     throw e;
   }
 };
 
-export const editTransactionAPI = async (editedData) => {
+export const editTransactionAPI = async (editedData, token) => {
   try {
     const newData = {
       date: new Date(editedData.date).getTime(),
@@ -49,16 +53,24 @@ export const editTransactionAPI = async (editedData) => {
       amount: editedData.amount,
       memo: editedData.memo,
     };
-    await axios.patch(`http://localhost:5000/api/transactions/${editedData.id}`, newData);
+    await axios.patch(`http://localhost:5000/api/transactions/${editedData.id}`, newData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
   } catch (e) {
     console.log("HTTP request 도중 에러 발생:", e.message);
     throw e;
   }
 };
 
-export const deleteTransactionAPI = async (tid) => {
+export const deleteTransactionAPI = async (tid, token) => {
   try {
-    await axios.delete(`http://localhost:5000/api/transactions/${tid}`);
+    await axios.delete(`http://localhost:5000/api/transactions/${tid}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
   } catch (e) {
     console.log("HTTP request 도중 에러 발생:", e.message);
     throw e;

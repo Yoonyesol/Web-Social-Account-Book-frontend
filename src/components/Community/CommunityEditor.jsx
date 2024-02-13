@@ -40,7 +40,7 @@ const CommunityEditor = () => {
       setForm({
         ...form,
         [name]: value,
-        writer: userInfo._id,
+        writer: userInfo.userId,
         category: selectedCategory,
       });
     }

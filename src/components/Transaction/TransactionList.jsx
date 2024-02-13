@@ -6,13 +6,14 @@ import { CiSquarePlus } from "react-icons/ci";
 import Modal from "../../common/Modal";
 import TransactionEditor from "./TransactionEditor";
 import { deleteTransactionAPI } from "../../utils/api";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { removeTransaction } from "../../modules/transactions";
 import ControlOption from "../../common/ControlOption";
 import { day, sortOption } from "../../constants/constant";
 
 export default function TransactionList({ data }) {
   const dispatch = useDispatch();
+  const token = useSelector((state) => state.user.token);
   const [selectedData, setSelectedData] = useState("");
   const [openEditor, setOpenEditor] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
@@ -45,7 +46,7 @@ export default function TransactionList({ data }) {
   const handleRemove = async (id) => {
     if (window.confirm("내역을 삭제하시겠습니까?")) {
       try {
-        await deleteTransactionAPI(id);
+        await deleteTransactionAPI(id, token);
         dispatch(removeTransaction(id));
         alert("삭제 완료");
       } catch (err) {

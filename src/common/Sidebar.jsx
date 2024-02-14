@@ -78,7 +78,7 @@ export default function Sidebar() {
         </div>
         <div className="logout" onClick={handleLogout}>
           <FiLogOut />
-          <span className="logout">logout</span>
+          logout
         </div>
       </Section>
 
@@ -86,7 +86,7 @@ export default function Sidebar() {
         <div className="responsive__links">
           <MenuList />
         </div>
-        <div className="logout" onClick={handleLogout}>
+        <div className="responsive-logout" onClick={handleLogout}>
           <FiLogOut />
           logout
         </div>
@@ -180,6 +180,10 @@ const Section = styled.section`
   .logout {
     padding: 0.3rem 1rem;
     border-radius: 0.6rem;
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+    align-items: center;
     &:hover {
       cursor: pointer;
       background-color: #6369bd;
@@ -271,7 +275,7 @@ const ResponsiveNav = styled.div`
     }
   }
 
-  .logout {
+  .responsive-logout {
     display: flex;
     flex-direction: row;
     align-items: center;

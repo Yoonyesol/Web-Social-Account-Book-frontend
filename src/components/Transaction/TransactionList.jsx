@@ -5,7 +5,7 @@ import { FaPen, FaTrashAlt } from "react-icons/fa";
 import { CiSquarePlus } from "react-icons/ci";
 import Modal from "../../common/Modal";
 import TransactionEditor from "./TransactionEditor";
-import { deleteTransactionAPI } from "../../utils/api";
+import { deleteTransactionAPI } from "../../utils/transactionAPI";
 import { useDispatch, useSelector } from "react-redux";
 import { removeTransaction } from "../../modules/transactions";
 import ControlOption from "../../common/ControlOption";

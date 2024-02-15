@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { editTransactionAPI, postTransactionAPI } from "../../utils/api";
+import { editTransactionAPI, postTransactionAPI } from "../../utils/transactionAPI";
 import { addTransaction, editTransaction } from "../../modules/transactions";
 import { useDispatch, useSelector } from "react-redux";
 import Button from "../../common/Button";

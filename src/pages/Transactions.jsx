@@ -6,7 +6,7 @@ import Header from "../components/Transaction/Header";
 import Button from "../common/Button";
 import { useDispatch, useSelector } from "react-redux";
 import { getTransactions } from "../modules/transactions";
-import { fetchTransactionsByUidAPI } from "../utils/api";
+import { fetchTransactionsByUidAPI } from "../utils/transactionAPI";
 
 export default function Transactions() {
   const transactionList = useSelector((state) => state.transactions.transactions);

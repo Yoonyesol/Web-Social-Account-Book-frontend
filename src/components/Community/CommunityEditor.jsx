@@ -12,6 +12,7 @@ import LoadingIndicator from "../../common/LoadingIndicator";
 const CommunityEditor = () => {
   const nav = useNavigate();
   const location = useLocation();
+  const token = useSelector((state) => state.user.token);
   const userInfo = useSelector((state) => state.user.userInfo);
 
   const [isEdit, setIsEdit] = useState(location.state === null ? false : true);
@@ -58,7 +59,7 @@ const CommunityEditor = () => {
     setIsLoading(true);
     if (!isEdit) {
       try {
-        const post = await createPostAPI(form);
+        const post = await createPostAPI(form, token);
         setIsLoading(false);
         alert("저장되었습니다!");
         nav(`/community/${post._id}`, {
@@ -70,7 +71,7 @@ const CommunityEditor = () => {
       }
     } else {
       try {
-        await updatePostAPI(editedData);
+        await updatePostAPI(editedData, token);
         setIsLoading(false);
         alert("수정되었습니다!");
         nav(`/community/${editedData.id}`, { replace: true });

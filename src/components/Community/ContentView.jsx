@@ -11,6 +11,7 @@ const ContentView = () => {
   const nav = useNavigate();
   const params = useParams();
   const userInfo = useSelector((state) => state.user.userInfo);
+  const token = useSelector((state) => state.user.token);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedPost, setSelectedPost] = useState();
 
@@ -46,7 +47,7 @@ const ContentView = () => {
     if (window.confirm("내역을 삭제하시겠습니까?")) {
       setIsLoading(true);
       try {
-        await deletePostAPI(params.cid);
+        await deletePostAPI(params.cid, token);
         alert("삭제되었습니다!");
         setIsLoading(false);
         nav("/community", { replace: true });

@@ -45,7 +45,7 @@ export const fetchPostsByUidAPI = async (uid) => {
   }
 };
 
-export const createPostAPI = async (form) => {
+export const createPostAPI = async (form, token) => {
   try {
     const newData = {
       writer: form.writer,
@@ -54,7 +54,11 @@ export const createPostAPI = async (form) => {
       category: form.category,
       content: form.content,
     };
-    const responseData = await axios.post("http://localhost:5000/api/community", newData);
+    const responseData = await axios.post("http://localhost:5000/api/community", newData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return responseData.data.post;
   } catch (error) {
     if (error.response) {
@@ -67,14 +71,18 @@ export const createPostAPI = async (form) => {
   }
 };
 
-export const updatePostAPI = async (form) => {
+export const updatePostAPI = async (form, token) => {
   try {
     const editedData = {
       title: form.title,
       category: form.category,
       content: form.content,
     };
-    await axios.patch(`http://localhost:5000/api/community/${form.id}`, editedData);
+    await axios.patch(`http://localhost:5000/api/community/${form.id}`, editedData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
   } catch (error) {
     if (error.response) {
       throw new Error(error.response.data.message);
@@ -86,9 +94,13 @@ export const updatePostAPI = async (form) => {
   }
 };
 
-export const deletePostAPI = async (id) => {
+export const deletePostAPI = async (id, token) => {
   try {
-    await axios.delete(`http://localhost:5000/api/community/${id}`);
+    await axios.delete(`http://localhost:5000/api/community/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
   } catch (error) {
     if (error.response) {
       throw new Error(error.response.data.message);

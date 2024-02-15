@@ -73,7 +73,6 @@ export default function TransactionEditor({ isEdit, selectedData, closeEditor })
 
   return (
     <Section>
-      {console.log(token)}
       <h3 className="title">{isEdit ? "내역 수정" : "내역 추가"}</h3>
       <form className="form" onSubmit={isEdit ? onSubmitEdit : onSubmit}>
         <div className="formItem">

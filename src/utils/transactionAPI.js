@@ -32,11 +32,12 @@ export const postTransactionAPI = async (form, token) => {
       amount: form.amount,
       memo: form.memo,
     };
-    await axios.post("http://localhost:5000/api/transactions", newData, {
+    const responseData = await axios.post("http://localhost:5000/api/transactions", newData, {
       headers: {
         Authorization: `Bearer ${token}`, // 토큰을 Authorization 헤더에 포함
       },
     });
+    return responseData.data.transaction;
   } catch (e) {
     console.log("HTTP request 도중 에러 발생:", e.message);
     throw e;
@@ -53,11 +54,13 @@ export const editTransactionAPI = async (editedData, token) => {
       amount: editedData.amount,
       memo: editedData.memo,
     };
-    await axios.patch(`http://localhost:5000/api/transactions/${editedData.id}`, newData, {
+    const responseData = await axios.patch(`http://localhost:5000/api/transactions/${editedData.id}`, newData, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
+    console.log(responseData);
+    return responseData.data.transaction;
   } catch (e) {
     console.log("HTTP request 도중 에러 발생:", e.message);
     throw e;

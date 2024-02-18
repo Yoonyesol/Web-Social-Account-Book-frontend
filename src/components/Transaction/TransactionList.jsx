@@ -23,10 +23,10 @@ export default function TransactionList({ data }) {
     setIsEdit(true);
     setOpenEditor(true);
 
-    const item = data.find((transaction) => transaction.id === id);
+    const item = data.find((transaction) => transaction._id === id);
 
     const selected = {
-      id: item.id,
+      id: item._id,
       transaction_type: item.transaction_type,
       date: item.date,
       category: item.category,
@@ -84,7 +84,7 @@ export default function TransactionList({ data }) {
       <ControlOption value={sortType} chooseOption={setSortType} optionList={sortOption} />
       <div className="history">
         {getSortedTransactionList().map((item) => (
-          <div className="card" key={item.id}>
+          <div className="card" key={item._id}>
             <div className="content">
               <div className="cell date">
                 <b>{`${new Date(item.date).getDate()}일 (${day[new Date(item.date).getDay()]})`}</b>
@@ -100,8 +100,8 @@ export default function TransactionList({ data }) {
                   : item.amount.toLocaleString("ko-KR")}
               </div>
               <div className="cell action">
-                <FaPen onClick={() => handleEdit(item.id)} />
-                <FaTrashAlt onClick={() => handleRemove(item.id)} />
+                <FaPen onClick={() => handleEdit(item._id)} />
+                <FaTrashAlt onClick={() => handleRemove(item._id)} />
               </div>
             </div>
           </div>

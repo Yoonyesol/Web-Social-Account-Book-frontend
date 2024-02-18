@@ -45,8 +45,8 @@ export default function TransactionEditor({ isEdit, selectedData, closeEditor })
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
-      await postTransactionAPI(form, token);
-      dispatch(addTransaction(form));
+      const transaction = await postTransactionAPI(form, token);
+      dispatch(addTransaction(transaction));
       alert("저장되었습니다!");
       onCancel();
     } catch (err) {
@@ -58,8 +58,8 @@ export default function TransactionEditor({ isEdit, selectedData, closeEditor })
   const onSubmitEdit = async (e) => {
     e.preventDefault();
     try {
-      await editTransactionAPI(edited, token);
-      dispatch(editTransaction(edited));
+      const transaction = await editTransactionAPI(edited, token);
+      dispatch(editTransaction(transaction));
       alert("수정되었습니다!");
       onCancel();
     } catch (err) {

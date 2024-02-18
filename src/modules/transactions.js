@@ -49,7 +49,7 @@ const transactionReducer = (state = initialState, action) => {
       };
     case REMOVE:
       return {
-        transactions: state.transactions.filter((transaction) => transaction.id !== action.payload),
+        transactions: state.transactions.filter((transaction) => transaction._id !== action.payload),
       };
     default:
       return state;

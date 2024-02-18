@@ -1,5 +1,5 @@
-import React, { useCallback, useState } from "react";
-import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Dashboard from "../pages/Dashboard";
 import Sidebar from "../common/Sidebar";
 import Auth from "../pages/Auth";
@@ -8,12 +8,30 @@ import Calendar from "../pages/Calendar";
 import Challenge from "../pages/Challenge";
 import Community from "../pages/Community";
 import Profile from "../pages/Profile";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import CommunityEditor from "../components/Community/CommunityEditor";
 import ContentView from "../components/Community/ContentView";
+import { loginSuccess, setToken, setUserInfo } from "../modules/user";
+import LoadingIndicator from "../common/LoadingIndicator";
 
 function AppRouter() {
+  const [isLoading, setIsLoading] = useState(true);
   const userData = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const storedData = JSON.parse(localStorage.getItem("userData"));
+    if (storedData && storedData.token) {
+      dispatch(loginSuccess());
+      dispatch(setUserInfo(storedData.userInfo));
+      dispatch(setToken(storedData.token));
+    }
+    setIsLoading(false);
+  }, [dispatch]);
+
+  if (isLoading) {
+    return <LoadingIndicator />;
+  }
 
   return (
     <Router>

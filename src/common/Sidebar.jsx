@@ -21,6 +21,7 @@ export default function Sidebar() {
 
   const handleLogout = useCallback(() => {
     dispatch(logout());
+    localStorage.removeItem("userData");
     alert("로그아웃되었습니다!");
     nav("/");
   }, [dispatch, nav]);

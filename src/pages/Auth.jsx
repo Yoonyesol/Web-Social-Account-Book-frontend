@@ -37,12 +37,9 @@ export default function Auth() {
     try {
       if (isLoginMode) {
         responseData = await loginAPI(form);
-        dispatch(loginSuccess());
       } else {
         responseData = await signupAPI(form);
       }
-      console.log(responseData);
-
       dispatch(loginSuccess());
       dispatch(setUserInfo(responseData.userInfo));
       dispatch(setToken(responseData.token));

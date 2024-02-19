@@ -3,13 +3,30 @@ import styled from "styled-components";
 import { cardStyleRealWhite } from "../../common/CardStyles";
 import { FaPen } from "react-icons/fa";
 import Modal from "../../common/Modal";
-import BudgetForm from "./BudgetForm";
+import BudgetEditor from "./BudgetEditor";
+import { fetchBudgetAPI } from "../../utils/userAPI";
+import { dateToYearMonthFormat } from "../../constants/function";
+import { useSelector } from "react-redux";
+import LoadingIndicator from "../../common/LoadingIndicator";
 
-export default function TransactionPost({ data }) {
-  const [budget, setBudget] = useState(30000);
+export default function TransactionAnalytics({ data, curDate }) {
+  const userId = useSelector((state) => state.user.userInfo.userId);
+  const [budget, setBudget] = useState({ amount: 0 });
   const [income, setIncome] = useState(0);
   const [expense, setExpense] = useState(0);
   const [modalOn, setModalOn] = useState(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const responseData = await fetchBudgetAPI(userId, dateToYearMonthFormat(curDate));
+        setBudget(responseData);
+      } catch (error) {
+        console.log("API 호출 도중 에러 발생:", error.message);
+      }
+    };
+    fetchData();
+  }, [curDate, userId]);
 
   useEffect(() => {
     if (data) {
@@ -24,11 +41,10 @@ export default function TransactionPost({ data }) {
       setIncome(totalIncome);
       setExpense(totalExpense);
     }
-  }, [data]);
+  }, [data, curDate]);
 
-  const handleSave = (data) => {
-    setBudget(data.budget);
-    handleCancel();
+  const updateBudget = (updatedBudget) => {
+    setBudget(updatedBudget);
   };
 
   function openModal() {
@@ -37,6 +53,10 @@ export default function TransactionPost({ data }) {
 
   function handleCancel() {
     setModalOn(false);
+  }
+
+  if (!budget) {
+    return <LoadingIndicator />;
   }
 
   return (
@@ -48,10 +68,10 @@ export default function TransactionPost({ data }) {
         </div>
         {modalOn && (
           <Modal visible={modalOn} closable={true} maskClosable={false} onClose={handleCancel}>
-            <BudgetForm onSaveData={handleSave} handleCancel={handleCancel} />
+            <BudgetEditor closeEditor={handleCancel} curDate={curDate} budget={budget} onUpdateBudget={updateBudget} />
           </Modal>
         )}
-        <h2>{budget.toLocaleString("ko-KR")}원</h2>
+        <h2>{budget.amount.toLocaleString("ko-KR")}원</h2>
       </div>
       <div className="analytic income">
         <h4>수입</h4>

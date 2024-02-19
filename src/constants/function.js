@@ -27,3 +27,12 @@ export const setDate = (dateString, view) => {
     return `${year}.${month < 10 ? "0" : ""}${month}.${day < 10 ? "0" : ""}${day}`;
   }
 };
+
+export const dateToYearMonthFormat = (dateString) => {
+  const date = new Date(dateString);
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1; // 월은 0부터 시작하므로 +1 해줍니다.
+  const formattedDate = `${year}-${month < 10 ? "0" + month : month}`;
+
+  return formattedDate;
+};

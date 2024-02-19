@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import TransactionList from "../components/Transaction/TransactionList";
-import AccountBookAnalytics from "../components/Transaction/TransactionAnalytics";
+import TransactionAnalytics from "../components/Transaction/TransactionAnalytics";
 import Header from "../components/Transaction/Header";
 import Button from "../common/Button";
 import { useDispatch, useSelector } from "react-redux";
@@ -58,7 +58,7 @@ export default function Transactions() {
         />
         <div className="transaction">
           <div className="analytics">
-            <AccountBookAnalytics data={data} />
+            <TransactionAnalytics data={data} curDate={curDate} />
           </div>
           <div className="list">
             <TransactionList data={data} />

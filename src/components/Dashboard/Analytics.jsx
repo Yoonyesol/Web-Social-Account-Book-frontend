@@ -1,17 +1,51 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { cardStyle } from "../../common/CardStyles";
 import { BsFillCalendar2WeekFill } from "react-icons/bs";
 import { IoStatsChart } from "react-icons/io5";
 import { BiGroup } from "react-icons/bi";
+import { useSelector } from "react-redux";
+import { fetchBudgetAPI } from "../../utils/userAPI";
+import { dateToYearMonthFormat } from "../../constants/function";
+import { fetchMonthlyTransactions } from "../../utils/transactionAPI";
 
 export default function Analytics() {
+  const userId = useSelector((state) => state.user.userInfo.userId);
+  const [budget, setBudget] = useState({ amount: 0 });
+  const [income, setIncome] = useState(0);
+  const [expense, setExpense] = useState(0);
+  const [curDate, setCurDate] = useState(new Date());
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const responseData = await fetchBudgetAPI(userId, dateToYearMonthFormat(curDate));
+        setBudget(responseData.amount);
+      } catch (error) {
+        console.log("API 호출 도중 에러 발생:", error.message);
+      }
+    };
+
+    const fetchMonthlyData = async () => {
+      try {
+        const responseData = await fetchMonthlyTransactions(userId, dateToYearMonthFormat(curDate));
+        setIncome(responseData.income);
+        setExpense(responseData.expense);
+      } catch (error) {
+        console.log("API 호출 도중 에러 발생:", error.message);
+      }
+    };
+
+    fetchData();
+    fetchMonthlyData();
+  }, [curDate, userId]);
+
   return (
     <Section>
       <div className="analytic">
         <div className="content">
           <h5>예산</h5>
-          <h2>300,000원</h2>
+          <h2>{budget.toLocaleString("ko-kr")}원</h2>
         </div>
         <div className="logo">
           <BsFillCalendar2WeekFill />
@@ -23,13 +57,13 @@ export default function Analytics() {
         </div>
         <div className="content">
           <h5>수입</h5>
-          <h2>190,000</h2>
+          <h2>{income.toLocaleString("ko-KR")}원</h2>
         </div>
       </div>
       <div className="analytic">
         <div className="content">
           <h5>지출</h5>
-          <h2>30,000원</h2>
+          <h2>{expense.toLocaleString("ko-KR")}원</h2>
         </div>
         <div className="logo">
           <IoStatsChart />

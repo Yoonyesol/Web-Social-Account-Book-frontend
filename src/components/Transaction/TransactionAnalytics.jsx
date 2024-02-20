@@ -10,7 +10,7 @@ import { useSelector } from "react-redux";
 import LoadingIndicator from "../../common/LoadingIndicator";
 import { fetchMonthlyTransactions } from "../../utils/transactionAPI";
 
-export default function TransactionAnalytics({ data, curDate }) {
+export default function TransactionAnalytics({ curDate }) {
   const userId = useSelector((state) => state.user.userInfo.userId);
   const [budget, setBudget] = useState({ amount: 0 });
   const [income, setIncome] = useState(0);

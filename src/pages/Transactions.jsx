@@ -58,7 +58,7 @@ export default function Transactions() {
         />
         <div className="transaction">
           <div className="analytics">
-            <TransactionAnalytics data={data} curDate={curDate} />
+            <TransactionAnalytics curDate={curDate} />
           </div>
           <div className="list">
             <TransactionList data={data} />

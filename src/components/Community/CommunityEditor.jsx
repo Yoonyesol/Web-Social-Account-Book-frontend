@@ -109,7 +109,7 @@ const CommunityEditor = () => {
             />
           </div>
           {isEdit && (
-            <div class="formItem">
+            <div className="formItem">
               <label className="date">작성일</label>
               {setDate(new Date(), true)}
             </div>

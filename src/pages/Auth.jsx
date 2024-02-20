@@ -40,9 +40,11 @@ export default function Auth() {
       } else {
         responseData = await signupAPI(form);
       }
+
       dispatch(loginSuccess());
       dispatch(setUserInfo(responseData.userInfo));
       dispatch(setToken(responseData.token));
+      localStorage.setItem("userData", JSON.stringify({ userInfo: responseData.userInfo, token: responseData.token }));
 
       alert(`${isLoginMode ? "로그인" : "회원가입"}에 성공했습니다!`);
 

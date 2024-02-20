@@ -81,7 +81,7 @@ const ContentView = () => {
           </div>
         </div>
         <div className="blank" />
-        <div class="content-view">
+        <div className="content-view">
           <div className="content-main">{selectedPost.content}</div>
           <div className="btn-container">
             <Button text="공감" type="button" color="purple" />

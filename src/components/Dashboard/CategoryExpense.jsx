@@ -74,7 +74,7 @@ export default function CategoryExpense() {
 
       <div className="comment">
         <h3>
-          이번 주에는 <span h5>식비</span>에 가장 많은 지출을 하셨어요.
+          이번 주에는 <span>식비</span>에 가장 많은 지출을 하셨어요.
         </h3>
       </div>
     </Section>

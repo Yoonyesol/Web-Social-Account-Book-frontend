@@ -79,3 +79,13 @@ export const deleteTransactionAPI = async (tid, token) => {
     throw e;
   }
 };
+
+export const fetchMonthlyTransactions = async (uid, date) => {
+  try {
+    const responseData = await axios.get(`http://localhost:5000/api/transactions/${uid}/${date}`);
+    return responseData.data;
+  } catch (e) {
+    console.log("HTTP request 도중 에러 발생:", e.message);
+    throw e;
+  }
+};

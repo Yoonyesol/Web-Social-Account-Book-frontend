@@ -8,6 +8,7 @@ import { fetchBudgetAPI } from "../../utils/userAPI";
 import { dateToYearMonthFormat } from "../../constants/function";
 import { useSelector } from "react-redux";
 import LoadingIndicator from "../../common/LoadingIndicator";
+import { fetchMonthlyTransactions } from "../../utils/transactionAPI";
 
 export default function TransactionAnalytics({ data, curDate }) {
   const userId = useSelector((state) => state.user.userInfo.userId);
@@ -25,23 +26,20 @@ export default function TransactionAnalytics({ data, curDate }) {
         console.log("API 호출 도중 에러 발생:", error.message);
       }
     };
+
+    const fetchMonthlyData = async () => {
+      try {
+        const responseData = await fetchMonthlyTransactions(userId, dateToYearMonthFormat(curDate));
+        setIncome(responseData.income);
+        setExpense(responseData.expense);
+      } catch (error) {
+        console.log("API 호출 도중 에러 발생:", error.message);
+      }
+    };
+
     fetchData();
+    fetchMonthlyData();
   }, [curDate, userId]);
-
-  useEffect(() => {
-    if (data) {
-      const totalExpense = data
-        .filter((transaction) => transaction.transaction_type === false)
-        .reduce((total, transaction) => parseInt(total) + parseInt(transaction.amount), 0);
-
-      const totalIncome = data
-        .filter((transaction) => transaction.transaction_type === true)
-        .reduce((total, transaction) => parseInt(total) + parseInt(transaction.amount), 0);
-
-      setIncome(totalIncome);
-      setExpense(totalExpense);
-    }
-  }, [data, curDate]);
 
   const updateBudget = (updatedBudget) => {
     setBudget(updatedBudget);

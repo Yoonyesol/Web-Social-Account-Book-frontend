@@ -1,12 +1,15 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { dateToYearMonthFormat } from "../../constants/function";
 import Button from "../../common/Button";
 import { editBudgetAPI } from "../../utils/userAPI";
+import { setBudget } from "../../modules/transactionAnalytics";
 
-const BudgetEditor = ({ closeEditor, curDate, budget, onUpdateBudget }) => {
+const BudgetEditor = ({ closeEditor, curDate, budget }) => {
   const userId = useSelector((state) => state.user.userInfo.userId);
+
+  const dispatch = useDispatch();
 
   const [form, setForm] = useState({
     uid: userId,
@@ -27,7 +30,7 @@ const BudgetEditor = ({ closeEditor, curDate, budget, onUpdateBudget }) => {
     e.preventDefault();
     try {
       const updatedBudget = await editBudgetAPI(form);
-      onUpdateBudget(updatedBudget);
+      dispatch(setBudget(updatedBudget));
       alert("저장되었습니다!");
       onCancel();
     } catch (err) {

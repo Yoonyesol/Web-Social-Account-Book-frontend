@@ -6,22 +6,23 @@ import Modal from "../../common/Modal";
 import BudgetEditor from "./BudgetEditor";
 import { fetchBudgetAPI } from "../../utils/userAPI";
 import { dateToYearMonthFormat } from "../../constants/function";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import LoadingIndicator from "../../common/LoadingIndicator";
 import { fetchMonthlyTransactions } from "../../utils/transactionAPI";
+import { setBudget, setExpense, setIncome } from "../../modules/transactionAnalytics";
 
 export default function TransactionAnalytics({ curDate }) {
+  const dispatch = useDispatch();
   const userId = useSelector((state) => state.user.userInfo.userId);
-  const [budget, setBudget] = useState({ amount: 0 });
-  const [income, setIncome] = useState(0);
-  const [expense, setExpense] = useState(0);
+  const transactionList = useSelector((state) => state.transactions.transactions);
+  const transactionAnalytics = useSelector((state) => state.transactionAnalytics);
   const [modalOn, setModalOn] = useState(false);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchBudget = async () => {
       try {
         const responseData = await fetchBudgetAPI(userId, dateToYearMonthFormat(curDate));
-        setBudget(responseData);
+        dispatch(setBudget(responseData));
       } catch (error) {
         console.log("API 호출 도중 에러 발생:", error.message);
       }
@@ -30,20 +31,16 @@ export default function TransactionAnalytics({ curDate }) {
     const fetchMonthlyData = async () => {
       try {
         const responseData = await fetchMonthlyTransactions(userId, dateToYearMonthFormat(curDate));
-        setIncome(responseData.income);
-        setExpense(responseData.expense);
+        dispatch(setIncome(responseData.income));
+        dispatch(setExpense(responseData.expense));
       } catch (error) {
         console.log("API 호출 도중 에러 발생:", error.message);
       }
     };
 
-    fetchData();
+    fetchBudget();
     fetchMonthlyData();
-  }, [curDate, userId]);
-
-  const updateBudget = (updatedBudget) => {
-    setBudget(updatedBudget);
-  };
+  }, [curDate, userId, dispatch, transactionList]);
 
   function openModal() {
     setModalOn(true);
@@ -53,7 +50,7 @@ export default function TransactionAnalytics({ curDate }) {
     setModalOn(false);
   }
 
-  if (!budget) {
+  if (!transactionAnalytics.budget) {
     return <LoadingIndicator />;
   }
 
@@ -66,18 +63,18 @@ export default function TransactionAnalytics({ curDate }) {
         </div>
         {modalOn && (
           <Modal visible={modalOn} closable={true} maskClosable={false} onClose={handleCancel}>
-            <BudgetEditor closeEditor={handleCancel} curDate={curDate} budget={budget} onUpdateBudget={updateBudget} />
+            <BudgetEditor closeEditor={handleCancel} curDate={curDate} budget={transactionAnalytics.budget} />
           </Modal>
         )}
-        <h2>{budget.amount.toLocaleString("ko-KR")}원</h2>
+        <h2>{transactionAnalytics.budget.amount.toLocaleString("ko-KR")}원</h2>
       </div>
       <div className="analytic income">
         <h4>수입</h4>
-        <h2 style={{ color: "green" }}>{income.toLocaleString("ko-KR")}원</h2>
+        <h2 style={{ color: "green" }}>{transactionAnalytics.income.toLocaleString("ko-KR")}원</h2>
       </div>
       <div className="analytic outcome">
         <h4>지출</h4>
-        <h2 style={{ color: "#ec444c" }}>{expense.toLocaleString("ko-KR")}원</h2>
+        <h2 style={{ color: "#ec444c" }}>{transactionAnalytics.expense.toLocaleString("ko-KR")}원</h2>
       </div>
     </Section>
   );

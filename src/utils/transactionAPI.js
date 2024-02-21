@@ -59,7 +59,6 @@ export const editTransactionAPI = async (editedData, token) => {
         Authorization: `Bearer ${token}`,
       },
     });
-    console.log(responseData);
     return responseData.data.transaction;
   } catch (e) {
     console.log("HTTP request 도중 에러 발생:", e.message);

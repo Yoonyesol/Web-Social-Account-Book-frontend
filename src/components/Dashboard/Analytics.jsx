@@ -11,34 +11,41 @@ import { fetchMonthlyTransactions } from "../../utils/transactionAPI";
 
 export default function Analytics() {
   const userId = useSelector((state) => state.user.userInfo.userId);
+  const transactionAnalytics = useSelector((state) => state.transactionAnalytics);
   const [budget, setBudget] = useState({ amount: 0 });
   const [income, setIncome] = useState(0);
   const [expense, setExpense] = useState(0);
   const [curDate, setCurDate] = useState(new Date());
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const responseData = await fetchBudgetAPI(userId, dateToYearMonthFormat(curDate));
-        setBudget(responseData.amount);
-      } catch (error) {
-        console.log("API 호출 도중 에러 발생:", error.message);
-      }
-    };
+    if (!transactionAnalytics.budget.id) {
+      const fetchData = async () => {
+        try {
+          const responseData = await fetchBudgetAPI(userId, dateToYearMonthFormat(curDate));
+          setBudget(responseData.amount);
+        } catch (error) {
+          console.log("API 호출 도중 에러 발생:", error.message);
+        }
+      };
 
-    const fetchMonthlyData = async () => {
-      try {
-        const responseData = await fetchMonthlyTransactions(userId, dateToYearMonthFormat(curDate));
-        setIncome(responseData.income);
-        setExpense(responseData.expense);
-      } catch (error) {
-        console.log("API 호출 도중 에러 발생:", error.message);
-      }
-    };
+      const fetchMonthlyData = async () => {
+        try {
+          const responseData = await fetchMonthlyTransactions(userId, dateToYearMonthFormat(curDate));
+          setIncome(responseData.income);
+          setExpense(responseData.expense);
+        } catch (error) {
+          console.log("API 호출 도중 에러 발생:", error.message);
+        }
+      };
 
-    fetchData();
-    fetchMonthlyData();
-  }, [curDate, userId]);
+      fetchData();
+      fetchMonthlyData();
+    } else {
+      setBudget(transactionAnalytics.budget.amount);
+      setIncome(transactionAnalytics.income);
+      setExpense(transactionAnalytics.expense);
+    }
+  }, [curDate, userId, transactionAnalytics]);
 
   return (
     <Section>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Dashboard from "../pages/Dashboard";
 import Sidebar from "../common/Sidebar";
@@ -11,7 +11,7 @@ import Profile from "../pages/Profile";
 import { useDispatch, useSelector } from "react-redux";
 import CommunityEditor from "../components/Community/CommunityEditor";
 import ContentView from "../components/Community/ContentView";
-import { loginSuccess, setToken, setUserInfo } from "../modules/user";
+import { loginSuccess, logout, setToken, setTokenExpiration, setUserInfo } from "../modules/user";
 import LoadingIndicator from "../common/LoadingIndicator";
 
 function AppRouter() {
@@ -19,15 +19,33 @@ function AppRouter() {
   const userData = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
+  const logoutHandler = useCallback(() => {
+    dispatch(logout());
+    localStorage.removeItem("userData");
+  }, [dispatch]);
+
   useEffect(() => {
     const storedData = JSON.parse(localStorage.getItem("userData"));
-    if (storedData && storedData.token) {
+    if (storedData && storedData.token && new Date(storedData.tokenExpiration) > new Date()) {
       dispatch(loginSuccess());
       dispatch(setUserInfo(storedData.userInfo));
       dispatch(setToken(storedData.token));
+      dispatch(setTokenExpiration(storedData.tokenExpiration));
     }
+
     setIsLoading(false);
-  }, [dispatch]);
+  }, [logoutHandler, dispatch]);
+
+  useEffect(() => {
+    let logoutTimer;
+    //토큰과 만료기간 둘 다 있으면 타이머 설정
+    if (userData.token && userData.tokenExpiration) {
+      const remainingTime = new Date(userData.tokenExpiration).getTime() - new Date().getTime(); //남은 만료기간
+      logoutTimer = setTimeout(logoutHandler, remainingTime);
+    } else {
+      clearTimeout(logoutTimer); //진행 중인 타이머 모두 제거
+    }
+  }, [logoutHandler, userData.token, userData.tokenExpiration]);
 
   if (isLoading) {
     return <LoadingIndicator />;

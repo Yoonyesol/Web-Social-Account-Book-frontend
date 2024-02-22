@@ -4,12 +4,13 @@ import Button from "../common/Button";
 import { loginAPI, signupAPI } from "../utils/userAPI";
 import { useNavigate } from "react-router-dom";
 import LoadingIndicator from "../common/LoadingIndicator";
-import { useDispatch } from "react-redux";
-import { loginSuccess, setToken, setUserInfo } from "../modules/user";
+import { useDispatch, useSelector } from "react-redux";
+import { loginSuccess, setToken, setTokenExpiration, setUserInfo } from "../modules/user";
 
 export default function Auth() {
   const nav = useNavigate();
   const dispatch = useDispatch();
+  const tokenExpiration = useSelector((state) => state.user.tokenExpiration);
 
   const [isLoginMode, setIsLoginMode] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
@@ -44,7 +45,19 @@ export default function Auth() {
       dispatch(loginSuccess());
       dispatch(setUserInfo(responseData.userInfo));
       dispatch(setToken(responseData.token));
-      localStorage.setItem("userData", JSON.stringify({ userInfo: responseData.userInfo, token: responseData.token }));
+
+      //만료시간 3시간
+      const tokenExpirationDate = tokenExpiration || new Date(new Date().getTime() + 3 * 1000 * 60 * 60);
+      dispatch(setTokenExpiration(tokenExpirationDate));
+
+      localStorage.setItem(
+        "userData",
+        JSON.stringify({
+          userInfo: responseData.userInfo,
+          token: responseData.token,
+          tokenExpiration: tokenExpirationDate.toISOString(),
+        }),
+      );
 
       alert(`${isLoginMode ? "로그인" : "회원가입"}에 성공했습니다!`);
 

@@ -88,3 +88,13 @@ export const fetchMonthlyTransactionsAPI = async (uid, date) => {
     throw e;
   }
 };
+
+export const fetchLatestExpensesAPI = async (uid) => {
+  try {
+    const responseData = await axios.get(`http://localhost:5000/api/transactions/user/latestExpenses/${uid}`);
+    return responseData.data;
+  } catch (e) {
+    console.log("HTTP request 도중 에러 발생:", e.message);
+    throw e;
+  }
+};

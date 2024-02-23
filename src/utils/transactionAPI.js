@@ -79,7 +79,7 @@ export const deleteTransactionAPI = async (tid, token) => {
   }
 };
 
-export const fetchMonthlyTransactions = async (uid, date) => {
+export const fetchMonthlyTransactionsAPI = async (uid, date) => {
   try {
     const responseData = await axios.get(`http://localhost:5000/api/transactions/${uid}/${date}`);
     return responseData.data;

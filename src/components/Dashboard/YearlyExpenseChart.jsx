@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { AreaChart, Area, Tooltip, ResponsiveContainer, XAxis } from "recharts";
-import { cardStyle } from "./CardStyles";
+import { cardStyle } from "../../common/CardStyles";
+import { fetchLatestExpensesAPI } from "../../utils/transactionAPI";
+import { useSelector } from "react-redux";
 
 const userData = [
   {
@@ -45,7 +47,7 @@ const userData = [
     Expense: 6407000,
   },
 ];
-export default function EarningPieChart() {
+export default function YearlyExpenseChart() {
   return (
     <Section>
       <div className="top">

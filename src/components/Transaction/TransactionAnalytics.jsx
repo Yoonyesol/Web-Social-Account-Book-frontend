@@ -8,7 +8,7 @@ import { fetchBudgetAPI } from "../../utils/userAPI";
 import { dateToYearMonthFormat } from "../../constants/function";
 import { useDispatch, useSelector } from "react-redux";
 import LoadingIndicator from "../../common/LoadingIndicator";
-import { fetchMonthlyTransactions } from "../../utils/transactionAPI";
+import { fetchMonthlyTransactionsAPI } from "../../utils/transactionAPI";
 import { setBudget, setExpense, setIncome } from "../../modules/transactionAnalytics";
 
 export default function TransactionAnalytics({ curDate }) {
@@ -30,7 +30,7 @@ export default function TransactionAnalytics({ curDate }) {
 
     const fetchMonthlyData = async () => {
       try {
-        const responseData = await fetchMonthlyTransactions(userId, dateToYearMonthFormat(curDate));
+        const responseData = await fetchMonthlyTransactionsAPI(userId, dateToYearMonthFormat(curDate));
         dispatch(setIncome(responseData.income));
         dispatch(setExpense(responseData.expense));
       } catch (error) {

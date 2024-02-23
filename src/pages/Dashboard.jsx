@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import Analytics from "../components/Dashboard/Analytics";
-import EarningPieChart from "../common/EarningPieChart";
+import YearlyExpenseChart from "../components/Dashboard/YearlyExpenseChart";
 import Navbar from "../common/Navbar";
 import Profile from "../components/Dashboard/ProfileCard";
 import CategoryExpense from "../components/Dashboard/CategoryExpense";
@@ -36,7 +36,7 @@ export default function Dashboard() {
           <CategoryExpense />
         </div>
         <div className="row__two">
-          <EarningPieChart />
+          <YearlyExpenseChart />
           <ChallengeCard />
           <Profile />
         </div>

@@ -7,7 +7,7 @@ import { BiGroup } from "react-icons/bi";
 import { useSelector } from "react-redux";
 import { fetchBudgetAPI } from "../../utils/userAPI";
 import { dateToYearMonthFormat } from "../../constants/function";
-import { fetchMonthlyTransactions } from "../../utils/transactionAPI";
+import { fetchMonthlyTransactionsAPI } from "../../utils/transactionAPI";
 
 export default function Analytics() {
   const userId = useSelector((state) => state.user.userInfo.userId);
@@ -30,7 +30,7 @@ export default function Analytics() {
 
       const fetchMonthlyData = async () => {
         try {
-          const responseData = await fetchMonthlyTransactions(userId, dateToYearMonthFormat(curDate));
+          const responseData = await fetchMonthlyTransactionsAPI(userId, dateToYearMonthFormat(curDate));
           setIncome(responseData.income);
           setExpense(responseData.expense);
         } catch (error) {

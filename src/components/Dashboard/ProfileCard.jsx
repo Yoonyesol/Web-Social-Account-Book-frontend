@@ -1,8 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import { HiOutlineLocationMarker } from "react-icons/hi";
+import { HiArrowNarrowRight, HiOutlineLocationMarker } from "react-icons/hi";
 import { cardStyle } from "../../common/CardStyles";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 export default function Profile() {
   const userInfo = useSelector((state) => state.user.userInfo);
@@ -16,23 +17,18 @@ export default function Profile() {
         <h2>{userInfo.name}</h2>
         <h5>
           <HiOutlineLocationMarker />
-          한국, 인천광역시
+          한국, 서울
         </h5>
       </div>
       <div className="info">
         <div className="container">
-          <h5>예산</h5>
-          <h3>300,000원</h3>
-        </div>
-        <div className="container">
-          <h5>수입</h5>
-          <h3>190,000원</h3>
-        </div>
-        <div className="container">
-          <h5>지출</h5>
-          <h3>30,000원</h3>
+          <h5>연락처</h5>
+          <h4>{userInfo.email}</h4>
         </div>
       </div>
+      <Link to="/profile" className="view">
+        설정 바로가기 <HiArrowNarrowRight />
+      </Link>
     </Section>
   );
 }
@@ -44,6 +40,7 @@ const Section = styled.section`
   align-items: center;
   gap: 1rem;
   .image {
+    margin-top: 10px;
     max-height: 10rem;
     overflow: hidden;
     border-radius: 20rem;
@@ -78,6 +75,27 @@ const Section = styled.section`
     gap: 2rem;
     .container {
       text-align: center;
+    }
+  }
+  .view {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    text-decoration: none;
+    color: #3c76e0;
+    font-family: "Gowun Batang", serif;
+    font-weight: bold;
+    margin-top: 1rem;
+    gap: 0.5rem;
+    svg {
+      transition: 0.3s ease-in-out;
+      font-size: 1.4rem;
+    }
+    &:hover {
+      svg {
+        transform: translateX(0.5rem);
+      }
     }
   }
 `;

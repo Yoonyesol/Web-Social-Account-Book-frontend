@@ -71,6 +71,7 @@ export default function Community() {
                 <td className="td-category">{item.category}</td>
                 <td className="td-title" onClick={() => handlePostDetail(item)}>
                   {item.title}
+                  <b style={{ color: "#f8764c" }}> ({item.comments.length})</b>
                 </td>
                 <td className="td-writer">{item.writer.name}</td>
                 <td className="td-hit">{item.hit}</td>

@@ -98,3 +98,13 @@ export const fetchLatestExpensesAPI = async (uid) => {
     throw e;
   }
 };
+
+export const fetchExpensesCategoryAPI = async (uid) => {
+  try {
+    const responseData = await axios.get(`http://localhost:5000/api/transactions/user/${uid}/expense/category/top5`);
+    return responseData.data;
+  } catch (e) {
+    console.log("HTTP request 도중 에러 발생:", e.message);
+    throw e;
+  }
+};

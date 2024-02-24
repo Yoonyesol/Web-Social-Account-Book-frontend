@@ -6,6 +6,8 @@ import Button from "../../common/Button";
 import LoadingIndicator from "../../common/LoadingIndicator";
 import { setDate } from "../../constants/function";
 import { deletePostAPI, fetchPostByCidAPI } from "../../utils/communityAPI";
+import { CommentView } from "./CommentView";
+import { CommentEditor } from "./CommentEditor";
 
 const ContentView = () => {
   const nav = useNavigate();
@@ -97,36 +99,8 @@ const ContentView = () => {
           <Button text="목록" type="button" color="grey" onClick={() => nav("/community")} />
         </div>
       </div>
-      <div className="comment-count">댓글 | 총 3개</div>
-      <div className="comment-container">
-        <div className="comment">
-          <div className="comment-writer">
-            <b>김하영</b>
-          </div>
-          <div className="comment-main">
-            <p className="comment-content">좋은 정보 감사합니다.</p>
-            <p className="comment-date">22.04.20</p>
-          </div>
-        </div>
-        <div className="comment">
-          <div className="comment-writer">
-            <b>김현서</b>
-          </div>
-          <div className="comment-main">
-            <p className="comment-content">얼른 구매해야겠네요.</p>
-            <p className="comment-date">22.04.20</p>
-          </div>
-        </div>
-        <div className="comment">
-          <div className="comment-writer">
-            <b>정진우</b>
-          </div>
-          <div className="comment-main">
-            <p className="comment-content">삼성카드 결제하면 추가할인 된대요 5%. 참고하세요~</p>
-            <p className="comment-date">22.04.20</p>
-          </div>
-        </div>
-      </div>
+      <CommentEditor userInfo={userInfo} postId={selectedPost.id} />
+      <CommentView postId={selectedPost.id} />
     </Section>
   );
 };
@@ -214,34 +188,6 @@ const Section = styled.section`
       font-family: "Montserrat", sans-serif;
       font-size: 12px;
       padding: 5px 10px;
-    }
-  }
-
-  .comment-count {
-    margin: 10px 0px;
-  }
-
-  .comment {
-    border-bottom: 1px solid #ccc;
-    display: flex;
-    flex-direction: row;
-
-    .comment-writer {
-      padding: 15px;
-      width: 130px;
-      background-color: #e2e1e1;
-    }
-
-    .comment-main {
-      padding: 15px;
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-
-      .comment-date {
-        font-size: 13px;
-        color: #b6b4b4;
-      }
     }
   }
 

@@ -5,8 +5,10 @@ import styled from "styled-components";
 import Button from "../../common/Button";
 import LoadingIndicator from "../../common/LoadingIndicator";
 import { setDate } from "../../constants/function";
-import { deletePostAPI, fetchPostByCidAPI } from "../../utils/communityAPI";
+import { deletePostAPI, fetchPostByCidAPI, updateLikeAPI } from "../../utils/communityAPI";
 import { CommentView } from "./CommentView";
+import { MdThumbUp } from "react-icons/md";
+import { FiThumbsUp } from "react-icons/fi";
 
 const ContentView = () => {
   const nav = useNavigate();
@@ -15,6 +17,10 @@ const ContentView = () => {
   const token = useSelector((state) => state.user.token);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedPost, setSelectedPost] = useState();
+  const [like, setLike] = useState({
+    click: false,
+    count: selectedPost ? selectedPost.like.length : 0,
+  });
 
   useEffect(() => {
     const fetchPostByCid = async () => {
@@ -28,18 +34,25 @@ const ContentView = () => {
     fetchPostByCid();
   }, [params.cid]);
 
+  //마운트 시 좋아요 클릭상태 업데이트
+  useEffect(() => {
+    if (selectedPost && selectedPost.like.includes(userInfo.userId)) {
+      setLike({ ...like, click: true });
+    }
+  }, [userInfo.userId, selectedPost, like]);
+
   if (!selectedPost) {
     return <LoadingIndicator />;
   }
 
-  const handleEditPost = (item) => {
-    nav(`/community/${item.id}/edit`, {
+  const handleEditPost = () => {
+    nav(`/community/${selectedPost.id}/edit`, {
       state: {
-        id: item.id,
-        category: item.category,
-        title: item.title,
-        writer: item.writer,
-        content: item.content,
+        id: selectedPost.id,
+        category: selectedPost.category,
+        title: selectedPost.title,
+        writer: selectedPost.writer,
+        content: selectedPost.content,
       },
     });
   };
@@ -56,6 +69,19 @@ const ContentView = () => {
         console.log("API 호출 도중 에러 발생:", error.message);
         setIsLoading(false);
       }
+    }
+  };
+
+  const handleUpdateLike = async () => {
+    try {
+      await updateLikeAPI(selectedPost.id, like.click, token);
+      if (like.click) {
+        setLike({ count: like.count - 1, click: false });
+      } else {
+        setLike({ count: like.count + 1, click: true });
+      }
+    } catch (error) {
+      console.log("API 호출 도중 에러 발생:", error.message);
     }
   };
 
@@ -77,21 +103,24 @@ const ContentView = () => {
             <p className="date">작성일: {setDate(selectedPost.date, true)} </p>
             <div style={{ margin: "10px" }}></div>
             <p className="content-info">
-              공감 {selectedPost.like.length} | 조회 {selectedPost.hit}
+              공감 {like.count} | 조회 {selectedPost.hit}
             </p>
           </div>
         </div>
         <div className="blank" />
         <div className="content-view">
           <div className="content-main">{selectedPost.content}</div>
-          <div className="btn-container">
-            <Button text="공감" type="button" color="purple" />
+          <div className="btn-container like-btn">
+            <LikeButton onClick={handleUpdateLike} liked={like.click}>
+              <span>{like.count}</span>
+              {like.click ? <MdThumbUp /> : <FiThumbsUp />}
+            </LikeButton>
           </div>
         </div>
         <div className="btn-container">
           {userInfo.userId === selectedPost.writer.uid && (
             <>
-              <Button text="수정" type="button" onClick={() => handleEditPost(selectedPost)} />
+              <Button text="수정" type="button" onClick={handleEditPost} />
               <Button text="삭제" type="button" color="red" onClick={handleRemovePost} />
             </>
           )}
@@ -104,6 +133,46 @@ const ContentView = () => {
 };
 
 export default ContentView;
+
+const LikeButton = styled.button`
+  background-color: ${({ liked }) => (liked ? "#8b8fc8" : "white")};
+  color: ${({ liked }) => (liked ? "white" : "black")};
+  font-size: 11px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 3px;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  cursor: pointer;
+
+  span {
+    font-weight: 500;
+  }
+
+  svg {
+    font-size: 1.1rem;
+  }
+
+  ${({ liked }) =>
+    liked &&
+    `
+    animation: explodeAnimation 0.5s ease;
+  `}
+
+  @keyframes explodeAnimation {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.5);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+`;
 
 const Section = styled.section`
   margin-left: 18vw;
@@ -168,9 +237,7 @@ const Section = styled.section`
       justify-content: center;
 
       button {
-        font-family: "Montserrat", sans-serif;
-        font-size: 13px;
-        padding: 20px;
+        padding: 15px 25px;
       }
     }
   }

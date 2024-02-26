@@ -99,8 +99,8 @@ const ContentView = () => {
           <Button text="목록" type="button" color="grey" onClick={() => nav("/community")} />
         </div>
       </div>
-      <CommentEditor userInfo={userInfo} postId={selectedPost.id} />
-      <CommentView postId={selectedPost.id} />
+      <CommentView userInfo={userInfo} postId={selectedPost.id} />
+      {/* <CommentEditor userInfo={userInfo} postId={selectedPost.id} /> */}
     </Section>
   );
 };

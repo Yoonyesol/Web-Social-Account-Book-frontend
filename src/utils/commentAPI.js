@@ -77,3 +77,21 @@ export const updateCommentAPI = async (id, content, token) => {
     }
   }
 };
+
+export const deleteCommentAPI = async (id, token) => {
+  try {
+    await axios.delete(`http://localhost:5000/api/comment/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  } catch (error) {
+    if (error.response) {
+      throw new Error(error.response.data.message);
+    } else if (error.request) {
+      throw new Error("서버 응답이 없습니다.");
+    } else {
+      throw new Error("요청을 보내는 중에 에러가 발생했습니다.");
+    }
+  }
+};

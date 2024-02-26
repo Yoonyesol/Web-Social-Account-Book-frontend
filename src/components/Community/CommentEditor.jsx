@@ -64,7 +64,6 @@ export function CommentEditor({ isEdit, postId, userInfo, comment, onCancelEdit 
 
   return (
     <Section>
-      {console.log(comment)}
       <form onSubmit={onSubmit} className="comment">
         {!isEdit && (
           <div className="comment-writer">

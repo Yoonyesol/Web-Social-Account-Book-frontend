@@ -1,14 +1,18 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { fetchAllCommentsByPostIdAPI } from "../../utils/commentAPI";
+import { deleteCommentAPI, fetchAllCommentsByPostIdAPI } from "../../utils/commentAPI";
 import { setDate } from "../../constants/function";
 import Button from "../../common/Button";
 import { CommentEditor } from "./CommentEditor";
+import { useSelector } from "react-redux";
 
 export function CommentView({ userInfo, postId }) {
+  const token = useSelector((state) => state.user.token);
+
   const [data, setData] = useState([]);
   const [isEdit, setIsEdit] = useState(false);
   const [editingComment, setEditingComment] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -31,6 +35,20 @@ export function CommentView({ userInfo, postId }) {
   const handleCancelEdit = () => {
     setIsEdit(false);
     setEditingComment(null);
+  };
+
+  const handleRemoveComment = async (id) => {
+    if (window.confirm("내역을 삭제하시겠습니까?")) {
+      setIsLoading(true);
+      try {
+        await deleteCommentAPI(id, token);
+        alert("삭제되었습니다!");
+        setIsLoading(false);
+      } catch (error) {
+        console.log("API 호출 도중 에러 발생:", error.message);
+        setIsLoading(false);
+      }
+    }
   };
 
   return (
@@ -62,7 +80,7 @@ export function CommentView({ userInfo, postId }) {
               {!isEdit && userInfo.userId === item.authorId && (
                 <div className="btn-container">
                   <Button text="수정" onClick={() => handleEdit(item)} />
-                  <Button text="삭제" type="button" color="red" />
+                  <Button text="삭제" type="button" color="red" onClick={() => handleRemoveComment(item._id)} />
                 </div>
               )}
             </div>

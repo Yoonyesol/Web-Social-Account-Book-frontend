@@ -15,17 +15,20 @@ export function CommentView({ userInfo, postId }) {
   const [editingComment, setEditingComment] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const responseData = await fetchAllCommentsByPostIdAPI(postId);
-        setData(responseData);
-      } catch (error) {
-        console.log("API 호출 도중 에러 발생:", error.message);
-      }
-    };
+  const fetchComments = async () => {
+    setIsLoading(true);
+    try {
+      const responseData = await fetchAllCommentsByPostIdAPI(postId);
+      setData(responseData);
+      setIsLoading(false);
+    } catch (error) {
+      console.log("API 호출 도중 에러 발생:", error.message);
+      setIsLoading(false);
+    }
+  };
 
-    fetchData();
+  useEffect(() => {
+    fetchComments();
   }, [postId]);
 
   const handleEdit = (comment) => {
@@ -43,8 +46,8 @@ export function CommentView({ userInfo, postId }) {
       setIsLoading(true);
       try {
         await deleteCommentAPI(id, token);
-        alert("삭제되었습니다!");
         setIsLoading(false);
+        fetchComments();
       } catch (error) {
         console.log("API 호출 도중 에러 발생:", error.message);
         setIsLoading(false);
@@ -75,6 +78,7 @@ export function CommentView({ userInfo, postId }) {
                   postId={postId}
                   comment={editingComment}
                   onCancelEdit={handleCancelEdit}
+                  onFetchData={fetchComments}
                 />
               ) : (
                 <div className="p-container">
@@ -91,7 +95,7 @@ export function CommentView({ userInfo, postId }) {
             </div>
           </div>
         ))}
-        <CommentEditor isEdit={false} userInfo={userInfo} postId={postId} />
+        <CommentEditor isEdit={false} userInfo={userInfo} postId={postId} onFetchData={fetchComments} />
       </div>
     </Section>
   );

@@ -5,7 +5,7 @@ import { createCommentAPI, updateCommentAPI } from "../../utils/commentAPI";
 import { useSelector } from "react-redux";
 import LoadingIndicator from "../../common/LoadingIndicator";
 
-export function CommentEditor({ isEdit, postId, userInfo, comment, onCancelEdit }) {
+export function CommentEditor({ isEdit, postId, userInfo, comment, onCancelEdit, onFetchData }) {
   const token = useSelector((state) => state.user.token);
   const [isLoading, setIsLoading] = useState(false);
   const [updatedContent, setUpdatedContent] = useState(isEdit ? comment.content : "");
@@ -38,6 +38,7 @@ export function CommentEditor({ isEdit, postId, userInfo, comment, onCancelEdit 
         await createCommentAPI(form, token);
         setIsLoading(false);
         alert("저장되었습니다!");
+        onFetchData();
         setForm({
           content: "",
         });
@@ -50,6 +51,7 @@ export function CommentEditor({ isEdit, postId, userInfo, comment, onCancelEdit 
         await updateCommentAPI(comment._id, updatedContent, token);
         setIsLoading(false);
         alert("수정되었습니다!");
+        onFetchData();
         onCancelEdit();
       } catch (error) {
         setIsLoading(false);

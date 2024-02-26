@@ -5,6 +5,7 @@ import { setDate } from "../../constants/function";
 import Button from "../../common/Button";
 import { CommentEditor } from "./CommentEditor";
 import { useSelector } from "react-redux";
+import LoadingIndicator from "../../common/LoadingIndicator";
 
 export function CommentView({ userInfo, postId }) {
   const token = useSelector((state) => state.user.token);
@@ -50,6 +51,10 @@ export function CommentView({ userInfo, postId }) {
       }
     }
   };
+
+  if (isLoading) {
+    return <LoadingIndicator />;
+  }
 
   return (
     <Section>
@@ -133,11 +138,4 @@ const Section = styled.section`
       align-items: center;
     }
   }
-
-  /* button {
-    height: 28px;
-    font-family: "Montserrat", sans-serif;
-    font-size: 13px;
-    padding: 10px;
-  } */
 `;

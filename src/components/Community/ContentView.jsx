@@ -7,7 +7,6 @@ import LoadingIndicator from "../../common/LoadingIndicator";
 import { setDate } from "../../constants/function";
 import { deletePostAPI, fetchPostByCidAPI } from "../../utils/communityAPI";
 import { CommentView } from "./CommentView";
-import { CommentEditor } from "./CommentEditor";
 
 const ContentView = () => {
   const nav = useNavigate();
@@ -100,7 +99,6 @@ const ContentView = () => {
         </div>
       </div>
       <CommentView userInfo={userInfo} postId={selectedPost.id} />
-      {/* <CommentEditor userInfo={userInfo} postId={selectedPost.id} /> */}
     </Section>
   );
 };

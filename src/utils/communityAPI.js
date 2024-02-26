@@ -112,9 +112,9 @@ export const deletePostAPI = async (id, token) => {
   }
 };
 
-export const updateLikeAPI = async (id, state, token) => {
+export const updateLikeAPI = async (id, token) => {
   try {
-    const responseData = await axios.post(`http://localhost:5000/api/community/${id}/like`, state, {
+    const responseData = await axios.post(`http://localhost:5000/api/community/${id}/like`, null, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

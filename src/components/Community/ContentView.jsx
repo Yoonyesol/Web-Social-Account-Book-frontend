@@ -74,7 +74,7 @@ const ContentView = () => {
 
   const handleUpdateLike = async () => {
     try {
-      await updateLikeAPI(selectedPost.id, like.click, token);
+      await updateLikeAPI(selectedPost.id, token);
       if (like.click) {
         setLike({ count: like.count - 1, click: false });
       } else {

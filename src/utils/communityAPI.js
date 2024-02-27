@@ -45,6 +45,25 @@ export const fetchPostsByUidAPI = async (uid) => {
   }
 };
 
+export const fetchLikedPostByUidAPI = async (token) => {
+  try {
+    const responseData = await axios.get(`http://localhost:5000/api/users/likedPosts`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return responseData.data.likedPosts;
+  } catch (error) {
+    if (error.response) {
+      throw new Error(error.response.data.message);
+    } else if (error.request) {
+      throw new Error("서버 응답이 없습니다.");
+    } else {
+      throw new Error("요청을 보내는 중에 에러가 발생했습니다.");
+    }
+  }
+};
+
 export const createPostAPI = async (form, token) => {
   try {
     const newData = {

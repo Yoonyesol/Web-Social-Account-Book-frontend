@@ -7,6 +7,7 @@ import Profile from "../components/Dashboard/ProfileCard";
 import CategoryExpense from "../components/Dashboard/CategoryExpense";
 import scrollreveal from "scrollreveal";
 import ChallengeCard from "../components/Dashboard/ChallengeCard";
+import PostCard from "../components/Dashboard/PostCard";
 
 export default function Dashboard() {
   useEffect(() => {
@@ -37,7 +38,7 @@ export default function Dashboard() {
         </div>
         <div className="row__two">
           <YearlyExpenseChart />
-          <ChallengeCard />
+          <PostCard />
           <Profile />
         </div>
       </div>

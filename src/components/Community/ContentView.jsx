@@ -17,10 +17,7 @@ const ContentView = () => {
   const token = useSelector((state) => state.user.token);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedPost, setSelectedPost] = useState();
-  const [like, setLike] = useState({
-    click: false,
-    count: selectedPost ? selectedPost.like.length : 0,
-  });
+  const [like, setLike] = useState({});
 
   useEffect(() => {
     const fetchPostByCid = async () => {
@@ -36,10 +33,14 @@ const ContentView = () => {
 
   //마운트 시 좋아요 클릭상태 업데이트
   useEffect(() => {
-    if (selectedPost && selectedPost.like.includes(userInfo.userId)) {
-      setLike({ ...like, click: true });
+    if (selectedPost) {
+      if (selectedPost.like.includes(userInfo.userId)) {
+        setLike({ click: true, count: selectedPost.like.length, animation: false });
+      } else {
+        setLike({ click: false, count: selectedPost.like.length, animation: false });
+      }
     }
-  }, [userInfo.userId, selectedPost, like]);
+  }, [userInfo.userId, selectedPost]);
 
   if (!selectedPost) {
     return <LoadingIndicator />;
@@ -76,9 +77,9 @@ const ContentView = () => {
     try {
       await updateLikeAPI(selectedPost.id, token);
       if (like.click) {
-        setLike({ count: like.count - 1, click: false });
+        setLike({ count: like.count - 1, click: false, animation: true });
       } else {
-        setLike({ count: like.count + 1, click: true });
+        setLike({ count: like.count + 1, click: true, animation: true });
       }
     } catch (error) {
       console.log("API 호출 도중 에러 발생:", error.message);
@@ -111,7 +112,7 @@ const ContentView = () => {
         <div className="content-view">
           <div className="content-main">{selectedPost.content}</div>
           <div className="btn-container like-btn">
-            <LikeButton onClick={handleUpdateLike} liked={like.click}>
+            <LikeButton onClick={handleUpdateLike} liked={like.click} animation={like.animation}>
               <span>{like.count}</span>
               {like.click ? <MdThumbUp /> : <FiThumbsUp />}
             </LikeButton>
@@ -155,8 +156,9 @@ const LikeButton = styled.button`
     font-size: 1.1rem;
   }
 
-  ${({ liked }) =>
+  ${({ liked, animation }) =>
     liked &&
+    animation &&
     `
     animation: explodeAnimation 0.5s ease;
   `}

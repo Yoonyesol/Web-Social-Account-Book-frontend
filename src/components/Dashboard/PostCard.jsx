@@ -29,7 +29,6 @@ export default function PostCard() {
         <h2>최근 공감한 글</h2>
       </div>
       <div className="container">
-        {console.log(data)}
         {data ? (
           data.map((post) => {
             return (

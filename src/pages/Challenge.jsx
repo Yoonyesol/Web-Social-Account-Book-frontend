@@ -1,51 +1,53 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { RiMailSendFill } from "react-icons/ri";
 import { PiChatTeardropDots } from "react-icons/pi";
 import { MdThumbUp } from "react-icons/md";
+import { fetchBudgetExpenseRatioAPI } from "../utils/challengeAPI";
+import { dateToYearMonthFormat } from "../constants/function";
 
 export default function ChallengePage() {
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const responseData = await fetchBudgetExpenseRatioAPI(dateToYearMonthFormat(new Date()));
+        setData(responseData);
+      } catch (error) {
+        console.log("API 호출 도중 에러 발생:", error.message);
+      }
+    };
+    fetchData();
+  }, []);
+
   return (
     <Section>
-      <div className="container1 aaa">
-        <h2>2월 실시간 소비 순위</h2>
-        <span>내 순위</span>
-        <table className="container">
-          <thead>
-            <tr>
-              <th>
-                <h1>순위</h1>
-              </th>
-              <th>
-                <h1>이름</h1>
-              </th>
-              <th>
-                <h1>예산 대비 지출</h1>
-              </th>
-              <th></th>
-              <th></th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td className="ranking">1위</td>
-              <td className="user">김옥순</td>
-              <td className="ratio">0.2</td>
-              <td>
-                <RiMailSendFill />
-              </td>
-              <td>
-                <PiChatTeardropDots />
-              </td>
-              <td>
-                <MdThumbUp />
-              </td>
-            </tr>
-            <tr>
-              <td className="ranking">2위</td>
-              <td className="user">모모</td>
-              <td className="ratio">0.45</td>
+      <h2>2월 실시간 소비 순위</h2>
+      <span>내 순위</span>
+      <table className="container">
+        <thead>
+          <tr>
+            <th>
+              <h1>순위</h1>
+            </th>
+            <th>
+              <h1>이름</h1>
+            </th>
+            <th>
+              <h1>예산 대비 지출</h1>
+            </th>
+            <th></th>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {data.map((challenge, idx) => (
+            <tr key={challenge.userId}>
+              <td className="ranking">{idx + 1}위</td>
+              <td className="user">{challenge.userName}</td>
+              <td className="ratio">{challenge.expenseRatio}</td>
               <td>
                 <RiMailSendFill />
               </td>
@@ -53,43 +55,15 @@ export default function ChallengePage() {
                 <PiChatTeardropDots />
               </td>
               <td className="like">
-                <div class="like-container">
+                <div className="like-container">
                   <MdThumbUp />
                   <span>0</span>
                 </div>
               </td>
             </tr>
-            <tr>
-              <td className="ranking">3위</td>
-              <td className="user">자바의 정석</td>
-              <td className="ratio">0.46</td>
-              <td>
-                <RiMailSendFill />
-              </td>
-              <td>
-                <PiChatTeardropDots />
-              </td>
-              <td>
-                <MdThumbUp />
-              </td>
-            </tr>
-            <tr>
-              <td className="ranking">4위</td>
-              <td className="user">자바의 정석</td>
-              <td className="ratio">0.46</td>
-              <td>
-                <RiMailSendFill />
-              </td>
-              <td>
-                <PiChatTeardropDots />
-              </td>
-              <td>
-                <MdThumbUp />
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+          ))}
+        </tbody>
+      </table>
     </Section>
   );
 }
@@ -187,6 +161,7 @@ const Section = styled.section`
 
   svg {
     font-size: 1.3rem;
+    cursor: pointer;
   }
 
   @media (max-width: 800px) {

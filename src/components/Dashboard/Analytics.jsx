@@ -81,7 +81,7 @@ export default function Analytics() {
           <BiGroup />
         </div>
         <div className="content">
-          <h5>친구</h5>
+          <h5>친구 (Coming soon!)</h5>
           <h2>9명</h2>
         </div>
       </div>

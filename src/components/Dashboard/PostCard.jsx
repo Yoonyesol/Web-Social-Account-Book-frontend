@@ -29,7 +29,7 @@ export default function PostCard() {
         <h2>최근 공감한 글</h2>
       </div>
       <div className="container">
-        {data ? (
+        {data.length ? (
           data.map((post) => {
             return (
               <div className="card" key={post._id} onClick={() => nav(`/community/${post._id}`)}>
@@ -46,7 +46,9 @@ export default function PostCard() {
             );
           })
         ) : (
-          <div>공감한 글이 없습니다.</div>
+          <div className="comment">
+            <h3>공감한 글이 존재하지 않습니다.</h3>
+          </div>
         )}
       </div>
       <Link to="/community" className="view">
@@ -129,6 +131,19 @@ const Section = styled.section`
       svg {
         transform: translateX(0.5rem);
       }
+    }
+  }
+
+  .comment {
+    margin: 2rem 0;
+    text-align: center;
+    h3 {
+      color: black;
+      font-family: "Gowun Batang", serif;
+    }
+    span {
+      color: red;
+      font-family: "Gowun Batang", serif;
     }
   }
 

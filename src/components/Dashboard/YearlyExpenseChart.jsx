@@ -7,6 +7,9 @@ import { useSelector } from "react-redux";
 
 const calculateExpenseChangeRate = (previousMonthExpense, currentMonthExpense) => {
   if (previousMonthExpense === 0) {
+    if (currentMonthExpense === 0) {
+      return 0;
+    }
     return 100;
   }
   const changeRate = ((currentMonthExpense - previousMonthExpense) / previousMonthExpense) * 100;

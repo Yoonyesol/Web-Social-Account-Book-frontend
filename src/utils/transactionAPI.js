@@ -3,7 +3,7 @@ import axios from "axios";
 
 export const fetchTransactionByTidAPI = async (tid) => {
   try {
-    const responseData = await axios.get(`http://localhost:5000/api/transactions/${tid}`);
+    const responseData = await axios.get(`${process.env.REACT_APP_BACKEND_URL}api/transactions/${tid}`);
     return responseData.data.transaction;
   } catch (e) {
     console.log("HTTP request 도중 에러 발생:", e.message);
@@ -13,7 +13,7 @@ export const fetchTransactionByTidAPI = async (tid) => {
 
 export const fetchTransactionsByUidAPI = async (uid) => {
   try {
-    const responseData = await axios.get(`http://localhost:5000/api/transactions/user/${uid}`);
+    const responseData = await axios.get(`${process.env.REACT_APP_BACKEND_URL}api/transactions/user/${uid}`);
     return responseData.data.transactions;
   } catch (e) {
     console.log("HTTP request 도중 에러 발생:", e.message);
@@ -32,7 +32,7 @@ export const postTransactionAPI = async (form, token) => {
       amount: form.amount,
       memo: form.memo,
     };
-    const responseData = await axios.post("http://localhost:5000/api/transactions", newData, {
+    const responseData = await axios.post(`${process.env.REACT_APP_BACKEND_URL}api/transactions`, newData, {
       headers: {
         Authorization: `Bearer ${token}`, // 토큰을 Authorization 헤더에 포함
       },
@@ -54,11 +54,15 @@ export const editTransactionAPI = async (editedData, token) => {
       amount: editedData.amount,
       memo: editedData.memo,
     };
-    const responseData = await axios.patch(`http://localhost:5000/api/transactions/${editedData.id}`, newData, {
-      headers: {
-        Authorization: `Bearer ${token}`,
+    const responseData = await axios.patch(
+      `${process.env.REACT_APP_BACKEND_URL}api/transactions/${editedData.id}`,
+      newData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       },
-    });
+    );
     return responseData.data.transaction;
   } catch (e) {
     console.log("HTTP request 도중 에러 발생:", e.message);
@@ -68,7 +72,7 @@ export const editTransactionAPI = async (editedData, token) => {
 
 export const deleteTransactionAPI = async (tid, token) => {
   try {
-    await axios.delete(`http://localhost:5000/api/transactions/${tid}`, {
+    await axios.delete(`${process.env.REACT_APP_BACKEND_URL}api/transactions/${tid}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -81,7 +85,7 @@ export const deleteTransactionAPI = async (tid, token) => {
 
 export const fetchMonthlyTransactionsAPI = async (uid, date) => {
   try {
-    const responseData = await axios.get(`http://localhost:5000/api/transactions/${uid}/${date}`);
+    const responseData = await axios.get(`${process.env.REACT_APP_BACKEND_URL}api/transactions/${uid}/${date}`);
     return responseData.data;
   } catch (e) {
     console.log("HTTP request 도중 에러 발생:", e.message);
@@ -91,7 +95,9 @@ export const fetchMonthlyTransactionsAPI = async (uid, date) => {
 
 export const fetchLatestExpensesAPI = async (uid) => {
   try {
-    const responseData = await axios.get(`http://localhost:5000/api/transactions/user/latestExpenses/${uid}`);
+    const responseData = await axios.get(
+      `${process.env.REACT_APP_BACKEND_URL}api/transactions/user/latestExpenses/${uid}`,
+    );
     return responseData.data;
   } catch (e) {
     console.log("HTTP request 도중 에러 발생:", e.message);
@@ -101,7 +107,9 @@ export const fetchLatestExpensesAPI = async (uid) => {
 
 export const fetchExpensesCategoryAPI = async (uid) => {
   try {
-    const responseData = await axios.get(`http://localhost:5000/api/transactions/user/${uid}/expense/category/top5`);
+    const responseData = await axios.get(
+      `${process.env.REACT_APP_BACKEND_URL}api/transactions/user/${uid}/expense/category/top5`,
+    );
     return responseData.data;
   } catch (e) {
     console.log("HTTP request 도중 에러 발생:", e.message);

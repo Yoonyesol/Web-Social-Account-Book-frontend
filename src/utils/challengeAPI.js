@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const fetchBudgetExpenseRatioAPI = async (date) => {
   try {
-    const responseData = await axios.get(`http://localhost:5000/api/challenge/${date}`);
+    const responseData = await axios.get(`${process.env.REACT_APP_BACKEND_URL}api/challenge/${date}`);
     return responseData.data.challenge;
   } catch (error) {
     if (error.response) {

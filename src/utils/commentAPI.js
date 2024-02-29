@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const fetchAllCommentsByPostIdAPI = async (cid) => {
   try {
-    const responseData = await axios.get(`http://localhost:5000/api/comment/${cid}`);
+    const responseData = await axios.get(`${process.env.REACT_APP_BACKEND_URL}api/comment/${cid}`);
     return responseData.data.comments;
   } catch (error) {
     if (error.response) {
@@ -17,7 +17,7 @@ export const fetchAllCommentsByPostIdAPI = async (cid) => {
 
 export const fetchAllCommentsByUserIdAPI = async (uid) => {
   try {
-    const responseData = await axios.get(`http://localhost:5000/api/comment/user/${uid}`);
+    const responseData = await axios.get(`${process.env.REACT_APP_BACKEND_URL}api/comment/user/${uid}`);
     return responseData.data.comments;
   } catch (error) {
     if (error.response) {
@@ -39,7 +39,7 @@ export const createCommentAPI = async (form, token) => {
       content: form.content,
     };
 
-    const responseData = await axios.post("http://localhost:5000/api/comment", newData, {
+    const responseData = await axios.post(`${process.env.REACT_APP_BACKEND_URL}api/comment`, newData, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -62,7 +62,7 @@ export const updateCommentAPI = async (id, content, token) => {
     const editedData = {
       content: content,
     };
-    await axios.patch(`http://localhost:5000/api/comment/${id}`, editedData, {
+    await axios.patch(`${process.env.REACT_APP_BACKEND_URL}api/comment/${id}`, editedData, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -80,7 +80,7 @@ export const updateCommentAPI = async (id, content, token) => {
 
 export const deleteCommentAPI = async (id, token) => {
   try {
-    await axios.delete(`http://localhost:5000/api/comment/${id}`, {
+    await axios.delete(`${process.env.REACT_APP_BACKEND_URL}api/comment/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

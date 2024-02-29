@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const fetchUserDataAPI = async () => {
   try {
-    const responseData = await axios.get(`http://localhost:5000/api/users`);
+    const responseData = await axios.get(`${process.env.REACT_APP_BACKEND_URL}api/users`);
     return responseData.data.users;
   } catch (error) {
     if (error.response) {
@@ -25,7 +25,7 @@ export const signupAPI = async (form) => {
       email: form.email,
       password: form.password,
     };
-    const responseData = await axios.post(`http://localhost:5000/api/users/signup`, user);
+    const responseData = await axios.post(`${process.env.REACT_APP_BACKEND_URL}api/users/signup`, user);
     return responseData.data;
   } catch (error) {
     if (error.response) {
@@ -44,7 +44,7 @@ export const loginAPI = async (form) => {
       email: form.email,
       password: form.password,
     };
-    const responseData = await axios.post(`http://localhost:5000/api/users/login`, user);
+    const responseData = await axios.post(`${process.env.REACT_APP_BACKEND_URL}api/users/login`, user);
     return responseData.data;
   } catch (error) {
     if (error.response) {
@@ -59,7 +59,7 @@ export const loginAPI = async (form) => {
 
 export const fetchBudgetAPI = async (uid, date) => {
   try {
-    const responseData = await axios.get(`http://localhost:5000/api/users/budget/${uid}/${date}`);
+    const responseData = await axios.get(`${process.env.REACT_APP_BACKEND_URL}api/users/budget/${uid}/${date}`);
     return responseData.data.budget;
   } catch (error) {
     if (error.response) {
@@ -79,7 +79,7 @@ export const editBudgetAPI = async (editedData) => {
       amount: editedData.amount,
     };
     const responseData = await axios.patch(
-      `http://localhost:5000/api/users/budget/${editedData.uid}/${editedData.id}`,
+      `${process.env.REACT_APP_BACKEND_URL}api/users/budget/${editedData.uid}/${editedData.id}`,
       newData,
     );
     return responseData.data.budget;

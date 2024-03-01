@@ -4,10 +4,9 @@ import TransactionList from "../components/Transaction/TransactionList";
 import AccountBookAnalytics from "../components/Transaction/TransactionAnalytics";
 import Header from "../components/Transaction/Header";
 import Button from "../common/Button";
-import axios from "axios";
 import { fetchTransactionsByUid } from "../utils/api";
 
-export default function Transaction() {
+export default function Transactions() {
   const [transactionList, setTransactionList] = useState([]);
   const [curDate, setCurDate] = useState(new Date());
   const [data, setData] = useState([]);

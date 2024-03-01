@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Dashboard from "../pages/Dashboard";
 import Sidebar from "../common/Sidebar";
 import Auth from "../pages/Auth";
-import Transaction from "../pages/Transaction";
+import Transactions from "../pages/Transactions";
 import Calendar from "../pages/Calendar";
 import Challenge from "../pages/Challenge";
 import Community from "../pages/Community";
@@ -29,7 +29,7 @@ function AppRouter() {
           <Route exact path="/" element={<Dashboard userInfo={userInfo} />} />
           <Route path="/authenticate" element={<Auth userInfo={userInfo} />} />
           <Route path="/calendar" element={<Calendar />} />
-          <Route path="/transaction" element={<Transaction />} />
+          <Route path="/transactions" element={<Transactions />} />
           <Route path="/challenge" element={<Challenge userInfo={userInfo.currentUser} />} />
           <Route path="/community" element={<Community userInfo={userInfo.currentUser} />} />
           <Route path="/community/new" element={<Community userInfo={userInfo.currentUser} />} />

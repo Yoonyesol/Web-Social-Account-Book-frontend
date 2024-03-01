@@ -1,5 +1,5 @@
 import { createStore } from "redux";
-import transactionReducer from "./reducers";
+import transactionReducer from "./transactions/transactions";
 
 const store = createStore(transactionReducer);
 

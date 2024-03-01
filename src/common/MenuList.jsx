@@ -19,7 +19,7 @@ export default function MenuList() {
       </li>
 
       <li onClick={() => setCurrentLink(2)} className={currentLink === 2 ? "active" : "none"}>
-        <Link to="/transaction">
+        <Link to="/transactions">
           <RiDashboard2Fill />
           <span> 수입/지출 내역</span>
         </Link>

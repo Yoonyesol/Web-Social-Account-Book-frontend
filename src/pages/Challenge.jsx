@@ -5,9 +5,12 @@ import { PiChatTeardropDots } from "react-icons/pi";
 import { MdThumbUp } from "react-icons/md";
 import { fetchBudgetExpenseRatioAPI } from "../utils/challengeAPI";
 import { dateToYearMonthFormat } from "../constants/function";
+import { useSelector } from "react-redux";
+import { FiAlertCircle } from "react-icons/fi";
 
 export default function ChallengePage() {
   const [data, setData] = useState([]);
+  const userId = useSelector((state) => state.user.userInfo.userId);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -35,7 +38,9 @@ export default function ChallengePage() {
               <h1>이름</h1>
             </th>
             <th>
-              <h1>예산 대비 지출</h1>
+              <div className="tooltip-toggle" aria-label="총 지출 금액/예산" tabIndex="0">
+                <h1>예산 대비 지출</h1>
+              </div>
             </th>
             <th></th>
             <th></th>
@@ -44,10 +49,10 @@ export default function ChallengePage() {
         </thead>
         <tbody>
           {data.map((challenge, idx) => (
-            <tr key={challenge.userId}>
+            <tr key={challenge.userId} className={challenge.userId === userId ? "my-rank" : ""}>
               <td className="ranking">{idx + 1}위</td>
               <td className="user">{challenge.userName}</td>
-              <td className="ratio">{challenge.expenseRatio}</td>
+              <td className="ratio">{challenge.expenseRatio.toFixed(4)}</td>
               <td>
                 <RiMailSendFill />
               </td>
@@ -91,6 +96,7 @@ const Section = styled.section`
 
   .container td {
     font-size: 1.05em;
+
     -webkit-box-shadow: 0 2px 2px -2px #0e1119;
     -moz-box-shadow: 0 2px 2px -2px #0e1119;
     box-shadow: 0 2px 2px -2px #0e1119;
@@ -146,6 +152,10 @@ const Section = styled.section`
     transition-timing-function: line;
   }
 
+  .my-rank {
+    border: 3px solid #3c76e0;
+  }
+
   .user {
     font-weight: bold;
   }
@@ -164,6 +174,42 @@ const Section = styled.section`
     cursor: pointer;
   }
 
+  .tooltip-toggle {
+    cursor: pointer;
+    position: relative;
+
+    //text container
+    &::before {
+      position: absolute;
+      top: -5px;
+      left: 120px;
+      background-color: #2b222a;
+      border-radius: 5px;
+      color: #fff;
+      content: attr(aria-label);
+      padding: 0.5rem;
+      text-transform: none;
+      transition: all 0.5s ease;
+      width: 120px;
+    }
+
+    //Setting up the transition
+    &::before {
+      color: #efefef;
+      font-size: 13px;
+      opacity: 0;
+      pointer-events: none;
+      text-align: center;
+    }
+
+    //Triggering the transition
+    &:focus::before,
+    &:hover::before {
+      opacity: 1;
+      transition: all 0.75s ease;
+    }
+  }
+
   @media (max-width: 800px) {
     .container td:nth-child(4),
     .container th:nth-child(4) {
@@ -173,5 +219,41 @@ const Section = styled.section`
 
   @media screen and (min-width: 280px) and (max-width: 1080px) {
     margin-left: 0;
+  }
+
+  @media screen and (min-width: 280px) and (max-width: 500px) {
+    .container th h1 {
+      font-size: 0.9em;
+    }
+
+    .container td {
+      font-size: 0.85em;
+    }
+
+    .container td:first-child {
+      font-size: 1rem;
+    }
+
+    .container td,
+    .container th {
+      padding: 0.7rem;
+    }
+
+    svg {
+      font-size: 1.1rem;
+    }
+
+    .tooltip-toggle {
+      &::before {
+        top: 5px;
+        left: 50px;
+        padding: 0.25rem;
+        width: 100px;
+      }
+
+      &::before {
+        font-size: 12px;
+      }
+    }
   }
 `;

@@ -52,7 +52,7 @@ export default function Analytics() {
       <div className="analytic">
         <div className="content">
           <h5>예산</h5>
-          <h2>{budget.toLocaleString("ko-kr")}원</h2>
+          <h2>{budget ? budget.toLocaleString("ko-kr") : 0}원</h2>
         </div>
         <div className="logo">
           <BsFillCalendar2WeekFill />

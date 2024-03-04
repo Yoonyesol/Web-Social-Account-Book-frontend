@@ -12,7 +12,7 @@ import { fetchMonthlyTransactionsAPI } from "../../utils/transactionAPI";
 export default function Analytics() {
   const userId = useSelector((state) => state.user.userInfo.userId);
   const transactionAnalytics = useSelector((state) => state.transactionAnalytics);
-  const [budget, setBudget] = useState({ amount: 0 });
+  const [budget, setBudget] = useState();
   const [income, setIncome] = useState(0);
   const [expense, setExpense] = useState(0);
   const [curDate, setCurDate] = useState(new Date());

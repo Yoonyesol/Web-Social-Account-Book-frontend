@@ -58,9 +58,12 @@ export function ChallengeTable({ data }) {
           ))}
         </tbody>
       </table>
-      <span style={{ fontSize: "1.2rem" }}>
-        🎉나의 순위: <b>{rank}위</b>
-      </span>
+      <div className="rank-description">
+        <span style={{ fontSize: "1.2rem" }}>
+          🎉나의 순위: <b>{rank === 0 ? "-" : rank}위</b>
+        </span>
+        {rank === 0 && <span className="comment">※ 예산을 등록하면 나의 소비 순위를 확인할 수 있어요.</span>}
+      </div>
     </Section>
   );
 }
@@ -213,6 +216,16 @@ const Section = styled.section`
     &:hover::before {
       opacity: 1;
       transition: all 0.75s ease;
+    }
+  }
+
+  .rank-description {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    .comment {
+      font-size: 0.9rem;
     }
   }
 

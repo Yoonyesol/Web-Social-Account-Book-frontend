@@ -24,12 +24,12 @@ export default function MenuList() {
           <span> 수입/지출 내역</span>
         </Link>
       </li>
-      <li onClick={() => setCurrentLink(3)} className={currentLink === 3 ? "active" : "none"}>
+      {/* <li onClick={() => setCurrentLink(3)} className={currentLink === 3 ? "active" : "none"}>
         <Link to="/calendar">
           <AiTwotoneCalendar />
           <span> 캘린더</span>
         </Link>
-      </li>
+      </li> */}
       <li onClick={() => setCurrentLink(5)} className={currentLink === 5 ? "active" : "none"}>
         <Link to="/challenge">
           <BiRun />

@@ -11,7 +11,7 @@ export default function Community() {
   const nav = useNavigate();
   const [board, setBoard] = useState([]);
   const [currentPage, setCurrentPage] = useState(1); //현재 페이지수
-  const [postsPerPage] = useState(10); //한 페이지당 게시물 수
+  const [postsPerPage] = useState(15); //한 페이지당 게시물 수
 
   //페이지 이동
   const indexOfLast = currentPage * postsPerPage;
@@ -65,9 +65,9 @@ export default function Community() {
             </tr>
           </thead>
           <tbody>
-            {board.map((item, idx) => (
+            {currentPosts(board).map((item, idx) => (
               <tr key={item._id}>
-                <td className="td-idx">{idx}</td>
+                <td className="td-idx">{idx + 1}</td>
                 <td className="td-category">{item.category}</td>
                 <td className="td-title" onClick={() => handlePostDetail(item)}>
                   {item.title}

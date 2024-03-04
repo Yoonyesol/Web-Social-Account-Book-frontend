@@ -6,27 +6,38 @@ const Pagination = ({ postsPerPage, totalPosts, paginate }) => {
   for (let i = 1; i <= Math.ceil(totalPosts / postsPerPage); i++) {
     pageNumbers.push(i);
   }
+
   return (
     <div>
-      <nav>
+      <PageNav>
         <PageUl className="pagination">
           {pageNumbers.map((number) => (
             <PageLi key={number} className="page-item">
-              <PageSpan onClick={() => paginate(number)} className="page-link">
+              <PageSpan
+                onClick={() => {
+                  paginate(number);
+                }}
+                className="page-link"
+              >
                 {number}
               </PageSpan>
             </PageLi>
           ))}
         </PageUl>
-      </nav>
+      </PageNav>
     </div>
   );
 };
 
 export default Pagination;
 
+const PageNav = styled.nav`
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+`;
+
 const PageUl = styled.ul`
-  float: center;
   list-style: none;
   text-align: center;
   border-radius: 3px;
@@ -36,26 +47,23 @@ const PageUl = styled.ul`
 
 const PageLi = styled.li`
   display: inline-block;
+  margin: 0 5px;
   font-size: 15px;
   font-weight: 600;
   padding: 5px;
   border-radius: 5px;
-  width: 25px;
+  width: 30px;
+`;
+
+const PageSpan = styled.span`
+  padding: 10px 15px;
+  border-radius: 5px;
   &:hover {
     cursor: pointer;
     color: white;
     background-color: #8b8fc8;
   }
   &:focus::after {
-    color: white;
-    background-color: #8b8fc8;
-  }
-`;
-
-const PageSpan = styled.span`
-  &:hover::after,
-  &:focus::after {
-    border-radius: 100%;
     color: white;
     background-color: #8b8fc8;
   }

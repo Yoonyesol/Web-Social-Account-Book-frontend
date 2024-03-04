@@ -27,7 +27,6 @@ export default function ChallengePage() {
     const fetchSimilarData = async () => {
       try {
         const responseData = await fetchSimilarBudgetExpenseRatioAPI(uid, date);
-        console.log(responseData);
         setSimilarData(responseData);
       } catch (error) {
         console.log("API 호출 도중 에러 발생:", error.message);
@@ -42,6 +41,7 @@ export default function ChallengePage() {
     <Section>
       <div className="title">
         <h2>{date}월 실시간 소비 순위</h2>
+        <span>✨예산 대비 지출이 적을수록 랭킹이 높아요!</span>
       </div>
 
       <div className="card">
@@ -50,7 +50,7 @@ export default function ChallengePage() {
       </div>
 
       <div className="card">
-        <h3>📊동일 범위 예산 사용자 랭킹</h3>
+        <h3>📊유사 범위 예산 사용자 랭킹</h3>
         <span className="description">* 예산 범위: ±10%</span>
         <ChallengeTable data={similarData} />
       </div>
@@ -66,6 +66,8 @@ const Section = styled.section`
 
   .title {
     display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
     justify-content: center;
     margin-bottom: 2rem;
 
@@ -73,6 +75,10 @@ const Section = styled.section`
       color: #3c76e0;
       font-family: "Gowun Batang", serif;
       letter-spacing: 0.2rem;
+    }
+
+    span {
+      font-size: 0.9rem;
     }
   }
 

@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom";
 import LoadingIndicator from "../common/LoadingIndicator";
 import { useDispatch, useSelector } from "react-redux";
 import { loginSuccess, setToken, setTokenExpiration, setUserInfo } from "../modules/user";
+import { FaEye } from "react-icons/fa6";
+import { FaRegEyeSlash } from "react-icons/fa";
 
 export default function Auth() {
   const nav = useNavigate();
@@ -14,6 +16,7 @@ export default function Auth() {
 
   const [isLoginMode, setIsLoginMode] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
+  const [isShowPw, setIsShowPw] = useState(false);
   const [error, setError] = useState(null);
 
   const [form, setForm] = useState({
@@ -80,6 +83,10 @@ export default function Auth() {
     return <LoadingIndicator />;
   }
 
+  const handleShowPw = () => {
+    setIsShowPw(!isShowPw);
+  };
+
   return (
     <Section>
       <div className="container">
@@ -118,7 +125,7 @@ export default function Auth() {
             <h3>비밀번호</h3>
             <div className="form-item">
               <input
-                type="password"
+                type={isShowPw ? "text" : "password"}
                 name="password"
                 placeholder="비밀번호"
                 minLength={6}
@@ -126,6 +133,10 @@ export default function Auth() {
                 onChange={handleInputChange}
                 required
               />
+            </div>
+            <div className="show-password">
+              <input type="checkbox" onChange={handleShowPw} />
+              <label>비밀번호 보이기</label>
             </div>
           </div>
           <div className="submit-btn">
@@ -176,6 +187,19 @@ const Section = styled.section`
     width: 100%;
     height: 35px;
     font-family: "Gowun Batang", serif;
+  }
+
+  .show-password {
+    margin-top: 0.6rem;
+    display: flex;
+    flex-direction: row;
+    gap: 0.3rem;
+    justify-content: start;
+    color: rgba(0, 0, 0, 0.65);
+
+    label {
+      font-size: 13px;
+    }
   }
 
   .submit-btn {

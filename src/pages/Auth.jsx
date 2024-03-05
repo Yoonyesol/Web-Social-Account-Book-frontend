@@ -76,10 +76,13 @@ export default function Auth() {
     setError(null);
   };
 
+  if (isLoading) {
+    return <LoadingIndicator />;
+  }
+
   return (
     <Section>
       <div className="container">
-        {isLoading && <LoadingIndicator />}
         <h1>{isLoginMode ? "로그인" : "회원가입"}</h1>
         {error && <ErrorMessage>{error}</ErrorMessage>}
         <form onSubmit={handleAuthSubmit}>

@@ -82,9 +82,12 @@ const CommunityEditor = () => {
     }
   };
 
+  if (isLoading) {
+    return <LoadingIndicator />;
+  }
+
   return (
     <Section>
-      {isLoading && <LoadingIndicator />}
       <div className="container">
         <h3>{isEdit ? "글 수정" : "게시글 등록"}</h3>
         <form className="form" onSubmit={onSubmit}>

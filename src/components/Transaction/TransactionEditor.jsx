@@ -50,7 +50,7 @@ export default function TransactionEditor({ isEdit, selectedData, closeEditor })
       alert("저장되었습니다!");
       onCancel();
     } catch (err) {
-      console.log("post 진행 중 오류가 발생했습니다.", err.message);
+      alert("가계부 내역 등록 중 오류가 발생했습니다.", err.message);
     }
   };
 
@@ -63,7 +63,7 @@ export default function TransactionEditor({ isEdit, selectedData, closeEditor })
       alert("수정되었습니다!");
       onCancel();
     } catch (err) {
-      console.log("수정 중 오류가 발생했습니다.", err.message);
+      alert("가계부 내역 수정 중 오류가 발생했습니다.", err.message);
     }
   };
 

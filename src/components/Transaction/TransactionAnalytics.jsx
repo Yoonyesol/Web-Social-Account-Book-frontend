@@ -24,7 +24,7 @@ export default function TransactionAnalytics({ curDate }) {
         const responseData = await fetchBudgetAPI(userId, dateToYearMonthFormat(curDate));
         dispatch(setBudget(responseData));
       } catch (error) {
-        console.log("API 호출 도중 에러 발생:", error.message);
+        console.log("월별 예산을 가져오는 API 호출 도중 에러 발생:", error.message);
       }
     };
 
@@ -34,7 +34,7 @@ export default function TransactionAnalytics({ curDate }) {
         dispatch(setIncome(responseData.income));
         dispatch(setExpense(responseData.expense));
       } catch (error) {
-        console.log("API 호출 도중 에러 발생:", error.message);
+        console.log("월별 소비/지출을 가져오는 API 호출 도중 에러 발생:", error.message);
       }
     };
 

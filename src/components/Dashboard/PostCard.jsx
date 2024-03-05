@@ -17,7 +17,7 @@ export default function PostCard() {
         const post = await fetchLikedPostByUidAPI(token);
         setData(post);
       } catch (error) {
-        console.log("API 호출 도중 에러 발생:", error.message);
+        console.log("유저별 공감한 게시글 API 호출 도중 에러 발생:", error.message);
       }
     };
     fetchLikedPostByUid();

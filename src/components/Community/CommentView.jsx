@@ -49,7 +49,7 @@ export function CommentView({ userInfo, postId }) {
         setIsLoading(false);
         fetchComments();
       } catch (error) {
-        console.log("API 호출 도중 에러 발생:", error.message);
+        alert("댓글 삭제에 실패했습니다.", error.message);
         setIsLoading(false);
       }
     }

@@ -34,7 +34,7 @@ const BudgetEditor = ({ closeEditor, curDate, budget }) => {
       alert("저장되었습니다!");
       onCancel();
     } catch (err) {
-      console.log("수정 진행 중 오류가 발생했습니다.", err.message);
+      alert("수정 진행 중 오류가 발생했습니다.", err.message);
     }
   };
 

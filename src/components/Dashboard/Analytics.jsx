@@ -24,7 +24,7 @@ export default function Analytics() {
           const responseData = await fetchBudgetAPI(userId, dateToYearMonthFormat(curDate));
           setBudget(responseData.amount);
         } catch (error) {
-          console.log("API 호출 도중 에러 발생:", error.message);
+          console.log("해당 유저의 예산을 불러올 수 없습니다:", error.message);
         }
       };
 
@@ -34,7 +34,7 @@ export default function Analytics() {
           setIncome(responseData.income);
           setExpense(responseData.expense);
         } catch (error) {
-          console.log("API 호출 도중 에러 발생:", error.message);
+          console.log("해당 유저의 월별 데이터를 불러올 수 없습니다:", error.message);
         }
       };
 

@@ -44,7 +44,7 @@ export function CommentEditor({ isEdit, postId, userInfo, comment, onCancelEdit,
         });
       } catch (error) {
         setIsLoading(false);
-        console.log("댓글 작성 중 오류가 발생했습니다.", error.message);
+        alert("댓글 작성에 실패했습니다.", error.message);
       }
     } else {
       try {
@@ -55,7 +55,7 @@ export function CommentEditor({ isEdit, postId, userInfo, comment, onCancelEdit,
         onCancelEdit();
       } catch (error) {
         setIsLoading(false);
-        console.log("댓글 수정 중 에러 발생:", error.message);
+        alert("댓글 수정에 실패했습니다.", error.message);
       }
     }
   };

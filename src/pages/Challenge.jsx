@@ -20,7 +20,7 @@ export default function ChallengePage() {
         const responseData = await fetchBudgetExpenseRatioAPI(date);
         setData(responseData);
       } catch (error) {
-        console.log("API 호출 도중 에러 발생:", error.message);
+        console.log("전체 챌린지 랭킹 API 호출 도중 에러 발생:", error.message);
       }
     };
 
@@ -29,7 +29,7 @@ export default function ChallengePage() {
         const responseData = await fetchSimilarBudgetExpenseRatioAPI(uid, date);
         setSimilarData(responseData);
       } catch (error) {
-        console.log("API 호출 도중 에러 발생:", error.message);
+        console.log("예산별 챌린지 랭킹 API 호출 도중 에러 발생:", error.message);
       }
     };
 

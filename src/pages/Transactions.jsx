@@ -33,7 +33,7 @@ export default function Transactions() {
         const transactions = await fetchTransactionsByUidAPI(uid);
         dispatch(getTransactions(transactions));
       } catch (error) {
-        console.log("API 호출 도중 에러 발생:", error.message);
+        console.log("해당 유저의 입출금 내역을 찾을 수 없습니다:", error.message);
       }
     };
     fetchData();

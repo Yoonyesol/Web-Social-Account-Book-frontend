@@ -48,9 +48,9 @@ export default function TransactionList({ data }) {
       try {
         await deleteTransactionAPI(id, token);
         dispatch(removeTransaction(id));
-        alert("삭제 완료");
+        alert("삭제 완료!");
       } catch (err) {
-        console.log("삭제 중 오류가 발생했습니다.", err.message);
+        alert("가계부 내역 삭제 도중 오류가 발생했습니다.", err.message);
       }
     }
   };

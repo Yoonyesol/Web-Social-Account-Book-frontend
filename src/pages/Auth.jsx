@@ -6,8 +6,6 @@ import { useNavigate } from "react-router-dom";
 import LoadingIndicator from "../common/LoadingIndicator";
 import { useDispatch, useSelector } from "react-redux";
 import { loginSuccess, setToken, setTokenExpiration, setUserInfo } from "../modules/user";
-import { FaEye } from "react-icons/fa6";
-import { FaRegEyeSlash } from "react-icons/fa";
 
 export default function Auth() {
   const nav = useNavigate();
@@ -17,7 +15,7 @@ export default function Auth() {
   const [isLoginMode, setIsLoginMode] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [isShowPw, setIsShowPw] = useState(false);
-  const [error, setError] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
 
   const [form, setForm] = useState({
     name: "",
@@ -65,18 +63,18 @@ export default function Auth() {
       alert(`${isLoginMode ? "로그인" : "회원가입"}에 성공했습니다!`);
 
       setIsLoading(false);
-      setError(null);
+      setErrorMsg(null);
 
       nav("/", { replace: true });
     } catch (err) {
       setIsLoading(false);
-      setError(err.message || "회원가입 진행 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.");
+      setErrorMsg(err.message || "회원가입 진행 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.");
     }
   };
 
   const switchModeHandler = () => {
     setIsLoginMode((prevMode) => !prevMode);
-    setError(null);
+    setErrorMsg(null);
   };
 
   if (isLoading) {
@@ -91,7 +89,7 @@ export default function Auth() {
     <Section>
       <div className="container">
         <h1>{isLoginMode ? "로그인" : "회원가입"}</h1>
-        {error && <ErrorMessage>{error}</ErrorMessage>}
+        {errorMsg && <ErrorMessage>{errorMsg}</ErrorMessage>}
         <form onSubmit={handleAuthSubmit}>
           {!isLoginMode && (
             <div className="form-field">

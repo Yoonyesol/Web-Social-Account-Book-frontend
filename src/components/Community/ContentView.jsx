@@ -25,7 +25,7 @@ const ContentView = () => {
         const post = await fetchPostByCidAPI(params.cid);
         setSelectedPost(post);
       } catch (error) {
-        console.log("API 호출 도중 에러 발생:", error.message);
+        console.log("게시글 정보 API 호출 도중 에러 발생:", error.message);
       }
     };
     fetchPostByCid();
@@ -59,7 +59,7 @@ const ContentView = () => {
   };
 
   const handleRemovePost = async () => {
-    if (window.confirm("내역을 삭제하시겠습니까?")) {
+    if (window.confirm("게시글을 삭제하시겠습니까?")) {
       setIsLoading(true);
       try {
         await deletePostAPI(params.cid, token);
@@ -67,7 +67,7 @@ const ContentView = () => {
         setIsLoading(false);
         nav("/community", { replace: true });
       } catch (error) {
-        console.log("API 호출 도중 에러 발생:", error.message);
+        alert("게시글을 삭제하지 못했습니다.", error.message);
         setIsLoading(false);
       }
     }
@@ -82,13 +82,16 @@ const ContentView = () => {
         setLike({ count: like.count + 1, click: true, animation: true });
       }
     } catch (error) {
-      console.log("API 호출 도중 에러 발생:", error.message);
+      alert("공감 상태를 업데이트하지 못했습니다.", error.message);
     }
   };
 
+  if (isLoading) {
+    return <LoadingIndicator />;
+  }
+
   return (
     <Section>
-      {isLoading && <LoadingIndicator />}
       <div className="post-container">
         <div className="title">
           <h3>{`[${selectedPost.category}] ${selectedPost.title}`}</h3>

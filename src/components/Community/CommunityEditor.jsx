@@ -67,7 +67,7 @@ const CommunityEditor = () => {
         });
       } catch (error) {
         setIsLoading(false);
-        console.log("post 진행 중 오류가 발생했습니다.", error.message);
+        alert("게시글을 작성하지 못했습니다.", error.message);
       }
     } else {
       try {
@@ -77,7 +77,7 @@ const CommunityEditor = () => {
         nav(`/community/${editedData.id}`, { replace: true });
       } catch (error) {
         setIsLoading(false);
-        console.log("update 진행 중 오류가 발생했습니다.", error.message);
+        alert("게시글을 수정하지 못했습니다.", error.message);
       }
     }
   };

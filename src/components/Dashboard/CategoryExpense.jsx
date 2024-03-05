@@ -33,7 +33,7 @@ export default function CategoryExpense() {
         const responseData = await fetchExpensesCategoryAPI(uid);
         setData(responseData);
       } catch (error) {
-        console.log("API 호출 도중 에러 발생:", error.message);
+        console.log("카테고리별 지출 API 호출 도중 에러 발생:", error.message);
       }
     };
     fetchData();

@@ -29,7 +29,7 @@ export default function Community() {
         const posts = await fetchAllPostsAPI();
         setBoard(posts);
       } catch (error) {
-        console.log("API 호출 도중 에러 발생:", error.message);
+        alert("게시글을 불러오지 못했습니다!", error.message);
       }
     };
     fetchAllPosts();

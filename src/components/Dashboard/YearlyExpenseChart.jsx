@@ -30,7 +30,7 @@ export default function YearlyExpenseChart() {
         setData(responseData.monthlyExpenses);
         setTotalExpense(responseData.totalYearlyExpense);
       } catch (error) {
-        console.log("API 호출 도중 에러 발생:", error.message);
+        console.log("최근 1년 지출금액 API 호출 도중 에러 발생:", error.message);
       }
     };
     fetchData();

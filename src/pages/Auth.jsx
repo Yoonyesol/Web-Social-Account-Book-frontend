@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import LoadingIndicator from "../common/LoadingIndicator";
 import { useDispatch, useSelector } from "react-redux";
 import { loginSuccess, setToken, setTokenExpiration, setUserInfo } from "../modules/user";
+import { useRef } from "react";
 
 export default function Auth() {
   const nav = useNavigate();
@@ -23,7 +24,15 @@ export default function Auth() {
     password: "",
   });
 
+  const nameInputRef = useRef(null);
+  const emailInputRef = useRef(null);
+  const passwordInputRef = useRef(null);
+
   const handleInputChange = (e) => {
+    if (errorMsg) {
+      setErrorMsg(null);
+    }
+
     const { name, value } = e.target;
     setForm({
       ...form,
@@ -59,12 +68,8 @@ export default function Auth() {
           tokenExpiration: tokenExpirationDate.toISOString(),
         }),
       );
-
-      alert(`${isLoginMode ? "로그인" : "회원가입"}에 성공했습니다!`);
-
       setIsLoading(false);
       setErrorMsg(null);
-
       nav("/", { replace: true });
     } catch (err) {
       setIsLoading(false);
@@ -100,6 +105,7 @@ export default function Auth() {
                   name="name"
                   placeholder="이름"
                   value={form.name}
+                  ref={nameInputRef}
                   onChange={handleInputChange}
                   required
                 />
@@ -114,6 +120,7 @@ export default function Auth() {
                 name="email"
                 placeholder="이메일"
                 value={form.email}
+                ref={emailInputRef}
                 onChange={handleInputChange}
                 required
               />
@@ -127,6 +134,7 @@ export default function Auth() {
                 name="password"
                 placeholder="비밀번호"
                 minLength={6}
+                ref={passwordInputRef}
                 value={form.password}
                 onChange={handleInputChange}
                 required
@@ -153,7 +161,7 @@ export default function Auth() {
 const Section = styled.section`
   .container {
     position: relative;
-    width: 500px;
+    width: 30rem;
     margin: 50px auto;
     display: flex;
     flex-direction: column;
@@ -218,7 +226,16 @@ const Section = styled.section`
     width: 8rem;
   }
 
-  @media screen and (min-width: 280px) and (max-width: 1080px) {
+  @media screen and (min-width: 280px) and (max-width: 450px) {
+    .container {
+      width: 15rem;
+    }
+  }
+
+  @media screen and (min-width: 451px) and (max-width: 520px) {
+    .container {
+      width: 25rem;
+    }
   }
 `;
 

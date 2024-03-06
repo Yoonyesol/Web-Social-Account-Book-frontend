@@ -84,7 +84,7 @@ export default function TransactionList({ data }) {
       <ControlOption value={sortType} chooseOption={setSortType} optionList={sortOption} />
       <div className="history">
         {getSortedTransactionList().map((item) => (
-          <div className="card" key={item._id}>
+          <div className="card" key={item._id} onClick={() => handleEdit(item._id)}>
             <div className="content">
               <div className="cell date">
                 <b>{`${new Date(item.date).getDate()}일 (${day[new Date(item.date).getDay()]})`}</b>
@@ -144,6 +144,7 @@ const Section = styled.section`
     ${cardStyleRealWhite}
     padding: 1rem 2rem;
     border: none;
+    cursor: pointer;
     width: 100%;
 
     .content {
@@ -195,6 +196,13 @@ const Section = styled.section`
       }
     }
   }
+
+  @media (max-width: 650px) {
+    .memo {
+      display: none;
+    }
+  }
+
   @media screen and (min-width: 280px) and (max-width: 1080px) {
   }
 `;

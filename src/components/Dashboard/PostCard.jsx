@@ -62,8 +62,9 @@ const Section = styled.section`
   ${cardStyle};
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 1rem;
-  height: 537.19px;
+  height: 500px;
   overflow-y: auto;
   overflow-x: hidden;
   cursor: pointer;

@@ -55,12 +55,12 @@ export default function Sidebar() {
     <>
       <Section>
         <div className="top">
-          <div className="brand">
-            <Link to="/" style={{ textDecoration: "none" }}>
+          <Link to="/" style={{ textDecoration: "none" }}>
+            <div className="brand">
               <VscNotebook />
               <span>소셜 가계부</span>
-            </Link>
-          </div>
+            </div>{" "}
+          </Link>
           <div className="toggle">
             {navbarState ? (
               <VscChromeClose className="menu-btn" onClick={() => setNavbarState(false)} />
@@ -126,9 +126,10 @@ const Section = styled.section`
     .brand {
       width: 100%;
       display: flex;
+      flex-direction: row;
       justify-content: center;
       align-items: center;
-      gap: 2rem;
+      gap: 0.5rem;
 
       svg {
         color: #e5dae8;
@@ -217,9 +218,13 @@ const Section = styled.section`
           font-size: 1.4rem;
         }
       }
+
       .brand {
-        gap: 1rem;
         justify-content: flex-start;
+
+        span {
+          font-size: 1.5rem;
+        }
       }
     }
     .top > .links,

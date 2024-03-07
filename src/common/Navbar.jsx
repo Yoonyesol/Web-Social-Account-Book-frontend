@@ -7,7 +7,9 @@ export default function Navbar() {
   return (
     <Nav>
       <div className="title">
-        <h4>hello {userInfo.name}</h4>
+        <h4>
+          hello <span className="user-name">{userInfo.name}</span>
+        </h4>
         <h1>
           Welcome to <span>CASH DASHBOARD</span>
         </h1>
@@ -25,6 +27,17 @@ const Nav = styled.nav`
   justify-content: space-between;
   color: black;
   .title {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    .user-name {
+      font-size: 1.2rem;
+      background: linear-gradient(to right top, #6369bd, #861657, #ffa69e);
+      color: transparent;
+      -webkit-background-clip: text;
+    }
+
     h1 {
       span {
         margin-left: 0.5rem;
@@ -59,13 +72,13 @@ const Nav = styled.nav`
       }
     }
   } */
-  @media screen and (min-width: 280px) and (max-width: 1080px) {
+  @media screen and (min-width: 280px) and (max-width: 430px) {
     flex-direction: column;
     .title {
       h1 {
         span {
           display: block;
-          margin: 1rem 0;
+          margin: 0.5rem 0;
         }
       }
     }

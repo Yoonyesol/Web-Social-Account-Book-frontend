@@ -44,19 +44,19 @@ export default function YearlyExpenseChart() {
 
   return (
     <Section>
-      <div className="top">
-        <div className="info">
-          <h4>최근 1년 지출</h4>
-          <h1>{totalExpense.toLocaleString("ko-kr")}원</h1>
-          <h5>전월 대비 지출 증감 ({new Date().getMonth() + 1}월)</h5>
-          <div className="growth">
-            <span>{expenseChangeRate}%</span>
-          </div>
+      <div className="title">
+        <h2>최근 1년 지출</h2>
+      </div>
+      <div className="info">
+        <h1>{totalExpense.toLocaleString("ko-kr")}원</h1>
+        <h5>전월 대비 지출 증감 ({new Date().getMonth() + 1}월)</h5>
+        <div className="growth">
+          <span>{expenseChangeRate}%</span>
         </div>
       </div>
       <div className="chart">
         <ResponsiveContainer height="100%" width="100%">
-          <AreaChart width={500} height={400} data={data} margin={{ top: 0, left: 0, right: 0, bottom: 0 }}>
+          <AreaChart width={800} height={400} data={data} margin={{ top: 0, left: 0, right: 0, bottom: 0 }}>
             <Tooltip />
             <XAxis dataKey="month" />
             <Area
@@ -81,47 +81,64 @@ const Section = styled.section`
   justify-content: space-between;
   min-height: 20rem;
   ${cardStyle}
-  padding: 2rem 0 0 0;
-  .top {
-    .info {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.3rem;
-      h1 {
-        font-size: 2rem;
-        margin-bottom: 1rem;
+  padding: 16px 0 0 10px;
+
+  .title {
+    text-align: center;
+    h2 {
+      color: #3c76e0;
+      font-family: "Gowun Batang", serif;
+      letter-spacing: 0.3rem;
+      margin-bottom: 0.5rem;
+    }
+  }
+
+  .info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+
+    h1 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+    h5 {
+      margin-bottom: 0.3rem;
+    }
+    .growth {
+      background-color: #6c5a74;
+      padding: 0.3rem 0.5rem;
+      border-radius: 1rem;
+      transition: 0.3s ease-in-out;
+      &:hover {
+        background-color: #8b8fc8;
       }
-      h5 {
-        margin-bottom: 0.3rem;
-      }
-      .growth {
-        background-color: #6c5a74;
-        padding: 0.5rem;
-        border-radius: 1rem;
-        transition: 0.3s ease-in-out;
-        &:hover {
-          background-color: #8b8fc8;
-          span {
-            color: white;
-          }
-        }
-        span {
-          color: white;
-        }
+      span {
+        font-size: 0.9rem;
+        color: white;
       }
     }
   }
+
   .chart {
-    height: 70%;
+    height: 100%;
+    width: calc(100% - 10px);
     .recharts-default-tooltip {
       background-color: white !important;
       border-color: white !important;
     }
   }
-  @media screen and (min-width: 280px) and (max-width: 1080px) {
-    .AreaChart {
-      /* width: 200; */
+
+  /* @media screen and (max-width: 1080px) {
+    .chart {
+      
     }
-  }
+  } */
+
+  /* @media screen and (min-width: 280px) and (max-width: 1080px) {
+    .chart {
+      width: 90%;
+    }
+  } */
 `;

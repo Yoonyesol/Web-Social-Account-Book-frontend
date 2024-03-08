@@ -26,6 +26,7 @@ const CustomTooltip = ({ active, payload, label }) => {
 export default function CategoryExpense() {
   const uid = useSelector((state) => state.user.userInfo.userId);
   const [data, setData] = useState([]);
+  const [chartSize, setChartSize] = useState(300);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -39,6 +40,19 @@ export default function CategoryExpense() {
     fetchData();
   }, [uid]);
 
+  useEffect(() => {
+    const handleResize = () => {
+      const newSize = window.innerWidth <= 445 ? 150 : 300; // 창 크기에 따라 너비 조절
+      setChartSize(newSize);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   return (
     <Section>
       <div className="title">
@@ -47,7 +61,7 @@ export default function CategoryExpense() {
       {data.length ? (
         <>
           <div className="piechart">
-            <PieChart width={300} height={300}>
+            <PieChart width={chartSize} height={chartSize}>
               <Pie
                 data={data}
                 color="#000000"
@@ -55,7 +69,7 @@ export default function CategoryExpense() {
                 nameKey="category"
                 cx="50%"
                 cy="50%"
-                outerRadius={120}
+                outerRadius="100%"
                 fill="#8884d8"
               >
                 {data.map((entry, index) => (
@@ -86,12 +100,13 @@ const Section = styled.section`
   display: flex;
   flex-direction: column;
   align-items: center;
+
   .title {
+    margin-bottom: 2rem;
     h2 {
       color: #3c76e0;
       font-family: "Gowun Batang", serif;
       letter-spacing: 0.3rem;
-      margin-bottom: 2rem;
     }
   }
   .piechart {

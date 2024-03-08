@@ -90,10 +90,12 @@ const Section = styled.section`
       font-family: "Gowun Batang", serif;
       letter-spacing: 0.3rem;
       margin-bottom: 0.5rem;
+      margin-right: 10px;
     }
   }
 
   .info {
+    margin-right: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -129,16 +131,4 @@ const Section = styled.section`
       border-color: white !important;
     }
   }
-
-  /* @media screen and (max-width: 1080px) {
-    .chart {
-      
-    }
-  } */
-
-  /* @media screen and (min-width: 280px) and (max-width: 1080px) {
-    .chart {
-      width: 90%;
-    }
-  } */
 `;

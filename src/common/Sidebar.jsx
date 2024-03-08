@@ -59,7 +59,7 @@ export default function Sidebar() {
             <div className="brand">
               <VscNotebook />
               <span>소셜 가계부</span>
-            </div>{" "}
+            </div>
           </Link>
           <div className="toggle">
             {navbarState ? (

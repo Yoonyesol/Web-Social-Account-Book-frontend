@@ -73,7 +73,7 @@ export default function TransactionEditor({ isEdit, selectedData, closeEditor })
 
   return (
     <Section>
-      <h3 className="title">{isEdit ? "내역 수정" : "내역 추가"}</h3>
+      <h2 className="title">{isEdit ? "내역 수정" : "내역 추가"}</h2>
       <form className="form" onSubmit={isEdit ? onSubmitEdit : onSubmit}>
         <div className="formItem">
           <label className="transaction_type">
@@ -175,6 +175,12 @@ export default function TransactionEditor({ isEdit, selectedData, closeEditor })
 }
 
 const Section = styled.section`
+  .title {
+    color: #3c76e0;
+    font-family: "Gowun Batang", serif;
+    letter-spacing: 0.3rem;
+  }
+
   .formItem {
     display: flex;
     flex-direction: column;

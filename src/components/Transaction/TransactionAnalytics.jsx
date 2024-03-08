@@ -108,6 +108,20 @@ const Section = styled.section`
     }
   }
 
-  @media screen and (min-width: 280px) and (max-width: 1080px) {
+  @media (max-width: 450px) {
+    font-size: 80%;
+  }
+
+  @media screen and (min-width: 280px) and (max-width: 500px) {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin: 0;
+
+    .analytic {
+      ${cardStyleRealWhite}
+      padding: 1rem 1.5rem 2rem 1.5rem;
+      width: 100%;
+    }
   }
 `;

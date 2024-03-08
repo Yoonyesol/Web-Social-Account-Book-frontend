@@ -44,10 +44,9 @@ const BudgetEditor = ({ closeEditor, curDate, budget }) => {
 
   return (
     <Section>
-      <h3>예산 수정</h3>
+      <h2 className="title">예산 수정</h2>
       <form className="form" onSubmit={onSubmit}>
         <div className="formItem">
-          <label className="amount">예산</label>
           <input
             className="formInput"
             required
@@ -70,6 +69,12 @@ const BudgetEditor = ({ closeEditor, curDate, budget }) => {
 export default BudgetEditor;
 
 const Section = styled.section`
+  .title {
+    color: #3c76e0;
+    font-family: "Gowun Batang", serif;
+    letter-spacing: 0.3rem;
+  }
+
   .formItem {
     display: flex;
     flex-direction: column;
@@ -77,21 +82,9 @@ const Section = styled.section`
     margin: 2rem 0rem 1rem 0rem;
   }
 
-  .formItem > label {
-    margin-bottom: 8px;
-    font-weight: bold;
-    font-size: 17px;
-    font-family: "Gowun Batang", serif;
-  }
-
   .formInput {
     font-size: 14px;
     padding: 0.25rem;
-  }
-
-  .formItem > input[type="date"] {
-    font-family: "Montserrat", sans-serif;
-    padding: 0.1rem;
   }
 
   .btn-container {

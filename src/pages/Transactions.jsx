@@ -100,4 +100,8 @@ const Section = styled.section`
       margin: 0;
     }
   }
+
+  @media (max-width: 450px) {
+    padding: 1rem;
+  }
 `;

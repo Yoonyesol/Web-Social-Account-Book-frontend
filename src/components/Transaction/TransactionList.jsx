@@ -197,12 +197,39 @@ const Section = styled.section`
     }
   }
 
-  @media (max-width: 650px) {
+  @media (max-width: 540px) {
+    font-size: 80%;
+  }
+
+  @media (max-width: 300px) {
     .memo {
       display: none;
     }
   }
 
-  @media screen and (min-width: 280px) and (max-width: 1080px) {
+  @media screen and (min-width: 280px) and (max-width: 450px) {
+    padding: 0.9rem;
+
+    .card {
+      padding: 0.5rem;
+
+      .content {
+        .category {
+          font-size: 0.55rem;
+        }
+        .title {
+          font-size: 0.7rem;
+        }
+        .amount {
+          font-size: 0.7rem;
+        }
+        .memo {
+          font-size: 0.7rem;
+        }
+        .action {
+          flex-direction: column;
+        }
+      }
+    }
   }
 `;

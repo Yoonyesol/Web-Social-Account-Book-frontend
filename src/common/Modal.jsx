@@ -1,25 +1,18 @@
 import React from "react";
 import styled from "styled-components";
-import { MdOutlineCancel } from "react-icons/md";
 
-function Modal({ className, onClose, maskClosable, closable, visible, children }) {
+function Modal({ className, onClose, maskClosable, visible, children }) {
   const onMaskClick = (e) => {
     if (e.target === e.currentTarget) {
       onClose(e);
     }
   };
 
-  const close = (e) => {
-    if (onClose) {
-      onClose(e);
-    }
-  };
   return (
     <>
       <ModalOverlay visible={visible} />
       <ModalWrapper className={className} onClick={maskClosable ? onMaskClick : null} tabIndex="-1" visible={visible}>
         <ModalInner tabIndex="0" className="modal-inner">
-          {/* {closable && <MdOutlineCancel className="modal-close" onClick={close} size="1.7rem" />} */}
           {children}
         </ModalInner>
       </ModalWrapper>
@@ -66,6 +59,20 @@ const ModalInner = styled.div`
   padding: 30px 45px;
   svg {
     float: right;
+  }
+
+  @media screen and (min-width: 280px) and (max-width: 349px) {
+    padding: 15px 22px;
+    width: 15rem;
+  }
+
+  @media screen and (min-width: 350px) and (max-width: 569px) {
+    padding: 15px 22px;
+    width: 20rem;
+  }
+
+  @media screen and (min-width: 570px) and (max-width: 800px) {
+    width: 30rem;
   }
 `;
 

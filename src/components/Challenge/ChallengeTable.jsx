@@ -6,7 +6,7 @@ import { MdThumbUp } from "react-icons/md";
 import { useSelector } from "react-redux";
 
 let rank = 0;
-const rankingImoji = ["🥇", "🥈", "🥉"];
+const rankingImoji = ["🥇 ", "🥈 ", "🥉 "];
 
 export function ChallengeTable({ data }) {
   const userId = useSelector((state) => state.user.userInfo.userId);
@@ -29,23 +29,25 @@ export function ChallengeTable({ data }) {
               </div>
             </th>
             <th></th>
-            <th></th>
-            <th></th>
+            {/* <th></th>
+            <th></th> */}
           </tr>
         </thead>
         <tbody>
           {data.map((challenge, idx) => (
             <tr key={challenge.userId} className={challenge.userId === userId ? "my-rank" : ""}>
               <td className="ranking">
-                {idx <= 2 ? rankingImoji[idx] : "\u00a0\u00a0\u00a0"}
+                {idx <= 2 ? rankingImoji[idx] : "\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0"}
                 {challenge.userId === userId ? (rank = idx + 1) : idx + 1}위
               </td>
               <td className="user">{challenge.userName}</td>
               <td className="ratio">{challenge.expenseRatio.toFixed(4)}</td>
-              <td>
-                <RiMailSendFill />
+              <td className="email">
+                <a href={"mailto:" + challenge.userEmail}>
+                  <RiMailSendFill />
+                </a>
               </td>
-              <td>
+              {/* <td>
                 <PiChatTeardropDots />
               </td>
               <td className="like">
@@ -53,7 +55,7 @@ export function ChallengeTable({ data }) {
                   <MdThumbUp />
                   <span>0</span>
                 </div>
-              </td>
+              </td> */}
             </tr>
           ))}
         </tbody>
@@ -219,6 +221,12 @@ const Section = styled.section`
     }
   }
 
+  .email {
+     a {
+      color: black;
+    }
+  }
+
   .rank-description {
     display: flex;
     flex-direction: column;
@@ -229,12 +237,12 @@ const Section = styled.section`
     }
   }
 
-  @media (max-width: 800px) {
+  /* @media (max-width: 800px) {
     .container td:nth-child(4),
     .container th:nth-child(4) {
       display: none;
     }
-  }
+  } */
 
   @media screen and (min-width: 280px) and (max-width: 500px) {
     .container th h1 {

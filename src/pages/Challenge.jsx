@@ -60,7 +60,7 @@ export default function ChallengePage() {
 
 const Section = styled.section`
   margin-left: 18vw;
-  padding: 1.5rem;
+  padding: 1.5rem 15rem;
   height: 100%;
   text-align: center;
 
@@ -95,10 +95,15 @@ const Section = styled.section`
     }
   }
 
-  @media screen and (min-width: 280px) and (max-width: 500px) {
+  @media screen and (min-width: 280px) and (max-width: 600px) {
+    padding: 1.5rem;
     .card {
       padding: 20px;
     }
+  }
+
+  @media screen and (min-width: 601px) and (max-width: 1300px) {
+    padding: 1.5rem 5rem;
   }
 
   @media screen and (min-width: 280px) and (max-width: 1080px) {

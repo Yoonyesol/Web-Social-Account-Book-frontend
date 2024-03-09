@@ -20,7 +20,7 @@ export default function Dashboard() {
       `nav, 
       .row__one, 
       .row__two, 
-      .row_three
+      .row__three
     `,
       {
         opacity: 0,

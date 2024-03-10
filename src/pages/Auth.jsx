@@ -94,6 +94,13 @@ export default function Auth() {
     <Section>
       <div className="container">
         <h1>{isLoginMode ? "로그인" : "회원가입"}</h1>
+        <div className="test-account-inform">
+          <div>
+            <b>테스트 계정</b>
+          </div>
+          <div>EMAIL: 112@naver.com</div>
+          <div>PW: qwer1234</div>
+        </div>
         {errorMsg && <ErrorMessage>{errorMsg}</ErrorMessage>}
         <form onSubmit={handleAuthSubmit}>
           {!isLoginMode && (
@@ -173,6 +180,15 @@ const Section = styled.section`
     box-shadow: 0 1px 11px rgba(0, 0, 0, 0.27);
     border-radius: 10px;
     padding: 35px;
+  }
+
+  .test-account-inform {
+    border: 1px solid gray;
+    padding: 0.5rem;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
   }
 
   form {

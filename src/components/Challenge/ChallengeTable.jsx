@@ -37,8 +37,7 @@ export function ChallengeTable({ data }) {
           {data.map((challenge, idx) => (
             <tr key={challenge.userId} className={challenge.userId === userId ? "my-rank" : ""}>
               <td className="ranking">
-                {idx <= 2 ? rankingImoji[idx] : "\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0"}
-                {challenge.userId === userId ? (rank = idx + 1) : idx + 1}위
+                {challenge.userId === userId ? (rank = idx + 1) : idx + 1}위{idx <= 2 ? rankingImoji[idx] : ""}
               </td>
               <td className="user">{challenge.userName}</td>
               <td className="ratio">{challenge.expenseRatio.toFixed(4)}</td>
@@ -94,13 +93,14 @@ const Section = styled.section`
     -webkit-box-shadow: 0 2px 2px -2px #0e1119;
     -moz-box-shadow: 0 2px 2px -2px #0e1119;
     box-shadow: 0 2px 2px -2px #0e1119;
+    word-break: break-all;
   }
 
   .container thead td,
   .container thead th {
     padding-bottom: 2%;
     padding-top: 2%;
-    padding-left: 2%;
+    padding-left: 1%;
   }
 
   .container tbody td,
@@ -128,19 +128,23 @@ const Section = styled.section`
     /* color: #ff6347; */
   }
 
-  .container tr:hover {
+  .container tbody tr:hover {
     background-color: #7d718d;
-    /* color: white; */
+    color: white;
 
     -webkit-box-shadow: 0 6px 6px -6px #0e1119;
     -moz-box-shadow: 0 6px 6px -6px #0e1119;
     box-shadow: 0 6px 6px -6px #0e1119;
+
+    svg {
+      color: white;
+    }
   }
 
   .user:hover,
   .ratio:hover {
     background-color: #f7d63c;
-    color: #403e10;
+    color: black;
     font-weight: bold;
 
     box-shadow: #7f7c21 -1px 1px, #7f7c21 -2px 2px, #7f7c21 -3px 3px, #7f7c21 -4px 4px, #7f7c21 -5px 5px,

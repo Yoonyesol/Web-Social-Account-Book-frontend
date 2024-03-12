@@ -11,48 +11,41 @@ import { fetchMonthlyTransactionsAPI } from "../../utils/transactionAPI";
 
 export default function Analytics() {
   const userId = useSelector((state) => state.user.userInfo.userId);
-  const transactionAnalytics = useSelector((state) => state.transactionAnalytics);
-  const [budget, setBudget] = useState();
+  const [budget, setBudget] = useState(0);
   const [income, setIncome] = useState(0);
   const [expense, setExpense] = useState(0);
   const [curDate, setCurDate] = useState(new Date());
 
   useEffect(() => {
-    if (!transactionAnalytics.budget.id) {
-      const fetchData = async () => {
-        try {
-          const responseData = await fetchBudgetAPI(userId, dateToYearMonthFormat(curDate));
-          setBudget(responseData.amount);
-        } catch (error) {
-          console.log("해당 유저의 예산을 불러올 수 없습니다:", error.message);
-        }
-      };
+    const fetchData = async () => {
+      try {
+        const responseData = await fetchBudgetAPI(userId, dateToYearMonthFormat(curDate));
+        setBudget(responseData.amount);
+      } catch (error) {
+        console.log("해당 유저의 예산을 불러올 수 없습니다:", error.message);
+      }
+    };
 
-      const fetchMonthlyData = async () => {
-        try {
-          const responseData = await fetchMonthlyTransactionsAPI(userId, dateToYearMonthFormat(curDate));
-          setIncome(responseData.income);
-          setExpense(responseData.expense);
-        } catch (error) {
-          console.log("해당 유저의 월별 데이터를 불러올 수 없습니다:", error.message);
-        }
-      };
+    const fetchMonthlyData = async () => {
+      try {
+        const responseData = await fetchMonthlyTransactionsAPI(userId, dateToYearMonthFormat(curDate));
+        setIncome(responseData.income);
+        setExpense(responseData.expense);
+      } catch (error) {
+        console.log("해당 유저의 월별 데이터를 불러올 수 없습니다:", error.message);
+      }
+    };
 
-      fetchData();
-      fetchMonthlyData();
-    } else {
-      setBudget(transactionAnalytics.budget.amount);
-      setIncome(transactionAnalytics.income);
-      setExpense(transactionAnalytics.expense);
-    }
-  }, [curDate, userId, transactionAnalytics]);
+    fetchData();
+    fetchMonthlyData();
+  }, [curDate, userId]);
 
   return (
     <Section>
       <div className="analytic">
         <div className="content">
           <h5>예산</h5>
-          <h2>{budget ? budget.toLocaleString("ko-kr") : 0}원</h2>
+          <h2>{budget.toLocaleString("ko-kr")}원</h2>
         </div>
         <div className="logo">
           <BsFillCalendar2WeekFill />

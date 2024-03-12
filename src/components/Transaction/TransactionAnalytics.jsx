@@ -55,7 +55,7 @@ export default function TransactionAnalytics({ curDate }) {
   }
 
   return (
-    <Section>
+    <Analytics>
       <div className="analytic budget">
         <div className="title-btn">
           <h4>예산</h4>
@@ -76,11 +76,11 @@ export default function TransactionAnalytics({ curDate }) {
         <h4>지출</h4>
         <h2 style={{ color: "#ec444c" }}>{transactionAnalytics.expense.toLocaleString("ko-KR")}원</h2>
       </div>
-    </Section>
+    </Analytics>
   );
 }
 
-const Section = styled.section`
+const Analytics = styled.section`
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;

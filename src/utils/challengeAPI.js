@@ -15,9 +15,9 @@ export const fetchBudgetExpenseRatioAPI = async (date) => {
   }
 };
 
-export const fetchSimilarBudgetExpenseRatioAPI = async (uid, date) => {
+export const fetchSimilarBudgetExpenseRatioAPI = async (date, budget) => {
   try {
-    const responseData = await axios.get(`${process.env.REACT_APP_BACKEND_URL}api/challenge/similar/${uid}/${date}`);
+    const responseData = await axios.get(`${process.env.REACT_APP_BACKEND_URL}api/challenge/similar/${date}/${budget}`);
     return responseData.data.similarBudgetUsers;
   } catch (error) {
     if (error.response) {

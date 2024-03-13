@@ -90,6 +90,7 @@ export default function Community() {
 const Section = styled.section`
   margin-left: 18vw;
   padding: 2rem;
+  align-items: center;
 
   .title {
     display: flex;
@@ -129,46 +130,108 @@ const Section = styled.section`
       text-align: center;
     }
 
-    .td-idx {
-      width: 5%;
-    }
-
     .td-category {
-      width: 15%;
       text-align: start;
     }
 
     .td-title {
-      width: 30%;
       text-align: start;
       cursor: pointer;
     }
 
-    .td-writer {
-      width: 20%;
-    }
-
-    .td-hit,
-    .td-like {
-      width: 7%;
-    }
-
-    .td-date {
-      width: 10%;
-    }
-
     td {
-      width: 350px;
       padding: 10px;
       vertical-align: top;
       border-bottom: 1px solid #ccc;
-      text-overflow: ellipsis;
     }
 
     svg {
       width: 1rem;
       height: 1rem;
       cursor: pointer;
+    }
+  }
+
+  @media screen and (min-width: 280px) and (max-width: 550px) {
+    padding: 1rem 0.5rem;
+
+    .table {
+      font-size: 13px;
+    }
+  }
+
+  @media screen and (max-width: 800px) {
+    .table {
+      table-layout: fixed;
+    }
+
+    .table thead {
+      display: none;
+    }
+
+    .table tr {
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .table th,
+    .table td {
+      display: block;
+      position: relative;
+      padding: 10px 0;
+      padding-left: 30%;
+      border-width: 0 0 1px 0;
+    }
+
+    .table td:before {
+      display: block;
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 30%;
+      padding: 10px 0;
+      background: #ccc;
+    }
+
+    .table {
+      .td-idx {
+        font-weight: bold;
+        background: #b4b3b3;
+      }
+
+      .td-category {
+        text-align: center;
+      }
+
+      .td-title {
+        text-align: center;
+        cursor: pointer;
+      }
+    }
+
+    .table td:nth-child(1):before {
+      content: "ID";
+      font-weight: bold;
+      background: #b4b3b3;
+    }
+    .table td:nth-child(2):before {
+      content: "카테고리";
+    }
+    .table td:nth-child(3):before {
+      content: "제목";
+      height: 100%;
+    }
+    .table td:nth-child(4):before {
+      content: "작성자";
+    }
+    .table td:nth-child(5):before {
+      content: "조회";
+    }
+    .table td:nth-child(6):before {
+      content: "공감";
+    }
+    .table td:nth-child(7):before {
+      content: "작성일";
     }
   }
 

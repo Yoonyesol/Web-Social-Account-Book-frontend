@@ -10,39 +10,30 @@ export default function SettingPage() {
 
   return (
     <Section>
-      <div className="user">
-        <div className="userTitleContainer">
-          <h1>내 정보</h1>
-          {/* <h2>{user.currentUser.name}</h2> */}
-          {/* <button className="userInfoEditButton">수정</button> */}
+      <div className="container">
+        <div className="title">
+          <h2>내 정보</h2>
         </div>
         <div className="userContainer">
           <div className="userShow">
             <div className="userShowTop">
-              {userInfo.image ? (
-                <img className="userShowImg" src={userInfo.image} alt={userInfo.name} />
-              ) : (
-                <div className="text-avatar">
-                  <span>{userInfo.name}</span>
-                </div>
-              )}
-
+              <img className="userShowImg" src={userInfo.image} alt={userInfo.name} />
               <div className="userShowTopTitle">
                 <span className="userShowUsername">{userInfo.name}</span>
-                <span className="uerShowUserTitle">Have a nice day!</span>
+                <span className="uerShowUserTitle">😀 Have a nice day!</span>
               </div>
             </div>
             <div className="userShowBottom">
-              <span className="userShowTitle">Account Details</span>
-              <div className="userShowInfo">
-                <MdPermIdentity className="userShowIcon" />
-                <span className="userShowInfoTitle">id: {userInfo.userId}</span>
-              </div>
+              {/* <span className="userShowTitle">Account Details</span>
+            <div className="userShowInfo">
+              <MdPermIdentity className="userShowIcon" />
+              <span className="userShowInfoTitle">id: {userInfo.userId}</span>
+            </div> */}
               <span className="userShowTitle">Contact Details</span>
-              <div className="userShowInfo">
-                <BsPhone className="userShowIcon" />
-                <span className="userShowInfoTitle">010-1234-1234</span>
-              </div>
+              {/* <div className="userShowInfo">
+              <BsPhone className="userShowIcon" />
+              <span className="userShowInfoTitle">010-1234-1234</span>
+            </div> */}
               <div className="userShowInfo">
                 <AiOutlineMail className="userShowIcon" />
                 <span className="userShowInfoTitle">{userInfo.email}</span>
@@ -50,20 +41,20 @@ export default function SettingPage() {
             </div>
           </div>
           <div className="userUpdate">
-            <span className="userUpdateTitle">Detail</span>
+            <span className="userUpdateTitle">Detail🖊</span>
             <form className="userUpdateForm">
               <div className="userUpdateItem">
-                <label>Username</label>
+                <label>이름</label>
                 <input type="text" placeholder={userInfo.name} className="userUpdateInput" />
               </div>
               <div className="userUpdateItem">
-                <label>Email</label>
+                <label>이메일</label>
                 <input type="text" placeholder={userInfo.email} className="userUpdateInput" />
               </div>
-              <div className="userUpdateItem">
-                <label>Phone</label>
-                <input type="text" placeholder="010-2223-1242" className="userUpdateInput" />
-              </div>
+              {/* <div className="userUpdateItem">
+              <label>Phone</label>
+              <input type="text" placeholder="010-2223-1242" className="userUpdateInput" />
+            </div> */}
             </form>
           </div>
         </div>
@@ -75,40 +66,31 @@ export default function SettingPage() {
 const Section = styled.section`
   margin-left: 18vw;
   padding: 2rem;
-  height: 100%;
+  align-items: center;
 
-  .user {
-    flex: 4;
-    padding: 0 30px;
-    margin: 8vw 8vw;
-  }
-
-  .userTitleContainer {
+  .title {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
+    justify-content: center;
 
-    h1 {
+    h2 {
       color: #3c76e0;
       font-family: "Gowun Batang", serif;
       letter-spacing: 0.3rem;
     }
   }
 
-  .userInfoEditButton {
-    width: 80px;
-    border: none;
-    padding: 5px;
-    background-color: rgb(37, 189, 174);
-    border-radius: 5px;
-    cursor: pointer;
-    color: white;
-    font-size: 16px;
+  .container {
+    margin: 0vw 15vw;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    gap: 3rem;
   }
 
   .userContainer {
     display: flex;
-    margin-top: 20px;
+    flex-direction: column;
+    gap: 1rem;
   }
 
   .userShow {
@@ -129,8 +111,6 @@ const Section = styled.section`
 
     -webkit-box-shadow: 2px 4px 15px -2px rgba(0, 0, 0, 0.57);
     box-shadow: 2px 4px 15px -2px rgba(0, 0, 0, 0.57);
-
-    margin-left: 20px;
   }
 
   .userShowUsername {
@@ -224,21 +204,9 @@ const Section = styled.section`
 
   @media screen and (min-width: 280px) and (max-width: 1080px) {
     margin-left: 0;
-    position: initial;
-    width: 100%;
-    height: max-content;
-    padding: 0rem;
 
-    .userContainer {
-      flex-direction: column;
-    }
-
-    .userShow {
-      margin-bottom: 2rem;
-    }
-
-    .userUpdate {
-      margin-left: 0px;
+    .container {
+      margin: 0vw 10vw;
     }
 
     .userUpdateInput {
@@ -249,6 +217,18 @@ const Section = styled.section`
     .userUpdateForm {
       flex-direction: column;
       justify-content: space-between;
+    }
+  }
+
+  @media screen and (min-width: 280px) and (max-width: 550px) {
+    .userShow,
+    .userUpdate {
+      padding: 25px;
+    }
+
+    .container {
+      margin: 0vw;
+      gap: 2rem;
     }
   }
 `;

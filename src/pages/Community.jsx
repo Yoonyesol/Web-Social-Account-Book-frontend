@@ -40,9 +40,7 @@ export default function Community() {
   }
 
   const handlePostDetail = (item) => {
-    nav(`/community/${item.id}`, {
-      replace: true,
-    });
+    nav(`/community/${item.id}`);
   };
 
   return (

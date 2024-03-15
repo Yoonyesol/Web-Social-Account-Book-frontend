@@ -10,10 +10,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../modules/user";
 import { useDispatch } from "react-redux";
 
-export default function Sidebar() {
+function Sidebar() {
   const nav = useNavigate();
   const dispatch = useDispatch();
-
   const [navbarState, setNavbarState] = useState(false);
 
   const html = document.querySelector("html");
@@ -23,7 +22,7 @@ export default function Sidebar() {
     dispatch(logout());
     localStorage.removeItem("userData");
     alert("로그아웃되었습니다!");
-    nav("/");
+    nav("/", { replace: true });
   }, [dispatch, nav]);
 
   useEffect(() => {
@@ -51,6 +50,12 @@ export default function Sidebar() {
       },
     );
   }, []);
+
+  const handleClickNavbar = useCallback((e) => {
+    e.stopPropagation();
+    setNavbarState(true);
+  }, []);
+
   return (
     <>
       <Section>
@@ -65,12 +70,7 @@ export default function Sidebar() {
             {navbarState ? (
               <VscChromeClose className="menu-btn" onClick={() => setNavbarState(false)} />
             ) : (
-              <GiHamburgerMenu
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setNavbarState(true);
-                }}
-              />
+              <GiHamburgerMenu onClick={handleClickNavbar} />
             )}
           </div>
           <div className="links">
@@ -297,3 +297,5 @@ const ResponsiveNav = styled.div`
     }
   }
 `;
+
+export default Sidebar;

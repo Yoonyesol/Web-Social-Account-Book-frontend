@@ -100,7 +100,7 @@ export default function TransactionList({ data }) {
                   : item.amount.toLocaleString("ko-KR")}
               </div>
               <div className="cell action">
-                <FaPen onClick={() => handleEdit(item._id)} />
+                {/* <FaPen onClick={() => handleEdit(item._id)} /> */}
                 <FaTrashAlt onClick={() => handleRemove(item._id)} />
               </div>
             </div>

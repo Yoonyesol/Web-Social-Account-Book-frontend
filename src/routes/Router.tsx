@@ -14,9 +14,22 @@ import ContentView from "../components/Community/ContentView";
 import { loginSuccess, logout, setToken, setTokenExpiration, setUserInfo } from "../modules/user";
 import LoadingIndicator from "../common/LoadingIndicator";
 
+interface StoreData {
+  transactionAnalytics: Object;
+  transactions: Object;
+  user: UserData;
+}
+
+interface UserData {
+  isLoggedIn: boolean;
+  token: string;
+  tokenExpiration: string;
+  userInfo: Object;
+}
+
 function AppRouter() {
   const [isLoading, setIsLoading] = useState(true);
-  const userData = useSelector((state) => state.user);
+  const userData: UserData = useSelector((state: StoreData) => state.user);
   const dispatch = useDispatch();
 
   const logoutHandler = useCallback(() => {
@@ -25,7 +38,7 @@ function AppRouter() {
   }, [dispatch]);
 
   useEffect(() => {
-    const storedData = JSON.parse(localStorage.getItem("userData"));
+    const storedData = JSON.parse(localStorage.getItem("userData") || "{}");
     if (storedData && storedData.token && new Date(storedData.tokenExpiration) > new Date()) {
       dispatch(loginSuccess());
       dispatch(setUserInfo(storedData.userInfo));
@@ -37,14 +50,17 @@ function AppRouter() {
   }, [logoutHandler, dispatch]);
 
   useEffect(() => {
-    let logoutTimer;
+    let logoutTimer: ReturnType<typeof setTimeout>;
     //토큰과 만료기간 둘 다 있으면 타이머 설정
     if (userData.token && userData.tokenExpiration) {
       const remainingTime = new Date(userData.tokenExpiration).getTime() - new Date().getTime(); //남은 만료기간
       logoutTimer = setTimeout(logoutHandler, remainingTime);
-    } else {
-      clearTimeout(logoutTimer); //진행 중인 타이머 모두 제거
     }
+    return () => {
+      if (logoutTimer) {
+        clearTimeout(logoutTimer); //진행 중인 타이머 모두 제거
+      }
+    };
   }, [logoutHandler, userData.token, userData.tokenExpiration]);
 
   if (isLoading) {

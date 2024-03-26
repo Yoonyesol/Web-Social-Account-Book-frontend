@@ -4,9 +4,11 @@ import { BsPhone } from "react-icons/bs";
 import { AiOutlineMail } from "react-icons/ai";
 import { MdPermIdentity } from "react-icons/md";
 import { useSelector } from "react-redux";
+import { UserInfo } from "../interfaces/UserData";
+import { StoreData } from "../interfaces/StoreData";
 
 export default function SettingPage() {
-  const userInfo = useSelector((state) => state.user.userInfo);
+  const userInfo: UserInfo = useSelector((state: StoreData) => state.user.userInfo);
 
   return (
     <Section>

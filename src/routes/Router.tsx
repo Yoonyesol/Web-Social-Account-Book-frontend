@@ -13,19 +13,8 @@ import CommunityEditor from "../components/Community/CommunityEditor";
 import ContentView from "../components/Community/ContentView";
 import { loginSuccess, logout, setToken, setTokenExpiration, setUserInfo } from "../modules/user";
 import LoadingIndicator from "../common/LoadingIndicator";
-
-interface StoreData {
-  transactionAnalytics: Object;
-  transactions: Object;
-  user: UserData;
-}
-
-interface UserData {
-  isLoggedIn: boolean;
-  token: string;
-  tokenExpiration: string;
-  userInfo: Object;
-}
+import { UserData } from "../interfaces/UserData";
+import { StoreData } from "../interfaces/StoreData";
 
 function AppRouter() {
   const [isLoading, setIsLoading] = useState(true);

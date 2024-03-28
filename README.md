@@ -43,6 +43,8 @@ https://social-account-book-frontend.vercel.app/
 - 기본 정보(이름, 이메일)를 확인 가능한 설정 페이지로 바로 이동 가능합니다. 
 
 ### 2. 가계부
+<img src="https://github.com/Yoonyesol/Web-Social-Account-Book-frontend/assets/51500821/9d8e6dc5-9c87-4c05-95e5-41302bbd36f5"  width="80%"/><br/> 
+<img src="https://github.com/Yoonyesol/Web-Social-Account-Book-frontend/assets/51500821/7ea265c8-9463-4948-a271-4f0bdd4e0ec8"  width="80%"/><br/> 
 - 나의 `수입/지출` 기록을 통해 돈의 흐름을 파악할 수 있습니다.
 - 예산 수정 기능을 통해 이번 달 예산을 지정할 수 있습니다.
 
@@ -107,7 +109,7 @@ https://social-account-book-frontend.vercel.app/
 * `ExpressJS`와 `Node.js`, `MongoDB`를 이용해 백엔드를 직접 구축해 보는 기회를 가졌습니다.
   * 프론트 개발자로서 백엔드 제작은 메인이 아니었지만 직접 하나의 프로젝트를 완성해 보는 과정에서 **데이터의 전송 방식이나 데이터 흐름** 등을 익힐 수 있는 시간이었습니다.
 * api를 직접 만들어 보며 endpoint에 대한 개념을 익혔습니다. 또한 해당 api 엔드포인트에 접근해 `Axios`를 이용하여 데이터를 프론트엔드로 가져오거나 백엔드로 보내는 방식을 익혔습니다.
-* `Redux`를 공부하여 직접 프로젝트에서 적용해 보았습니다.
+* 상태 관리 라이브러리 `Redux`를 공부하여 직접 프로젝트에서 적용해 보았습니다.
   * `dispatch`를 이용해 저장소 데이터를 수정했습니다. 
   * `useSelector`를 이용해 직접 저장소에서 데이터를 꺼내오는 방식으로 데이터를 전역적으로 관리하였습니다.
   * 이를 통해 1차 개발에서 발생했던 props drilling 현상을 제거할 수 있었습니다.

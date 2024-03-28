@@ -44,6 +44,7 @@ export default function TransactionList({ data }) {
   }
 
   const handleRemove = async (id) => {
+    setOpenEditor(false);
     if (window.confirm("내역을 삭제하시겠습니까?")) {
       try {
         await deleteTransactionAPI(id, token);
@@ -72,7 +73,7 @@ export default function TransactionList({ data }) {
 
   return (
     <Section>
-      <div className="title">
+      <div className="main-title">
         <h2>입출금 내역</h2>
         <CiSquarePlus onClick={() => setOpenEditor(true)} />
         {openEditor && (
@@ -84,23 +85,25 @@ export default function TransactionList({ data }) {
       <ControlOption value={sortType} chooseOption={setSortType} optionList={sortOption} />
       <div className="history">
         {getSortedTransactionList().map((item) => (
-          <div className="card" key={item._id} onClick={() => handleEdit(item._id)}>
+          <div className="card" key={item._id}>
             <div className="content">
-              <div className="cell date">
-                <b>{`${new Date(item.date).getDate()}일 (${day[new Date(item.date).getDay()]})`}</b>
+              <div className="tr-data" onClick={() => handleEdit(item._id)}>
+                <div className="cell date">
+                  <b>{`${new Date(item.date).getDate()}일 (${day[new Date(item.date).getDay()]})`}</b>
+                </div>
+                <div className="cell category-title">
+                  <div className="category">{item.category}</div>
+                  <div className="title">{item.title}</div>
+                </div>
+                <div className="cell memo">{item.memo}</div>
+                <div className="cell amount" style={{ color: item.transaction_type === false ? "#ec444c" : "green" }}>
+                  {item.transaction_type === false
+                    ? "-" + item.amount.toLocaleString("ko-KR")
+                    : item.amount.toLocaleString("ko-KR")}
+                </div>
               </div>
-              <div className="cell category-title">
-                <div className="category">{item.category}</div>
-                <div className="title">{item.title}</div>
-              </div>
-              <div className="cell memo">{item.memo}</div>
-              <div className="cell amount" style={{ color: item.transaction_type === false ? "#ec444c" : "green" }}>
-                {item.transaction_type === false
-                  ? "-" + item.amount.toLocaleString("ko-KR")
-                  : item.amount.toLocaleString("ko-KR")}
-              </div>
+
               <div className="cell action">
-                {/* <FaPen onClick={() => handleEdit(item._id)} /> */}
                 <FaTrashAlt onClick={() => handleRemove(item._id)} />
               </div>
             </div>
@@ -114,7 +117,7 @@ export default function TransactionList({ data }) {
 const Section = styled.section`
   ${cardStyle}
 
-  .title {
+  .main-title {
     display: flex;
     justify-content: space-between;
     svg {
@@ -149,43 +152,54 @@ const Section = styled.section`
 
     .content {
       display: grid;
-      grid-template-columns: 0.8fr 1.5fr 2fr 1fr 1fr;
-      justify-content: space-between;
+      grid-template-columns: 9fr 1fr;
       align-items: center;
 
-      .cell {
-        text-align: center;
-        padding: 0.5rem;
-      }
-
-      .date {
-        font-weight: bold;
-      }
-
-      .category-title {
-        display: flex;
-        flex-direction: column;
-        text-align: center;
+      .tr-data {
+        display: grid;
+        grid-template-columns: 0.8fr 1.5fr 2fr 1fr;
+        justify-content: space-between;
         align-items: center;
-      }
 
-      .category {
-        color: grey;
-        font-size: 0.7rem;
-      }
+        .cell {
+          text-align: center;
+          padding: 0.5rem;
+        }
 
-      .title {
-        font-size: 1rem;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
+        .date {
+          font-weight: bold;
+        }
 
-      .memo {
-        color: grey;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
+        .category-title {
+          display: flex;
+          flex-direction: column;
+          text-align: center;
+          align-items: center;
+
+          .category {
+            color: grey;
+            font-size: 0.7rem;
+            width: 150px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+
+          .title {
+            font-size: 1rem;
+            width: 150px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+        }
+
+        .memo {
+          color: grey;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
       }
 
       .action {
@@ -201,33 +215,31 @@ const Section = styled.section`
     font-size: 80%;
   }
 
-  @media (max-width: 300px) {
-    .memo {
-      display: none;
-    }
-  }
-
-  @media screen and (min-width: 280px) and (max-width: 450px) {
+  @media screen and (min-width: 280px) and (max-width: 500px) {
     padding: 0.9rem;
 
     .card {
       padding: 0.5rem;
 
       .content {
-        .category {
-          font-size: 0.55rem;
-        }
-        .title {
-          font-size: 0.7rem;
-        }
-        .amount {
-          font-size: 0.7rem;
-        }
-        .memo {
-          font-size: 0.7rem;
-        }
-        .action {
-          flex-direction: column;
+        .tr-data {
+          grid-template-columns: 1fr 1fr 1fr;
+          .category-title {
+            .category {
+              font-size: 0.55rem;
+              width: 50px;
+            }
+            .title {
+              width: 50px;
+              font-size: 0.7rem;
+            }
+          }
+          .amount {
+            font-size: 0.7rem;
+          }
+          .memo {
+            display: none;
+          }
         }
       }
     }

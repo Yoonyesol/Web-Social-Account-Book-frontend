@@ -35,7 +35,7 @@ https://social-account-book-frontend.vercel.app/
 
 ## 🔮 기능 소개
 ### 1. 대시보드
-<img src="https://github.com/Yoonyesol/Web-Social-Account-Book-frontend/assets/51500821/7165f181-e88e-4b60-aec7-8853711bd37b"  width="80%"/><br/> 
+<img src="https://github.com/Yoonyesol/Web-Social-Account-Book-frontend/assets/51500821/7165f181-e88e-4b60-aec7-8853711bd37b"  width="90%"/><br/> 
 - 이번 달 예산, 총 지출, 총 수입을 확인할 수 있습니다.
 - 지출 카테고리를 분석하여 원형 그래프 형식으로 제공합니다. 이번 달에 가장 많은 지출이 발생한 카테고리도 확인할 수 있습니다.
 - 최근 1년 간 지출 기록을 그래프로 볼 수 있습니다. 전월 대비 금월의 지출 퍼센테이지(%)도 체크할 수 있습니다.
@@ -43,27 +43,30 @@ https://social-account-book-frontend.vercel.app/
 - 기본 정보(이름, 이메일)를 확인 가능한 설정 페이지로 바로 이동 가능합니다. 
 
 ### 2. 가계부
-<img src="https://github.com/Yoonyesol/Web-Social-Account-Book-frontend/assets/51500821/9d8e6dc5-9c87-4c05-95e5-41302bbd36f5"  width="80%"/><br/> 
-<img src="https://github.com/Yoonyesol/Web-Social-Account-Book-frontend/assets/51500821/7ea265c8-9463-4948-a271-4f0bdd4e0ec8"  width="80%"/><br/> 
+<img src="https://github.com/Yoonyesol/Web-Social-Account-Book-frontend/assets/51500821/9d8e6dc5-9c87-4c05-95e5-41302bbd36f5"  width="90%"/><br/> 
+<img src="https://github.com/Yoonyesol/Web-Social-Account-Book-frontend/assets/51500821/7ea265c8-9463-4948-a271-4f0bdd4e0ec8"  width="90%"/><br/> 
 - 나의 `수입/지출` 기록을 통해 돈의 흐름을 파악할 수 있습니다.
 - 예산 수정 기능을 통해 이번 달 예산을 지정할 수 있습니다.
 
 ### 3. 챌린지
-<img src="https://github.com/Yoonyesol/Web-Social-Account-Book-frontend/assets/51500821/ef8000a4-23e9-4de2-a06a-829282a8ba76"  width="80%"/><br/> 
+<img src="https://github.com/Yoonyesol/Web-Social-Account-Book-frontend/assets/51500821/ef8000a4-23e9-4de2-a06a-829282a8ba76"  width="90%"/><br/> 
 - 매월 `예산 대비 지출`을 계산하여 전체 유저의 랭킹을 매깁니다.
 - 비슷한 예산(±10%)을 가진 사용자들끼리의 지출 랭킹도 확인할 수 있습니다.
 - 단, 이번 달 설정한 예산이 0원인 경우, 랭킹 서비스가 제공되지 않습니다!
 
 ### 4. 게시판
-<img src="https://github.com/Yoonyesol/Web-Social-Account-Book-frontend/assets/51500821/770da358-a339-4fb7-885d-03049a53b67b"  width="80%"/><br/> 
+<img src="https://github.com/Yoonyesol/Web-Social-Account-Book-frontend/assets/51500821/770da358-a339-4fb7-885d-03049a53b67b"  width="90%"/><br/> 
 - 게시판에 다른 사용자들과 공유하고 싶은 글을 등록할 수 있습니다.
 - 게시글에 댓글을 달고 `공감` 버튼을 누를 수 있습니다.
 - 얼마나 많은 사용자가 글을 조회했는지, `조회수`를 확인 가능합니다.
 - 게시글을 작성한 유저가 아니라면 게시글을 수정 및 삭제할 수 없습니다.
 
 ### 5. 내 정보
-<img src="https://github.com/Yoonyesol/Web-Social-Account-Book-frontend/assets/51500821/b885ab45-74d4-4ebb-b121-20a02094865f"  width="80%"/><br/> 
+<img src="https://github.com/Yoonyesol/Web-Social-Account-Book-frontend/assets/51500821/b885ab45-74d4-4ebb-b121-20a02094865f"  width="90%"/><br/> 
 - 내 정보 페이지에서는 나의 정보(`이메일`, `이름`)을 확인할 수 있습니다.
+
+### 6. 반응형 디자인
+- 모바일, 태블릿, PC에 유연하게 대응할 수 있는 반응형 디자인을 적용하였습니다.
 
 
 <br/>

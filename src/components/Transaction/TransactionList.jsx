@@ -147,7 +147,7 @@ const Section = styled.section`
     ${cardStyleRealWhite}
     padding: 1rem 2rem;
     border: none;
-    cursor: pointer;
+
     width: 100%;
 
     .content {
@@ -156,6 +156,7 @@ const Section = styled.section`
       align-items: center;
 
       .tr-data {
+        cursor: pointer;
         display: grid;
         grid-template-columns: 0.8fr 1.5fr 2fr 1fr;
         justify-content: space-between;

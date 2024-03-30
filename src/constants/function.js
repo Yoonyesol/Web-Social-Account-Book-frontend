@@ -1,3 +1,5 @@
+import { persistor } from "..";
+
 export const setDate = (dateString, view) => {
   const currentDate = new Date();
   const date = new Date(dateString);
@@ -35,4 +37,8 @@ export const dateToYearMonthFormat = (dateString) => {
   const formattedDate = `${year}-${month < 10 ? "0" + month : month}`;
 
   return formattedDate;
+};
+
+export const purge = async () => {
+  await persistor.purge();
 };

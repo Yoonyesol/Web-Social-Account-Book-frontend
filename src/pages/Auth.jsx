@@ -60,14 +60,6 @@ export default function Auth() {
       const tokenExpirationDate = tokenExpiration || new Date(new Date().getTime() + 3 * 1000 * 60 * 60);
       dispatch(setTokenExpiration(tokenExpirationDate));
 
-      localStorage.setItem(
-        "userData",
-        JSON.stringify({
-          userInfo: responseData.userInfo,
-          token: responseData.token,
-          tokenExpiration: tokenExpirationDate.toISOString(),
-        }),
-      );
       setIsLoading(false);
       setErrorMsg(null);
       nav("/", { replace: true });

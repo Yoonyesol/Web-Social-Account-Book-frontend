@@ -9,6 +9,7 @@ import MenuList from "./MenuList";
 import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../modules/user";
 import { useDispatch } from "react-redux";
+import { purge } from "../constants/function";
 
 function Sidebar() {
   const nav = useNavigate();
@@ -18,9 +19,9 @@ function Sidebar() {
   const html = document.querySelector("html");
   html.addEventListener("click", () => setNavbarState(false));
 
-  const handleLogout = useCallback(() => {
+  const handleLogout = useCallback(async () => {
     dispatch(logout());
-    localStorage.removeItem("userData");
+    await setTimeout(() => purge(), 200);
     alert("로그아웃되었습니다!");
     nav("/", { replace: true });
   }, [dispatch, nav]);

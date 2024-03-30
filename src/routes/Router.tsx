@@ -15,19 +15,20 @@ import { loginSuccess, logout, setToken, setTokenExpiration, setUserInfo } from 
 import LoadingIndicator from "../common/LoadingIndicator";
 import { UserData } from "../interfaces/UserData";
 import { StoreData } from "../interfaces/StoreData";
+import { purge } from "../constants/function";
 
 function AppRouter() {
   const [isLoading, setIsLoading] = useState(true);
   const userData: UserData = useSelector((state: StoreData) => state.user);
   const dispatch = useDispatch();
 
-  const logoutHandler = useCallback(() => {
+  const logoutHandler = useCallback(async () => {
     dispatch(logout());
-    localStorage.removeItem("userData");
+    await setTimeout(() => purge(), 200);
   }, [dispatch]);
 
   useEffect(() => {
-    const storedData = JSON.parse(localStorage.getItem("userData") || "{}");
+    const storedData = JSON.parse(localStorage.getItem("root") || "{}");
     if (storedData && storedData.token && new Date(storedData.tokenExpiration) > new Date()) {
       dispatch(loginSuccess());
       dispatch(setUserInfo(storedData.userInfo));

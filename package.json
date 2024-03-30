@@ -19,6 +19,7 @@
     "react-scripts": "^5.0.1",
     "recharts": "^2.1.9",
     "redux": "^5.0.1",
+    "redux-persist": "^6.0.0",
     "scrollreveal": "^4.0.9",
     "socket.io-client": "^4.5.1",
     "sockjs-client": "^1.6.1",

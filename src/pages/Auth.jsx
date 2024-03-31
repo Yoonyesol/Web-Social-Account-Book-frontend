@@ -86,13 +86,6 @@ export default function Auth() {
     <Section>
       <div className="container">
         <h1>{isLoginMode ? "로그인" : "회원가입"}</h1>
-        <div className="test-account-inform">
-          <div>
-            <b>테스트 계정</b>
-          </div>
-          <div>EMAIL: 112@naver.com</div>
-          <div>PW: qwer1234</div>
-        </div>
         {errorMsg && <ErrorMessage>{errorMsg}</ErrorMessage>}
         <form onSubmit={handleAuthSubmit}>
           {!isLoginMode && (
@@ -174,15 +167,6 @@ const Section = styled.section`
     padding: 35px;
   }
 
-  .test-account-inform {
-    border: 1px solid gray;
-    padding: 0.5rem;
-    border-radius: 10px;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-
   form {
     border-top: solid 1px #b8b6b6;
     width: 100%;
@@ -234,15 +218,9 @@ const Section = styled.section`
     width: 8rem;
   }
 
-  @media screen and (min-width: 280px) and (max-width: 450px) {
+  @media screen and (min-width: 280px) and (max-width: 520px) {
     .container {
-      width: 15rem;
-    }
-  }
-
-  @media screen and (min-width: 451px) and (max-width: 520px) {
-    .container {
-      width: 25rem;
+      width: 85%;
     }
   }
 `;

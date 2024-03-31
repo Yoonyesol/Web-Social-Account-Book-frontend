@@ -5,6 +5,7 @@ import storage from "redux-persist/lib/storage";
 import userReducer from "./user";
 import transactionReducer from "./transactions";
 import transactionAnalyticsReducer from "./transactionAnalytics";
+import { encryptTransform } from "redux-persist-transform-encrypt";
 
 const persistConfig = {
   key: "root",
@@ -18,4 +19,16 @@ const rootReducer = combineReducers({
   transactionAnalytics: transactionAnalyticsReducer,
 });
 
-export default persistReducer(persistConfig, rootReducer);
+const reducer = persistReducer(
+  {
+    ...persistConfig,
+    transforms: [
+      encryptTransform({
+        secretKey: process.env.REACT_APP_PERSISTOR_SECRET_KEY,
+      }),
+    ],
+  },
+  rootReducer,
+);
+
+export default reducer;

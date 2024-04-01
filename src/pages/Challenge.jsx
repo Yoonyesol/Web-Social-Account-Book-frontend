@@ -83,7 +83,7 @@ export default function ChallengePage() {
         </div>
         <div className="analytic outcome-for-budget">
           <h4>예산 대비 지출</h4>
-          <h2 style={{ color: "green" }}>{(expense / budget).toFixed(4)}</h2>
+          <h2 style={{ color: "green" }}>{expense && budget ? (expense / budget).toFixed(4) : 0}</h2>
         </div>
       </Analytics>
 

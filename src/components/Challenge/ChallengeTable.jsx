@@ -5,10 +5,10 @@ import { PiChatTeardropDots } from "react-icons/pi";
 import { MdThumbUp } from "react-icons/md";
 import { useSelector } from "react-redux";
 
-let rank = 0;
 const rankingImoji = ["🥇 ", "🥈 ", "🥉 "];
 
 export function ChallengeTable({ data }) {
+  let rank = 0;
   const userId = useSelector((state) => state.user.userInfo.userId);
 
   return (

@@ -126,6 +126,7 @@ export default function Auth() {
                 name="password"
                 placeholder="비밀번호"
                 minLength={6}
+                autoComplete="off"
                 ref={passwordInputRef}
                 value={form.password}
                 onChange={handleInputChange}

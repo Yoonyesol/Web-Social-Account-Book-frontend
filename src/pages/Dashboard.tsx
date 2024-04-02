@@ -18,9 +18,9 @@ export default function Dashboard() {
     });
     sr.reveal(
       `nav, 
-      .row__one, 
-      .row__two, 
-      .row__three
+      .row_one, 
+      .row_two, 
+      .row_three
     `,
       {
         opacity: 0,
@@ -28,18 +28,19 @@ export default function Dashboard() {
       },
     );
   }, []);
+
   return (
     <Section>
       <Navbar />
       <div className="grid">
-        <div className="row__one">
+        <div className="row_one">
           <Analytics />
           <CategoryExpense />
         </div>
-        <div className="row__two">
+        <div className="row_two">
           <YearlyExpenseChart />
         </div>
-        <div className="row__three">
+        <div className="row_three">
           <PostCard />
           <Profile />
         </div>
@@ -58,14 +59,14 @@ const Section = styled.section`
     height: 100%;
     gap: 1rem;
     margin-top: 2rem;
-    .row__one,
-    .row__three {
+    .row_one,
+    .row_three {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       height: 50%;
       gap: 1rem;
     }
-    .row__two {
+    .row_two {
       display: grid;
       grid-template-columns: 1fr;
       height: 50%;
@@ -75,8 +76,8 @@ const Section = styled.section`
   @media screen and (min-width: 280px) and (max-width: 1080px) {
     margin-left: 0;
     .grid {
-      .row__one,
-      .row__three {
+      .row_one,
+      .row_three {
         grid-template-columns: 1fr;
       }
     }

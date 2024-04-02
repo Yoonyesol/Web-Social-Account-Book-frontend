@@ -8,9 +8,10 @@ import { useSelector } from "react-redux";
 import { fetchBudgetAPI } from "../../utils/userAPI";
 import { dateToYearMonthFormat } from "../../constants/function";
 import { fetchMonthlyTransactionsAPI } from "../../utils/transactionAPI";
+import { StoreData } from "../../interfaces/StoreData";
 
 export default function Analytics() {
-  const userId = useSelector((state) => state.user.userInfo.userId);
+  const userId: string = useSelector((state: StoreData) => state.user.userInfo.userId);
   const [budget, setBudget] = useState(0);
   const [income, setIncome] = useState(0);
   const [expense, setExpense] = useState(0);

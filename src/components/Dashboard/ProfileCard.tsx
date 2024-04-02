@@ -1,12 +1,14 @@
 import React from "react";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { HiArrowNarrowRight, HiOutlineLocationMarker } from "react-icons/hi";
 import { cardStyle } from "../../common/CardStyles";
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { UserInfo } from "../../interfaces/UserData";
+import { StoreData } from "../../interfaces/StoreData";
 
 export default function Profile() {
-  const userInfo = useSelector((state) => state.user.userInfo);
+  const userInfo: UserInfo = useSelector((state: StoreData) => state.user.userInfo);
 
   return (
     <Section>

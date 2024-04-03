@@ -26,7 +26,7 @@ const calculateExpenseChangeRate = (previousMonthExpense: number, currentMonthEx
 
 export default function YearlyExpenseChart() {
   const uid: string = useSelector((state: StoreData) => state.user.userInfo.userId);
-  const [data, setData] = useState<Array<MonthlyExpenses>>([]);
+  const [data, setData] = useState<MonthlyExpenses[]>([]);
   const [totalExpense, setTotalExpense] = useState(0);
   const [expenseChangeRate, setExpenseChangeRate] = useState("0");
 

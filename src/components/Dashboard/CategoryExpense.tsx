@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
+import { useSelector } from "react-redux";
 import { cardStyle } from "../../common/CardStyles";
 import { fetchExpensesCategoryAPI } from "../../utils/transactionAPI";
-import { useSelector } from "react-redux";
+import { StoreData } from "../../interfaces/StoreData";
+
 const COLORS = ["#0088FE", "#F75C82", "#FFBB28", "#00C49F", "#FF8042", "#AF19FF"];
 
-const CustomTooltip = ({ active, payload, label }) => {
+const CustomTooltip = ({ active, payload }) => {
   if (active) {
     return (
       <div
@@ -23,9 +25,14 @@ const CustomTooltip = ({ active, payload, label }) => {
   }
 };
 
+interface ExpensesCategory {
+  category: string;
+  ratio: number;
+}
+
 export default function CategoryExpense() {
-  const uid = useSelector((state) => state.user.userInfo.userId);
-  const [data, setData] = useState([]);
+  const uid: string = useSelector((state: StoreData) => state.user.userInfo.userId);
+  const [data, setData] = useState<ExpensesCategory[]>([]);
   const [chartSize, setChartSize] = useState(300);
 
   useEffect(() => {
@@ -76,7 +83,7 @@ export default function CategoryExpense() {
                   <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                 ))}
               </Pie>
-              <Tooltip content={<CustomTooltip />} />
+              <Tooltip content={<CustomTooltip active={false} payload={[]} />} />
               <Legend />
             </PieChart>
           </div>

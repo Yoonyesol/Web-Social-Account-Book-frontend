@@ -1,6 +1,15 @@
+import React from "react";
+import { MouseEventHandler } from "react";
 import styled from "styled-components";
 
-export default function Button({ text, type, onClick, color }) {
+type ButtonProps = {
+  text?: string;
+  type?: "button" | "submit" | "reset";
+  onClick: MouseEventHandler<HTMLButtonElement>;
+  color?: string;
+};
+
+export default function Button({ text, type, onClick, color }: ButtonProps) {
   return (
     <CustomButton type={type} onClick={onClick} color={color}>
       {text}

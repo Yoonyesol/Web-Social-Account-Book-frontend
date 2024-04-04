@@ -7,14 +7,17 @@ import Button from "../common/Button";
 import { useDispatch, useSelector } from "react-redux";
 import { getTransactions } from "../modules/transactions";
 import { fetchTransactionsByUidAPI } from "../utils/transactionAPI";
+import { UserInfo } from "../interfaces/UserData";
+import { StoreData } from "../interfaces/StoreData";
+import { TransactionData } from "../interfaces/TransactionData";
 
 export default function Transactions() {
-  const transactionList = useSelector((state) => state.transactions.transactions);
-  const userInfo = useSelector((state) => state.user.userInfo);
+  const transactionList: TransactionData[] = useSelector((state: StoreData) => state.transactions.transactions);
+  const userInfo: UserInfo = useSelector((state: StoreData) => state.user.userInfo);
   const dispatch = useDispatch();
 
   const [curDate, setCurDate] = useState(new Date());
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<TransactionData[]>([]);
 
   const dateText = `${curDate.getFullYear()}년 ${curDate.getMonth() + 1}월`;
 

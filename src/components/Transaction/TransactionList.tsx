@@ -10,22 +10,34 @@ import { useDispatch, useSelector } from "react-redux";
 import { removeTransaction } from "../../modules/transactions";
 import ControlOption from "../../common/ControlOption";
 import { day, sortOption } from "../../constants/constant";
+import { StoreData } from "../../interfaces/StoreData";
+import { TransactionData } from "../../interfaces/TransactionData";
 
 export default function TransactionList({ data }) {
   const dispatch = useDispatch();
-  const token = useSelector((state) => state.user.token);
-  const [selectedData, setSelectedData] = useState("");
+  const token: string = useSelector((state: StoreData) => state.user.token);
+  const [selectedData, setSelectedData] = useState<TransactionData>({
+    _id: "",
+    id: "",
+    transaction_type: false,
+    category: "",
+    title: "",
+    amount: 0,
+    date: new Date().getTime(),
+    memo: "",
+  });
   const [openEditor, setOpenEditor] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [sortType, setSortType] = useState("latest");
 
-  const handleEdit = (id) => {
+  const handleEdit = (id: string) => {
     setIsEdit(true);
     setOpenEditor(true);
 
-    const item = data.find((transaction) => transaction._id === id);
+    const item = data.find((transaction: TransactionData) => transaction._id === id);
 
     const selected = {
+      _id: item._id,
       id: item._id,
       transaction_type: item.transaction_type,
       date: item.date,
@@ -43,7 +55,7 @@ export default function TransactionList({ data }) {
     setIsEdit(false);
   }
 
-  const handleRemove = async (id) => {
+  const handleRemove = async (id: string) => {
     setOpenEditor(false);
     if (window.confirm("내역을 삭제하시겠습니까?")) {
       try {
@@ -51,17 +63,17 @@ export default function TransactionList({ data }) {
         dispatch(removeTransaction(id));
         alert("삭제 완료!");
       } catch (err) {
-        alert("가계부 내역 삭제 도중 오류가 발생했습니다.", err.message);
+        alert("가계부 내역 삭제 도중 오류가 발생했습니다." + err.message);
       }
     }
   };
 
   const getSortedTransactionList = () => {
-    const compare = (a, b) => {
+    const compare = (a: TransactionData, b: TransactionData): number => {
       if (sortType === "latest") {
-        return parseInt(b.date) - parseInt(a.date);
+        return b.date - a.date;
       } else {
-        return parseInt(a.date) - parseInt(b.date);
+        return a.date - b.date;
       }
     };
 
@@ -77,14 +89,14 @@ export default function TransactionList({ data }) {
         <h2>입출금 내역</h2>
         <CiSquarePlus onClick={() => setOpenEditor(true)} />
         {openEditor && (
-          <Modal visible={openEditor} closable={true} maskClosable={false} onClose={handleCancelEditor}>
+          <Modal visible={openEditor}>
             <TransactionEditor isEdit={isEdit} selectedData={selectedData} closeEditor={handleCancelEditor} />
           </Modal>
         )}
       </div>
       <ControlOption value={sortType} chooseOption={setSortType} optionList={sortOption} />
       <div className="history">
-        {getSortedTransactionList().map((item) => (
+        {getSortedTransactionList().map((item: TransactionData) => (
           <div className="card" key={item._id}>
             <div className="content">
               <div className="tr-data" onClick={() => handleEdit(item._id)}>

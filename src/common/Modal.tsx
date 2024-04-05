@@ -1,26 +1,23 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import styled from "styled-components";
 
-function Modal({ className, onClose, maskClosable, visible, children }) {
-  const onMaskClick = (e) => {
-    if (e.target === e.currentTarget) {
-      onClose(e);
-    }
-  };
+type ModalProps = {
+  visible: boolean;
+  children: ReactNode;
+};
 
+function Modal({ visible, children }: ModalProps) {
   return (
     <>
       <ModalOverlay visible={visible} />
-      <ModalWrapper className={className} onClick={maskClosable ? onMaskClick : null} tabIndex="-1" visible={visible}>
-        <ModalInner tabIndex="0" className="modal-inner">
-          {children}
-        </ModalInner>
+      <ModalWrapper visible={visible}>
+        <ModalInner className="modal-inner">{children}</ModalInner>
       </ModalWrapper>
     </>
   );
 }
 
-const ModalWrapper = styled.div`
+const ModalWrapper = styled.div<{ visible: boolean }>`
   box-sizing: border-box;
   display: ${(props) => (props.visible ? "block" : "none")};
   position: fixed;
@@ -33,7 +30,7 @@ const ModalWrapper = styled.div`
   outline: 0;
 `;
 
-const ModalOverlay = styled.div`
+const ModalOverlay = styled.div<{ visible: boolean }>`
   box-sizing: border-box;
   display: ${(props) => (props.visible ? "block" : "none")};
   position: fixed;

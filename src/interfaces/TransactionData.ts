@@ -3,7 +3,9 @@ export interface TransactionList {
 }
 
 export interface TransactionData {
-  uid: string;
+  id?: string;
+  _id: string;
+  uid?: string;
   transaction_type: boolean;
   date: number;
   category: string;

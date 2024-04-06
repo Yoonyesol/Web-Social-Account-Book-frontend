@@ -5,7 +5,7 @@ import styled from "styled-components";
 type ButtonProps = {
   text?: string;
   type?: "button" | "submit" | "reset";
-  onClick: MouseEventHandler<HTMLButtonElement>;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
   color?: string;
 };
 

@@ -1,14 +1,14 @@
-import React, { useState } from "react";
+import React, { ChangeEvent, FormEvent, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { dateToYearMonthFormat } from "../../constants/function";
 import Button from "../../common/Button";
 import { editBudgetAPI } from "../../utils/userAPI";
 import { setBudget } from "../../modules/transactionAnalytics";
+import { StoreData } from "../../interfaces/StoreData";
 
 const BudgetEditor = ({ closeEditor, curDate, budget }) => {
-  const userId = useSelector((state) => state.user.userInfo.userId);
-
+  const userId: string = useSelector((state: StoreData) => state.user.userInfo.userId);
   const dispatch = useDispatch();
 
   const [form, setForm] = useState({
@@ -18,7 +18,7 @@ const BudgetEditor = ({ closeEditor, curDate, budget }) => {
     amount: budget.amount,
   });
 
-  const handleChange = (e) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setForm({
       ...form,
@@ -26,7 +26,7 @@ const BudgetEditor = ({ closeEditor, curDate, budget }) => {
     });
   };
 
-  const onSubmit = async (e) => {
+  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       const updatedBudget = await editBudgetAPI(form);
@@ -34,7 +34,7 @@ const BudgetEditor = ({ closeEditor, curDate, budget }) => {
       alert("저장되었습니다!");
       onCancel();
     } catch (err) {
-      alert("수정 진행 중 오류가 발생했습니다.", err.message);
+      alert("수정 진행 중 오류가 발생했습니다." + err.message);
     }
   };
 
@@ -58,7 +58,7 @@ const BudgetEditor = ({ closeEditor, curDate, budget }) => {
           />
         </div>
         <div className="btn-container">
-          <Button type="submit" text={"수정"} />
+          <Button type="submit" text="수정" />
           <Button type="button" onClick={onCancel} text="취소" color="red" />
         </div>
       </form>

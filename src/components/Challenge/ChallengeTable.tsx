@@ -1,15 +1,24 @@
+import React from "react";
 import styled from "styled-components";
 import { IoMdAlert } from "react-icons/io";
 import { RiMailSendFill } from "react-icons/ri";
 import { PiChatTeardropDots } from "react-icons/pi";
 import { MdThumbUp } from "react-icons/md";
 import { useSelector } from "react-redux";
+import { StoreData } from "../../interfaces/StoreData";
 
 const rankingImoji = ["🥇 ", "🥈 ", "🥉 "];
 
+interface ChallengeData {
+  userId: string;
+  userName: string;
+  userEmail: string;
+  expenseRatio: number;
+}
+
 export function ChallengeTable({ data }) {
   let rank = 0;
-  const userId = useSelector((state) => state.user.userInfo.userId);
+  const userId: string = useSelector((state: StoreData) => state.user.userInfo.userId);
 
   return (
     <Section>
@@ -23,7 +32,7 @@ export function ChallengeTable({ data }) {
               <h1>이름</h1>
             </th>
             <th>
-              <div className="tooltip-toggle" aria-label="총 지출 금액 / 예산" tabIndex="0">
+              <div className="tooltip-toggle" aria-label="총 지출 금액 / 예산" tabIndex={0}>
                 <h1>예산 대비 지출</h1>
                 <IoMdAlert />
               </div>
@@ -34,7 +43,7 @@ export function ChallengeTable({ data }) {
           </tr>
         </thead>
         <tbody>
-          {data.map((challenge, idx) => (
+          {data.map((challenge: ChallengeData, idx: number) => (
             <tr key={challenge.userId} className={challenge.userId === userId ? "my-rank" : ""}>
               <td className="ranking">
                 {challenge.userId === userId ? (rank = idx + 1) : idx + 1}위{idx <= 2 ? rankingImoji[idx] : ""}

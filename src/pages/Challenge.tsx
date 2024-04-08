@@ -7,11 +7,12 @@ import { cardStylePurple, cardStyleRealWhite } from "../common/CardStyles";
 import { useSelector } from "react-redux";
 import { fetchBudgetAPI } from "../utils/userAPI";
 import { fetchMonthlyTransactionsAPI } from "../utils/transactionAPI";
+import { StoreData } from "../interfaces/StoreData";
 
 const date = dateToYearMonthFormat(new Date());
 
 export default function ChallengePage() {
-  const userId = useSelector((state) => state.user.userInfo.userId);
+  const userId: string = useSelector((state: StoreData) => state.user.userInfo.userId);
   const [budget, setBudget] = useState(0);
   const [expense, setExpense] = useState(0);
   const [curDate, setCurDate] = useState(new Date());
@@ -95,11 +96,10 @@ export default function ChallengePage() {
       <div className="card">
         <h3>📊유사 범위 예산 사용자 랭킹</h3>
         <div className="budget-width">
-          {parseFloat(budget) > 0 &&
-            `${Math.max(0, parseFloat(budget) * (1 - 0.1)).toLocaleString("ko-KR")}원 ~ ${(
-              parseFloat(budget) *
-              (1 + 0.1)
-            ).toLocaleString("ko-KR")}원`}
+          {budget > 0 &&
+            `${Math.max(0, budget * (1 - 0.1)).toLocaleString("ko-KR")}원 ~ ${(budget * (1 + 0.1)).toLocaleString(
+              "ko-KR",
+            )}원`}
         </div>
         <span className="description">* 예산 범위: ±10%</span>
         <ChallengeTable data={similarData} />

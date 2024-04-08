@@ -14,7 +14,6 @@ export const persistor = persistStore(store);
 createRoot(document.getElementById("root")).render(
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
-      {console.log(store.getState())}
       <App />
     </PersistGate>
   </Provider>,

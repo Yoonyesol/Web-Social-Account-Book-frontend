@@ -1,14 +1,15 @@
-import React, { useState } from "react";
+import React, { ChangeEvent, FormEvent, useState } from "react";
 import styled from "styled-components";
 import { editTransactionAPI, postTransactionAPI } from "../../utils/transactionAPI";
 import { addTransaction, editTransaction } from "../../modules/transactions";
 import { useDispatch, useSelector } from "react-redux";
 import Button from "../../common/Button";
+import { StoreData } from "../../interfaces/StoreData";
 
 export default function TransactionEditor({ isEdit, selectedData, closeEditor }) {
   const dispatch = useDispatch();
-  const userId = useSelector((state) => state.user.userInfo.userId);
-  const token = useSelector((state) => state.user.token);
+  const userId: string = useSelector((state: StoreData) => state.user.userInfo.userId);
+  const token: string = useSelector((state: StoreData) => state.user.token);
 
   //추가
   const [form, setForm] = useState({
@@ -24,7 +25,7 @@ export default function TransactionEditor({ isEdit, selectedData, closeEditor })
   const [edited, setEdited] = useState(selectedData);
 
   //추가
-  const handleChange = (e) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setForm((prevForm) => ({
       ...prevForm,
@@ -33,7 +34,7 @@ export default function TransactionEditor({ isEdit, selectedData, closeEditor })
   };
 
   //수정
-  const onEditChange = (e) => {
+  const onEditChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setEdited((prevEdited) => ({
       ...prevEdited,
@@ -42,7 +43,7 @@ export default function TransactionEditor({ isEdit, selectedData, closeEditor })
   };
 
   //추가(POST)
-  const onSubmit = async (e) => {
+  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       const transaction = await postTransactionAPI(form, token);
@@ -50,12 +51,12 @@ export default function TransactionEditor({ isEdit, selectedData, closeEditor })
       alert("저장되었습니다!");
       onCancel();
     } catch (err) {
-      alert("가계부 내역 등록 중 오류가 발생했습니다.", err.message);
+      alert("가계부 내역 등록 중 오류가 발생했습니다." + err.message);
     }
   };
 
   //수정(PATCH)
-  const onSubmitEdit = async (e) => {
+  const onSubmitEdit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       const transaction = await editTransactionAPI(edited, token);
@@ -63,7 +64,7 @@ export default function TransactionEditor({ isEdit, selectedData, closeEditor })
       alert("수정되었습니다!");
       onCancel();
     } catch (err) {
-      alert("가계부 내역 수정 중 오류가 발생했습니다.", err.message);
+      alert("가계부 내역 수정 중 오류가 발생했습니다." + err.message);
     }
   };
 

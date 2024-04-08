@@ -1,8 +1,8 @@
-import { TransactionList } from "./TransactionData";
+import { TransactionAnalyticsData, TransactionList } from "./TransactionData";
 import { UserData } from "./UserData";
 
 export interface StoreData {
-  transactionAnalytics: Object;
+  transactionAnalytics: TransactionAnalyticsData;
   transactions: TransactionList;
   user: UserData;
 }

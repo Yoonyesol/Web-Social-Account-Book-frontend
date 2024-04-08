@@ -26,7 +26,7 @@ export const clearTransactionsData = () => ({
 
 /* ----------------- 모듈의 초기 상태 ------------------ */
 const initialState = {
-  budget: { amount: 0 },
+  budget: { monthYear: "", amount: 0 },
   income: 0,
   expense: 0,
 };

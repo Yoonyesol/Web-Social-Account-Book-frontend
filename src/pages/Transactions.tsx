@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import TransactionList from "../components/Transaction/TransactionList";
 import TransactionAnalytics from "../components/Transaction/TransactionAnalytics";
-import Header from "../components/Transaction/Header";
+import Header from "../common/Header";
 import Button from "../common/Button";
 import { useDispatch, useSelector } from "react-redux";
 import { getTransactions } from "../modules/transactions";

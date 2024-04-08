@@ -13,3 +13,14 @@ export interface TransactionData {
   amount: number;
   memo: string;
 }
+
+export interface TransactionAnalyticsData {
+  budget: BudgetData;
+  expense: number;
+  income: number;
+}
+
+export interface BudgetData {
+  monthYear: string;
+  amount: number;
+}

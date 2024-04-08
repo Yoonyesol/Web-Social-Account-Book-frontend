@@ -10,12 +10,14 @@ import { useDispatch, useSelector } from "react-redux";
 import LoadingIndicator from "../../common/LoadingIndicator";
 import { fetchMonthlyTransactionsAPI } from "../../utils/transactionAPI";
 import { setBudget, setExpense, setIncome } from "../../modules/transactionAnalytics";
+import { TransactionAnalyticsData, TransactionData } from "../../interfaces/TransactionData";
+import { StoreData } from "../../interfaces/StoreData";
 
 export default function TransactionAnalytics({ curDate }) {
   const dispatch = useDispatch();
-  const userId = useSelector((state) => state.user.userInfo.userId);
-  const transactionList = useSelector((state) => state.transactions.transactions);
-  const transactionAnalytics = useSelector((state) => state.transactionAnalytics);
+  const transactionList: TransactionData[] = useSelector((state: StoreData) => state.transactions.transactions);
+  const userId: string = useSelector((state: StoreData) => state.user.userInfo.userId);
+  const transactionAnalytics: TransactionAnalyticsData = useSelector((state: StoreData) => state.transactionAnalytics);
   const [modalOn, setModalOn] = useState(false);
 
   useEffect(() => {
@@ -62,7 +64,7 @@ export default function TransactionAnalytics({ curDate }) {
           <FaPen onClick={openModal} />
         </div>
         {modalOn && (
-          <Modal visible={modalOn} closable={true} maskClosable={false} onClose={handleCancel}>
+          <Modal visible={modalOn}>
             <BudgetEditor closeEditor={handleCancel} curDate={curDate} budget={transactionAnalytics.budget} />
           </Modal>
         )}

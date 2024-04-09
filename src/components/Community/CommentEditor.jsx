@@ -66,14 +66,12 @@ export function CommentEditor({ isEdit, postId, userInfo, comment, onCancelEdit,
 
   return (
     <Section>
-      <form onSubmit={onSubmit} className="comment">
-        {!isEdit && (
-          <div className="comment-writer">
-            <b>{userInfo.name}</b>
-          </div>
-        )}
-        <div className="comment-main-btn-container">
-          <div className="comment-main">
+      <form onSubmit={onSubmit} className="editor-comment">
+        <div className="editor-comment-writer">
+          <b>{userInfo.name}</b>
+        </div>
+        <div className="main-btn-container">
+          <div className="editor-comment-main">
             <textarea
               required
               name="content"
@@ -99,19 +97,30 @@ export function CommentEditor({ isEdit, postId, userInfo, comment, onCancelEdit,
 }
 
 const Section = styled.section`
-  .comment {
+  .editor-comment {
     border: none;
+    display: flex;
+    flex-direction: column;
+    padding: 10px 15px;
+    border-bottom: 1px solid #ccc;
   }
 
-  .comment-main-btn-container {
+  .editor-comment-writer {
+    padding: 5px;
+  }
+
+  .main-btn-container {
     display: flex;
     flex-direction: row;
     align-items: center;
     border: none;
-    flex: 1;
 
-    .comment-main {
-      padding: 8px;
+    .editor-comment-main {
+      display: flex;
+      justify-content: space-between;
+      flex: 1;
+      padding: 5px 0;
+      width: 100%;
     }
 
     textarea {
@@ -121,6 +130,26 @@ const Section = styled.section`
       display: flex;
       padding: 10px;
       height: 5rem;
+    }
+
+    .btn-container {
+      align-items: center;
+      display: flex;
+      flex-direction: column;
+      padding-right: 0;
+    }
+  }
+
+  @media screen and (min-width: 280px) and (max-width: 400px) {
+    .main-btn-container {
+      flex-direction: column;
+
+      .btn-container {
+        width: 100%;
+        justify-content: end;
+        flex-direction: row;
+        padding: 0;
+      }
     }
   }
 `;

@@ -66,33 +66,35 @@ export function CommentView({ userInfo, postId }) {
       </div>
       <div className="comment-container">
         {data.map((item) => (
-          <div key={item._id} className="comment">
-            <div className="comment-writer">
-              <b>{item.authorName}</b>
-            </div>
-            <div className="comment-main">
-              {editingComment && editingComment._id === item._id ? (
-                <CommentEditor
-                  isEdit={isEdit}
-                  userInfo={userInfo}
-                  postId={postId}
-                  comment={editingComment}
-                  onCancelEdit={handleCancelEdit}
-                  onFetchData={fetchComments}
-                />
-              ) : (
-                <div className="p-container">
-                  <p className="comment-content">{item.content}</p>
-                  <p className="comment-date">{setDate(item.createdAt, true)}</p>
+          <div key={item._id}>
+            {editingComment && editingComment._id === item._id ? (
+              <CommentEditor
+                isEdit={isEdit}
+                userInfo={userInfo}
+                postId={postId}
+                comment={editingComment}
+                onCancelEdit={handleCancelEdit}
+                onFetchData={fetchComments}
+              />
+            ) : (
+              <div className="comment">
+                <div className="comment-writer">
+                  <b>{item.authorName}</b>
                 </div>
-              )}
-              {!isEdit && userInfo.userId === item.authorId && (
-                <div className="btn-container">
-                  <Button text="수정" onClick={() => handleEdit(item)} />
-                  <Button text="삭제" type="button" color="red" onClick={() => handleRemoveComment(item._id)} />
+                <div className="comment-main">
+                  <div className="p-container">
+                    <p className="comment-content">{item.content}</p>
+                    <p className="comment-date">{setDate(item.createdAt, true)}</p>
+                  </div>
+                  {!isEdit && userInfo.userId === item.authorId && (
+                    <div className="btn-container">
+                      <Button text="수정" onClick={() => handleEdit(item)} />
+                      <Button text="삭제" type="button" color="red" onClick={() => handleRemoveComment(item._id)} />
+                    </div>
+                  )}
                 </div>
-              )}
-            </div>
+              </div>
+            )}
           </div>
         ))}
         <CommentEditor isEdit={false} userInfo={userInfo} postId={postId} onFetchData={fetchComments} />
@@ -123,7 +125,7 @@ const Section = styled.section`
       flex: 1;
 
       .p-container {
-        padding: 15px;
+        padding: 15px 0px 15px 15px;
         display: flex;
         width: 80%;
         flex-direction: column;
@@ -140,6 +142,16 @@ const Section = styled.section`
       display: flex;
       flex-direction: column;
       align-items: center;
+      justify-content: center;
+    }
+  }
+
+  @media screen and (min-width: 280px) and (max-width: 500px) {
+    .comment {
+      .comment-writer {
+        padding: 8px;
+        width: 80px;
+      }
     }
   }
 `;

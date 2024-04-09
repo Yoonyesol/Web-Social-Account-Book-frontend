@@ -106,7 +106,7 @@ export default function Auth() {
         <h1>{isLoginMode ? "로그인" : "회원가입"}</h1>
         {isLoginMode ? (
           <span className="auto-fill" onClick={autoFillTestAuth}>
-            테스트 계정 로그인을 원할 시 클릭해주세요
+            테스트 계정 로그인
           </span>
         ) : (
           ""
@@ -197,6 +197,7 @@ const Section = styled.section`
     cursor: pointer;
     color: #8b8b8b;
     font-size: 13px;
+    text-decoration: underline;
   }
 
   form {

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { ChangeEvent, FormEvent, useState } from "react";
 import styled from "styled-components";
 import Button from "../common/Button";
 import { loginAPI, signupAPI } from "../utils/userAPI";
@@ -7,11 +7,21 @@ import LoadingIndicator from "../common/LoadingIndicator";
 import { useDispatch, useSelector } from "react-redux";
 import { loginSuccess, setToken, setTokenExpiration, setUserInfo } from "../modules/user";
 import { useRef } from "react";
+import { StoreData } from "../interfaces/StoreData";
+
+interface FormData {
+  userInfo: {
+    userId: string;
+    email: string;
+    name: string;
+  };
+  token: string;
+}
 
 export default function Auth() {
   const nav = useNavigate();
   const dispatch = useDispatch();
-  const tokenExpiration = useSelector((state) => state.user.tokenExpiration);
+  const tokenExpiration: string = useSelector((state: StoreData) => state.user.tokenExpiration);
 
   const [isLoginMode, setIsLoginMode] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
@@ -24,11 +34,11 @@ export default function Auth() {
     password: "",
   });
 
-  const nameInputRef = useRef(null);
-  const emailInputRef = useRef(null);
-  const passwordInputRef = useRef(null);
+  const nameInputRef = useRef<HTMLInputElement>(null);
+  const emailInputRef = useRef<HTMLInputElement>(null);
+  const passwordInputRef = useRef<HTMLInputElement>(null);
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (errorMsg) {
       setErrorMsg(null);
     }
@@ -40,11 +50,11 @@ export default function Auth() {
     });
   };
 
-  const handleAuthSubmit = async (e) => {
+  const handleAuthSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
 
-    let responseData;
+    let responseData: FormData;
     try {
       if (isLoginMode) {
         responseData = await loginAPI(form);
@@ -82,10 +92,25 @@ export default function Auth() {
     setIsShowPw(!isShowPw);
   };
 
+  const autoFillTestAuth = () => {
+    emailInputRef.current!.value = "112@naver.com";
+    passwordInputRef.current!.value = "qwer1234";
+
+    form.email = "112@naver.com";
+    form.password = "qwer1234";
+  };
+
   return (
     <Section>
       <div className="container">
         <h1>{isLoginMode ? "로그인" : "회원가입"}</h1>
+        {isLoginMode ? (
+          <span className="auto-fill" onClick={autoFillTestAuth}>
+            테스트 계정 로그인을 원할 시 클릭해주세요
+          </span>
+        ) : (
+          ""
+        )}
         {errorMsg && <ErrorMessage>{errorMsg}</ErrorMessage>}
         <form onSubmit={handleAuthSubmit}>
           {!isLoginMode && (
@@ -166,6 +191,12 @@ const Section = styled.section`
     box-shadow: 0 1px 11px rgba(0, 0, 0, 0.27);
     border-radius: 10px;
     padding: 35px;
+  }
+
+  .auto-fill {
+    cursor: pointer;
+    color: #8b8b8b;
+    font-size: 13px;
   }
 
   form {

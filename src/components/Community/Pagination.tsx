@@ -1,8 +1,15 @@
 import React from "react";
 import styled from "styled-components";
 
-const Pagination = ({ postsPerPage, totalPosts, paginate }) => {
-  const pageNumbers = [];
+type PaginationType = {
+  postsPerPage: number;
+  totalPosts: number;
+  currentPage: number;
+  paginate: React.Dispatch<React.SetStateAction<number>>;
+};
+
+const Pagination = ({ postsPerPage, totalPosts, currentPage, paginate }: PaginationType) => {
+  const pageNumbers: number[] = [];
   for (let i = 1; i <= Math.ceil(totalPosts / postsPerPage); i++) {
     pageNumbers.push(i);
   }
@@ -12,7 +19,7 @@ const Pagination = ({ postsPerPage, totalPosts, paginate }) => {
       <PageNav>
         <PageUl className="pagination">
           {pageNumbers.map((number) => (
-            <PageLi key={number} className="page-item">
+            <PageLi key={number} className={currentPage === number ? "page-item current" : "page-item"}>
               <PageSpan
                 onClick={() => {
                   paginate(number);
@@ -47,23 +54,21 @@ const PageUl = styled.ul`
 
 const PageLi = styled.li`
   display: inline-block;
-  margin: 0 5px;
   font-size: 15px;
-  font-weight: 600;
   padding: 5px;
   border-radius: 5px;
   width: 30px;
+
+  &.current {
+    font-weight: bold;
+  }
 `;
 
 const PageSpan = styled.span`
-  padding: 10px 15px;
+  padding: 10px;
   border-radius: 5px;
   &:hover {
     cursor: pointer;
-    color: white;
-    background-color: #8b8fc8;
-  }
-  &:focus::after {
     color: white;
     background-color: #8b8fc8;
   }

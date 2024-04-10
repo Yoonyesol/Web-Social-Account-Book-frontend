@@ -80,7 +80,12 @@ export default function Community() {
             ))}
           </tbody>
         </table>
-        <Pagination postsPerPage={postsPerPage} totalPosts={board.length} paginate={setCurrentPage}></Pagination>
+        <Pagination
+          postsPerPage={postsPerPage}
+          totalPosts={board.length}
+          currentPage={currentPage}
+          paginate={setCurrentPage}
+        ></Pagination>
       </div>
     </Section>
   );

@@ -6,19 +6,20 @@ import { fetchAllPostsAPI } from "../utils/communityAPI";
 import Button from "../common/Button";
 import LoadingIndicator from "../common/LoadingIndicator";
 import { setDate } from "../constants/function";
+import { PostData } from "../interfaces/CommunityData";
 
 export default function Community() {
   const nav = useNavigate();
-  const [board, setBoard] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1); //현재 페이지수
-  const [postsPerPage] = useState(15); //한 페이지당 게시물 수
+  const [board, setBoard] = useState<PostData[]>([]);
+  const [currentPage, setCurrentPage] = useState<number>(1); //현재 페이지수
+  const [postsPerPage] = useState<number>(15); //한 페이지당 게시물 수
 
   //페이지 이동
   const indexOfLast = currentPage * postsPerPage;
   const indexOfFirst = indexOfLast - postsPerPage;
 
-  function currentPosts(data) {
-    let currentPosts = 0;
+  function currentPosts(data: PostData[]) {
+    let currentPosts: PostData[];
     currentPosts = data.slice(indexOfFirst, indexOfLast);
     return currentPosts;
   }
@@ -29,7 +30,7 @@ export default function Community() {
         const posts = await fetchAllPostsAPI();
         setBoard(posts);
       } catch (error) {
-        alert("게시글을 불러오지 못했습니다!", error.message);
+        alert("게시글을 불러오지 못했습니다!" + error.message);
       }
     };
     fetchAllPosts();
@@ -39,7 +40,7 @@ export default function Community() {
     return <LoadingIndicator />;
   }
 
-  const handlePostDetail = (item) => {
+  const handlePostDetail = (item: PostData) => {
     nav(`/community/${item.id}`);
   };
 

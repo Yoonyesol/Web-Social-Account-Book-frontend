@@ -234,6 +234,7 @@ const Section = styled.section`
     border-bottom: 1px solid #e2e1e1;
 
     .content-main {
+      white-space: pre-wrap;
       min-height: 300px;
     }
 

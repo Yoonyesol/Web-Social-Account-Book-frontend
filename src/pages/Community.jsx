@@ -63,9 +63,9 @@ export default function Community() {
             </tr>
           </thead>
           <tbody>
-            {currentPosts(board).map((item, idx) => (
+            {currentPosts(board).map((item) => (
               <tr key={item._id}>
-                <td className="td-idx">{idx + 1}</td>
+                <td className="td-idx">{item.index}</td>
                 <td className="td-category">{item.category}</td>
                 <td className="td-title" onClick={() => handlePostDetail(item)}>
                   {item.title}

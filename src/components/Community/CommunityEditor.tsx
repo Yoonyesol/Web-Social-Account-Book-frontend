@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import styled from "styled-components";
 import Button from "../../common/Button";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -8,12 +8,24 @@ import { categoryOption } from "../../constants/constant";
 import { createPostAPI, updatePostAPI } from "../../utils/communityAPI";
 import { setDate } from "../../constants/function";
 import LoadingIndicator from "../../common/LoadingIndicator";
+import { StoreData } from "../../interfaces/StoreData";
+import { UserInfo } from "../../interfaces/UserData";
+
+type FormType = {
+  title: string;
+  content: string;
+  date: Date;
+  writer?: string;
+  category?: string;
+};
 
 const CommunityEditor = () => {
+  let postId = "";
+
   const nav = useNavigate();
   const location = useLocation();
-  const token = useSelector((state) => state.user.token);
-  const userInfo = useSelector((state) => state.user.userInfo);
+  const userInfo: UserInfo = useSelector((state: StoreData) => state.user.userInfo);
+  const token: string = useSelector((state: StoreData) => state.user.token);
 
   const [isEdit, setIsEdit] = useState(location.state === null ? false : true);
   const [isLoading, setIsLoading] = useState(false);
@@ -22,13 +34,15 @@ const CommunityEditor = () => {
     location.state === null ? categoryOption[0].value : location.state.category,
   );
 
-  const [form, setForm] = useState({
+  const [form, setForm] = useState<FormType>({
     title: "",
     content: "",
     date: new Date(),
+    writer: "",
+    category: "",
   });
 
-  const handleChange = (e) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
 
     if (isEdit) {
@@ -48,13 +62,13 @@ const CommunityEditor = () => {
   };
 
   useEffect(() => {
-    setEditedData((prevForm) => ({
+    setEditedData((prevForm: FormType) => ({
       ...prevForm,
       category: selectedCategory,
     }));
   }, [selectedCategory]);
 
-  const onSubmit = async (e) => {
+  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
     if (!isEdit) {
@@ -62,12 +76,13 @@ const CommunityEditor = () => {
         const post = await createPostAPI(form, token);
         setIsLoading(false);
         alert("저장되었습니다!");
+        postId = post._id;
         nav(`/community/${post._id}`, {
           replace: true,
         });
       } catch (error) {
         setIsLoading(false);
-        alert("게시글을 작성하지 못했습니다.", error.message);
+        alert("게시글을 작성하지 못했습니다." + error.message);
       }
     } else {
       try {
@@ -77,7 +92,7 @@ const CommunityEditor = () => {
         nav(`/community/${editedData.id}`, { replace: true });
       } catch (error) {
         setIsLoading(false);
-        alert("게시글을 수정하지 못했습니다.", error.message);
+        alert("게시글을 수정하지 못했습니다." + error.message);
       }
     }
   };
@@ -123,7 +138,6 @@ const CommunityEditor = () => {
               className="formArea"
               required
               placeholder="내용을 입력해주세요"
-              type="text"
               name="content"
               value={isEdit ? editedData.content : form.content}
               onChange={handleChange}
@@ -132,13 +146,27 @@ const CommunityEditor = () => {
           {!isEdit && (
             <div className="btn-container">
               <Button type="submit" text="작성" />
-              <Button type="button" onClick={() => nav(-1, { replace: true })} text="목록" color="red" />
+              <Button
+                type="button"
+                onClick={() =>
+                  nav(`/community/${postId}`, {
+                    replace: true,
+                  })
+                }
+                text="목록"
+                color="red"
+              />
             </div>
           )}
           {isEdit && (
             <div className="btn-container">
               <Button type="submit" text="수정" />
-              <Button type="button" onClick={() => nav(-1, { replace: true })} text="취소" color="red" />
+              <Button
+                type="button"
+                onClick={() => nav(`/community/${editedData.id}`, { replace: true })}
+                text="취소"
+                color="red"
+              />
             </div>
           )}
         </form>

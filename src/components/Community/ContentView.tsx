@@ -9,15 +9,18 @@ import { deletePostAPI, fetchPostByCidAPI, updateLikeAPI } from "../../utils/com
 import { CommentView } from "./CommentView";
 import { MdThumbUp } from "react-icons/md";
 import { FiThumbsUp } from "react-icons/fi";
+import { StoreData } from "../../interfaces/StoreData";
+import { UserInfo } from "../../interfaces/UserData";
+import { PostData } from "../../interfaces/CommunityData";
 
 const ContentView = () => {
   const nav = useNavigate();
   const params = useParams();
-  const userInfo = useSelector((state) => state.user.userInfo);
-  const token = useSelector((state) => state.user.token);
+  const userInfo: UserInfo = useSelector((state: StoreData) => state.user.userInfo);
+  const token: string = useSelector((state: StoreData) => state.user.token);
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedPost, setSelectedPost] = useState();
-  const [like, setLike] = useState({});
+  const [selectedPost, setSelectedPost] = useState<PostData>();
+  const [like, setLike] = useState({ click: false, count: 0, animation: false });
 
   useEffect(() => {
     const fetchPostByCid = async () => {
@@ -67,7 +70,7 @@ const ContentView = () => {
         setIsLoading(false);
         nav("/community", { replace: true });
       } catch (error) {
-        alert("게시글을 삭제하지 못했습니다.", error.message);
+        alert("게시글을 삭제하지 못했습니다." + error.message);
         setIsLoading(false);
       }
     }
@@ -82,7 +85,7 @@ const ContentView = () => {
         setLike({ count: like.count + 1, click: true, animation: true });
       }
     } catch (error) {
-      alert("공감 상태를 업데이트하지 못했습니다.", error.message);
+      alert("공감 상태를 업데이트하지 못했습니다." + error.message);
     }
   };
 
@@ -138,7 +141,7 @@ const ContentView = () => {
 
 export default ContentView;
 
-const LikeButton = styled.button`
+const LikeButton = styled.button<{ liked: boolean; animation: boolean }>`
   background-color: ${({ liked }) => (liked ? "#8b8fc8" : "white")};
   color: ${({ liked }) => (liked ? "white" : "black")};
   font-size: 11px;

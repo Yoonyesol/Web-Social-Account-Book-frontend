@@ -6,7 +6,8 @@ export interface UserData {
 }
 
 export interface UserInfo {
-  userId?: string;
+  userId: string;
+  uid?: string;
   name: string;
   email: string;
   image: string;

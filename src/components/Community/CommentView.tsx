@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { deleteCommentAPI, fetchAllCommentsByPostIdAPI } from "../../utils/commentAPI";
 import { setDate } from "../../constants/function";
@@ -6,13 +6,23 @@ import Button from "../../common/Button";
 import { CommentEditor } from "./CommentEditor";
 import { useSelector } from "react-redux";
 import LoadingIndicator from "../../common/LoadingIndicator";
+import { StoreData } from "../../interfaces/StoreData";
+
+export interface CommentData {
+  _id: string;
+  postId: string;
+  authorId: string;
+  authorName: string;
+  content: string;
+  createdAt: number;
+}
 
 export function CommentView({ userInfo, postId }) {
-  const token = useSelector((state) => state.user.token);
+  const token: string = useSelector((state: StoreData) => state.user.token);
 
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<CommentData[]>([]);
   const [isEdit, setIsEdit] = useState(false);
-  const [editingComment, setEditingComment] = useState(null);
+  const [editingComment, setEditingComment] = useState<CommentData | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const fetchComments = async () => {
@@ -31,7 +41,7 @@ export function CommentView({ userInfo, postId }) {
     fetchComments();
   }, [postId]);
 
-  const handleEdit = (comment) => {
+  const handleEdit = (comment: CommentData) => {
     setIsEdit(true);
     setEditingComment(comment);
   };
@@ -41,7 +51,7 @@ export function CommentView({ userInfo, postId }) {
     setEditingComment(null);
   };
 
-  const handleRemoveComment = async (id) => {
+  const handleRemoveComment = async (id: string) => {
     if (window.confirm("내역을 삭제하시겠습니까?")) {
       setIsLoading(true);
       try {
@@ -49,7 +59,7 @@ export function CommentView({ userInfo, postId }) {
         setIsLoading(false);
         fetchComments();
       } catch (error) {
-        alert("댓글 삭제에 실패했습니다.", error.message);
+        alert("댓글 삭제에 실패했습니다." + error.message);
         setIsLoading(false);
       }
     }
@@ -65,7 +75,7 @@ export function CommentView({ userInfo, postId }) {
         댓글 | 총 <b>{data.length}</b>개
       </div>
       <div className="comment-container">
-        {data.map((item) => (
+        {data.map((item: CommentData) => (
           <div key={item._id}>
             {editingComment && editingComment._id === item._id ? (
               <CommentEditor
@@ -97,7 +107,7 @@ export function CommentView({ userInfo, postId }) {
             )}
           </div>
         ))}
-        <CommentEditor isEdit={false} userInfo={userInfo} postId={postId} onFetchData={fetchComments} />
+        <CommentEditor isEdit={false} postId={postId} userInfo={userInfo} onFetchData={fetchComments} />
       </div>
     </Section>
   );

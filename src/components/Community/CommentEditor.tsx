@@ -1,14 +1,27 @@
+import React, { ChangeEvent, FormEvent } from "react";
 import styled from "styled-components";
 import Button from "../../common/Button";
 import { useState } from "react";
 import { createCommentAPI, updateCommentAPI } from "../../utils/commentAPI";
 import { useSelector } from "react-redux";
 import LoadingIndicator from "../../common/LoadingIndicator";
+import { UserInfo } from "../../interfaces/UserData";
+import { CommentData } from "./CommentView";
+import { StoreData } from "../../interfaces/StoreData";
 
-export function CommentEditor({ isEdit, postId, userInfo, comment, onCancelEdit, onFetchData }) {
-  const token = useSelector((state) => state.user.token);
+type CommentEditorProps = {
+  isEdit: boolean;
+  postId: string;
+  userInfo: UserInfo;
+  comment?: CommentData;
+  onCancelEdit?: () => void;
+  onFetchData: () => Promise<void>;
+};
+
+export function CommentEditor({ isEdit, postId, userInfo, comment, onCancelEdit, onFetchData }: CommentEditorProps) {
+  const token: string = useSelector((state: StoreData) => state.user.token);
   const [isLoading, setIsLoading] = useState(false);
-  const [updatedContent, setUpdatedContent] = useState(isEdit ? comment.content : "");
+  const [updatedContent, setUpdatedContent] = useState(isEdit && comment ? comment!.content : "");
 
   const [form, setForm] = useState({
     postId,
@@ -17,7 +30,7 @@ export function CommentEditor({ isEdit, postId, userInfo, comment, onCancelEdit,
     content: "",
   });
 
-  const handleChange = (e) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
 
     if (!isEdit) {
@@ -30,21 +43,22 @@ export function CommentEditor({ isEdit, postId, userInfo, comment, onCancelEdit,
     }
   };
 
-  const onSubmit = async (e) => {
+  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
-    if (!isEdit) {
+    if (!isEdit || comment === undefined || onCancelEdit === undefined) {
       try {
         await createCommentAPI(form, token);
         setIsLoading(false);
         alert("저장되었습니다!");
         onFetchData();
-        setForm({
+        setForm((prevForm) => ({
+          ...prevForm,
           content: "",
-        });
+        }));
       } catch (error) {
         setIsLoading(false);
-        alert("댓글 작성에 실패했습니다.", error.message);
+        alert("댓글 작성에 실패했습니다." + error.message);
       }
     } else {
       try {
@@ -55,7 +69,7 @@ export function CommentEditor({ isEdit, postId, userInfo, comment, onCancelEdit,
         onCancelEdit();
       } catch (error) {
         setIsLoading(false);
-        alert("댓글 수정에 실패했습니다.", error.message);
+        alert("댓글 수정에 실패했습니다." + error.message);
       }
     }
   };

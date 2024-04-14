@@ -1,6 +1,7 @@
 import axios from "axios";
+import { CommentFormType } from "../components/Community/CommentEditor";
 
-export const fetchAllCommentsByPostIdAPI = async (cid) => {
+export const fetchAllCommentsByPostIdAPI = async (cid: string) => {
   try {
     const responseData = await axios.get(`${process.env.REACT_APP_BACKEND_URL}api/comment/${cid}`);
     return responseData.data.comments;
@@ -15,7 +16,7 @@ export const fetchAllCommentsByPostIdAPI = async (cid) => {
   }
 };
 
-export const fetchAllCommentsByUserIdAPI = async (uid) => {
+export const fetchAllCommentsByUserIdAPI = async (uid: string) => {
   try {
     const responseData = await axios.get(`${process.env.REACT_APP_BACKEND_URL}api/comment/user/${uid}`);
     return responseData.data.comments;
@@ -30,7 +31,7 @@ export const fetchAllCommentsByUserIdAPI = async (uid) => {
   }
 };
 
-export const createCommentAPI = async (form, token) => {
+export const createCommentAPI = async (form: CommentFormType, token: string) => {
   try {
     const newData = {
       postId: form.postId,
@@ -57,7 +58,7 @@ export const createCommentAPI = async (form, token) => {
   }
 };
 
-export const updateCommentAPI = async (id, content, token) => {
+export const updateCommentAPI = async (id: string, content: string, token: string) => {
   try {
     const editedData = {
       content: content,
@@ -78,7 +79,7 @@ export const updateCommentAPI = async (id, content, token) => {
   }
 };
 
-export const deleteCommentAPI = async (id, token) => {
+export const deleteCommentAPI = async (id: string, token: string) => {
   try {
     await axios.delete(`${process.env.REACT_APP_BACKEND_URL}api/comment/${id}`, {
       headers: {

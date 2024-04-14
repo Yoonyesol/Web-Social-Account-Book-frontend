@@ -1,4 +1,5 @@
 import axios from "axios";
+import { EditPostFormType, PostFormType } from "../components/Community/CommunityEditor";
 
 export const fetchAllPostsAPI = async () => {
   try {
@@ -15,7 +16,7 @@ export const fetchAllPostsAPI = async () => {
   }
 };
 
-export const fetchPostByCidAPI = async (cid) => {
+export const fetchPostByCidAPI = async (cid: string) => {
   try {
     const responseData = await axios.get(`${process.env.REACT_APP_BACKEND_URL}api/community/${cid}`);
     return responseData.data.post;
@@ -30,7 +31,7 @@ export const fetchPostByCidAPI = async (cid) => {
   }
 };
 
-export const fetchPostsByUidAPI = async (uid) => {
+export const fetchPostsByUidAPI = async (uid: string) => {
   try {
     const responseData = await axios.get(`${process.env.REACT_APP_BACKEND_URL}api/community/${uid}`);
     return responseData.data.posts;
@@ -45,7 +46,7 @@ export const fetchPostsByUidAPI = async (uid) => {
   }
 };
 
-export const fetchLikedPostByUidAPI = async (token) => {
+export const fetchLikedPostByUidAPI = async (token: string) => {
   try {
     const responseData = await axios.get(`${process.env.REACT_APP_BACKEND_URL}api/users/likedPosts`, {
       headers: {
@@ -64,7 +65,7 @@ export const fetchLikedPostByUidAPI = async (token) => {
   }
 };
 
-export const createPostAPI = async (form, token) => {
+export const createPostAPI = async (form: PostFormType, token: string) => {
   try {
     const newData = {
       writer: form.writer,
@@ -90,7 +91,7 @@ export const createPostAPI = async (form, token) => {
   }
 };
 
-export const updatePostAPI = async (form, token) => {
+export const updatePostAPI = async (form: EditPostFormType, token: string) => {
   try {
     const editedData = {
       title: form.title,
@@ -113,7 +114,7 @@ export const updatePostAPI = async (form, token) => {
   }
 };
 
-export const deletePostAPI = async (id, token) => {
+export const deletePostAPI = async (id: string, token: string) => {
   try {
     await axios.delete(`${process.env.REACT_APP_BACKEND_URL}api/community/${id}`, {
       headers: {
@@ -131,7 +132,7 @@ export const deletePostAPI = async (id, token) => {
   }
 };
 
-export const updateLikeAPI = async (id, token) => {
+export const updateLikeAPI = async (id: string, token: string) => {
   try {
     const responseData = await axios.post(`${process.env.REACT_APP_BACKEND_URL}api/community/${id}/like`, null, {
       headers: {

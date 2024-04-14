@@ -1,12 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 
-type PaginationType = {
+interface PaginationType {
   postsPerPage: number;
   totalPosts: number;
   currentPage: number;
   paginate: React.Dispatch<React.SetStateAction<number>>;
-};
+}
 
 const Pagination = ({ postsPerPage, totalPosts, currentPage, paginate }: PaginationType) => {
   const pageNumbers: number[] = [];

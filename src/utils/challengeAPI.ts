@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const fetchBudgetExpenseRatioAPI = async (date) => {
+export const fetchBudgetExpenseRatioAPI = async (date: string) => {
   try {
     const responseData = await axios.get(`${process.env.REACT_APP_BACKEND_URL}api/challenge/${date}`);
     return responseData.data.challenge;
@@ -15,7 +15,7 @@ export const fetchBudgetExpenseRatioAPI = async (date) => {
   }
 };
 
-export const fetchSimilarBudgetExpenseRatioAPI = async (date, budget) => {
+export const fetchSimilarBudgetExpenseRatioAPI = async (date: string, budget: number) => {
   try {
     const responseData = await axios.get(`${process.env.REACT_APP_BACKEND_URL}api/challenge/similar/${date}/${budget}`);
     return responseData.data.similarBudgetUsers;

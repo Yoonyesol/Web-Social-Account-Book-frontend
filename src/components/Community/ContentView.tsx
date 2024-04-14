@@ -25,8 +25,10 @@ const ContentView = () => {
   useEffect(() => {
     const fetchPostByCid = async () => {
       try {
-        const post = await fetchPostByCidAPI(params.cid);
-        setSelectedPost(post);
+        if (params.cid) {
+          const post = await fetchPostByCidAPI(params.cid);
+          setSelectedPost(post);
+        }
       } catch (error) {
         console.log("게시글 정보 API 호출 도중 에러 발생:", error.message);
       }
@@ -65,10 +67,12 @@ const ContentView = () => {
     if (window.confirm("게시글을 삭제하시겠습니까?")) {
       setIsLoading(true);
       try {
-        await deletePostAPI(params.cid, token);
-        alert("삭제되었습니다!");
-        setIsLoading(false);
-        nav("/community", { replace: true });
+        if (params.cid) {
+          await deletePostAPI(params.cid, token);
+          alert("삭제되었습니다!");
+          setIsLoading(false);
+          nav("/community", { replace: true });
+        }
       } catch (error) {
         alert("게시글을 삭제하지 못했습니다." + error.message);
         setIsLoading(false);

@@ -11,13 +11,17 @@ import LoadingIndicator from "../../common/LoadingIndicator";
 import { StoreData } from "../../interfaces/StoreData";
 import { UserInfo } from "../../interfaces/UserData";
 
-type FormType = {
+export interface EditPostFormType {
+  id?: string;
   title: string;
   content: string;
-  date: Date;
-  writer?: string;
   category?: string;
-};
+}
+
+export interface PostFormType extends EditPostFormType {
+  date: Date;
+  writer: string;
+}
 
 const CommunityEditor = () => {
   let postId = "";
@@ -29,12 +33,12 @@ const CommunityEditor = () => {
 
   const [isEdit, setIsEdit] = useState(location.state === null ? false : true);
   const [isLoading, setIsLoading] = useState(false);
-  const [editedData, setEditedData] = useState({ ...location.state });
+  const [editedData, setEditedData] = useState<EditPostFormType>({ ...location.state });
   const [selectedCategory, setSelectedCategory] = useState(
     location.state === null ? categoryOption[0].value : location.state.category,
   );
 
-  const [form, setForm] = useState<FormType>({
+  const [form, setForm] = useState<PostFormType>({
     title: "",
     content: "",
     date: new Date(),
@@ -62,7 +66,7 @@ const CommunityEditor = () => {
   };
 
   useEffect(() => {
-    setEditedData((prevForm: FormType) => ({
+    setEditedData((prevForm: EditPostFormType) => ({
       ...prevForm,
       category: selectedCategory,
     }));

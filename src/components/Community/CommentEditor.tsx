@@ -9,21 +9,28 @@ import { UserInfo } from "../../interfaces/UserData";
 import { CommentData } from "./CommentView";
 import { StoreData } from "../../interfaces/StoreData";
 
-type CommentEditorProps = {
+export interface CommentFormType {
+  postId: string;
+  authorId: string;
+  authorName: string;
+  content: string;
+}
+
+interface CommentEditorProps {
   isEdit: boolean;
   postId: string;
   userInfo: UserInfo;
   comment?: CommentData;
   onCancelEdit?: () => void;
   onFetchData: () => Promise<void>;
-};
+}
 
 export function CommentEditor({ isEdit, postId, userInfo, comment, onCancelEdit, onFetchData }: CommentEditorProps) {
   const token: string = useSelector((state: StoreData) => state.user.token);
   const [isLoading, setIsLoading] = useState(false);
   const [updatedContent, setUpdatedContent] = useState(isEdit && comment ? comment!.content : "");
 
-  const [form, setForm] = useState({
+  const [form, setForm] = useState<CommentFormType>({
     postId,
     authorId: userInfo.userId,
     authorName: userInfo.name,

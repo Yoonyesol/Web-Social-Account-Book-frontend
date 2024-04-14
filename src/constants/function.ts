@@ -1,6 +1,8 @@
 import { persistor } from "..";
 
-export const setDate = (dateString, view) => {
+type InputTimeType = string | Date | number;
+
+export const setDate = (dateString: InputTimeType, view: boolean): string => {
   const currentDate = new Date();
   const date = new Date(dateString);
 
@@ -30,7 +32,7 @@ export const setDate = (dateString, view) => {
   }
 };
 
-export const dateToYearMonthFormat = (dateString) => {
+export const dateToYearMonthFormat = (dateString: InputTimeType): string => {
   const date = new Date(dateString);
   const year = date.getFullYear();
   const month = date.getMonth() + 1; // 월은 0부터 시작하므로 +1 해줍니다.

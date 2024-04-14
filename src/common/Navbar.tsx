@@ -1,14 +1,15 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
+import { StoreData } from "../interfaces/StoreData";
 
 export default function Navbar() {
-  const userInfo = useSelector((state) => state.user.userInfo);
+  const userName: string = useSelector((state: StoreData) => state.user.userInfo.name);
   return (
     <Nav>
       <div className="title">
         <h4>
-          hello <span className="user-name">{userInfo.name}</span>
+          hello <span className="user-name">{userName}</span>
         </h4>
         <h1>
           Welcome to <span>CASH DASHBOARD</span>

@@ -1,9 +1,21 @@
+import React from "react";
 import styled from "styled-components";
 
-const ControlOption = ({ value, chooseOption, optionList }) => {
+interface ControlOptionProps {
+  value: string;
+  chooseOption: React.Dispatch<React.SetStateAction<string>>;
+  optionList: OptionListType[];
+}
+
+interface OptionListType {
+  value: string;
+  name: string;
+}
+
+const ControlOption = ({ value, chooseOption, optionList }: ControlOptionProps) => {
   return (
     <StyledSelect value={value} onChange={(e) => chooseOption(e.target.value)}>
-      {optionList.map((it, idx) => (
+      {optionList.map((it: OptionListType, idx: number) => (
         <option key={idx} value={it.value}>
           {it.name}
         </option>

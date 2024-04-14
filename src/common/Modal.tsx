@@ -1,10 +1,10 @@
 import React, { ReactNode } from "react";
 import styled from "styled-components";
 
-type ModalProps = {
+interface ModalProps {
   visible: boolean;
   children: ReactNode;
-};
+}
 
 function Modal({ visible, children }: ModalProps) {
   return (

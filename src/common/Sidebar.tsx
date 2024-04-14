@@ -17,7 +17,7 @@ function Sidebar() {
   const [navbarState, setNavbarState] = useState(false);
 
   const html = document.querySelector("html");
-  html.addEventListener("click", () => setNavbarState(false));
+  html!.addEventListener("click", () => setNavbarState(false));
 
   const handleLogout = useCallback(async () => {
     dispatch(logout());
@@ -52,7 +52,7 @@ function Sidebar() {
     );
   }, []);
 
-  const handleClickNavbar = useCallback((e) => {
+  const handleClickNavbar = useCallback((e: React.MouseEvent<SVGElement>) => {
     e.stopPropagation();
     setNavbarState(true);
   }, []);
@@ -85,7 +85,7 @@ function Sidebar() {
       </Section>
 
       <ResponsiveNav state={navbarState} className={navbarState ? "show" : ""}>
-        <div className="responsive__links">
+        <div className="responsive-links">
           <MenuList />
         </div>
         <div className="responsive-logout" onClick={handleLogout}>
@@ -235,7 +235,7 @@ const Section = styled.section`
   }
 `;
 
-const ResponsiveNav = styled.div`
+const ResponsiveNav = styled.div<{ state: boolean }>`
   position: fixed;
   display: flex;
   flex-direction: column;
@@ -250,7 +250,7 @@ const ResponsiveNav = styled.div`
   opacity: 0;
   visibility: hidden;
   padding: 1rem;
-  .responsive__links {
+  .responsive-links {
     ul {
       list-style-type: none;
       display: flex;

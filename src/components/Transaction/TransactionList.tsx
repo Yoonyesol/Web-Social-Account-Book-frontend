@@ -99,7 +99,7 @@ export default function TransactionList({ data }) {
         {getSortedTransactionList().map((item: TransactionData) => (
           <div className="card" key={item._id}>
             <div className="content">
-              <div className="tr-data" onClick={() => handleEdit(item._id)}>
+              <div className="tr-data" onClick={() => handleEdit(item._id!)}>
                 <div className="cell date">
                   <b>{`${new Date(item.date).getDate()}일 (${day[new Date(item.date).getDay()]})`}</b>
                 </div>
@@ -116,7 +116,7 @@ export default function TransactionList({ data }) {
               </div>
 
               <div className="cell action">
-                <FaTrashAlt onClick={() => handleRemove(item._id)} />
+                <FaTrashAlt onClick={() => handleRemove(item._id!)} />
               </div>
             </div>
           </div>

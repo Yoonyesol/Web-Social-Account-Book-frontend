@@ -1,4 +1,6 @@
 import axios from "axios";
+import { BudgetData, BudgetFormType } from "../interfaces/TransactionData";
+import { AuthFormType } from "../interfaces/UserData";
 
 export const fetchUserDataAPI = async () => {
   try {
@@ -18,7 +20,7 @@ export const fetchUserDataAPI = async () => {
   }
 };
 
-export const signupAPI = async (form) => {
+export const signupAPI = async (form: AuthFormType) => {
   try {
     const user = {
       name: form.name,
@@ -38,7 +40,7 @@ export const signupAPI = async (form) => {
   }
 };
 
-export const loginAPI = async (form) => {
+export const loginAPI = async (form: AuthFormType) => {
   try {
     const user = {
       email: form.email,
@@ -57,7 +59,7 @@ export const loginAPI = async (form) => {
   }
 };
 
-export const fetchBudgetAPI = async (uid, date) => {
+export const fetchBudgetAPI = async (uid: string, date: string) => {
   try {
     const responseData = await axios.get(`${process.env.REACT_APP_BACKEND_URL}api/users/budget/${uid}/${date}`);
     return responseData.data.budget;
@@ -72,7 +74,7 @@ export const fetchBudgetAPI = async (uid, date) => {
   }
 };
 
-export const editBudgetAPI = async (editedData) => {
+export const editBudgetAPI = async (editedData: BudgetFormType) => {
   try {
     const newData = {
       monthYear: editedData.monthYear,

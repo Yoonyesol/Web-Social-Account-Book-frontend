@@ -4,7 +4,7 @@ export interface TransactionList {
 
 export interface TransactionData {
   id?: string;
-  _id: string;
+  _id?: string;
   uid?: string;
   transaction_type: boolean;
   date: number;
@@ -23,4 +23,9 @@ export interface TransactionAnalyticsData {
 export interface BudgetData {
   monthYear: string;
   amount: number;
+}
+
+export interface BudgetFormType extends BudgetData {
+  uid: string;
+  id: string;
 }

@@ -1,7 +1,8 @@
 // utils/api.js
 import axios from "axios";
+import { TransactionData } from "../interfaces/TransactionData";
 
-export const fetchTransactionByTidAPI = async (tid) => {
+export const fetchTransactionByTidAPI = async (tid: string) => {
   try {
     const responseData = await axios.get(`${process.env.REACT_APP_BACKEND_URL}api/transactions/${tid}`);
     return responseData.data.transaction;
@@ -11,7 +12,7 @@ export const fetchTransactionByTidAPI = async (tid) => {
   }
 };
 
-export const fetchTransactionsByUidAPI = async (uid) => {
+export const fetchTransactionsByUidAPI = async (uid: string) => {
   try {
     const responseData = await axios.get(`${process.env.REACT_APP_BACKEND_URL}api/transactions/user/${uid}`);
     return responseData.data.transactions;
@@ -21,7 +22,7 @@ export const fetchTransactionsByUidAPI = async (uid) => {
   }
 };
 
-export const postTransactionAPI = async (form, token) => {
+export const postTransactionAPI = async (form: TransactionData, token: string) => {
   try {
     const newData = {
       uid: form.uid,
@@ -44,7 +45,7 @@ export const postTransactionAPI = async (form, token) => {
   }
 };
 
-export const editTransactionAPI = async (editedData, token) => {
+export const editTransactionAPI = async (editedData: TransactionData, token: string) => {
   try {
     const newData = {
       date: new Date(editedData.date).getTime(),
@@ -70,7 +71,7 @@ export const editTransactionAPI = async (editedData, token) => {
   }
 };
 
-export const deleteTransactionAPI = async (tid, token) => {
+export const deleteTransactionAPI = async (tid: string, token: string) => {
   try {
     await axios.delete(`${process.env.REACT_APP_BACKEND_URL}api/transactions/${tid}`, {
       headers: {
@@ -83,7 +84,7 @@ export const deleteTransactionAPI = async (tid, token) => {
   }
 };
 
-export const fetchMonthlyTransactionsAPI = async (uid, date) => {
+export const fetchMonthlyTransactionsAPI = async (uid: string, date: string) => {
   try {
     const responseData = await axios.get(`${process.env.REACT_APP_BACKEND_URL}api/transactions/${uid}/${date}`);
     return responseData.data;
@@ -93,7 +94,7 @@ export const fetchMonthlyTransactionsAPI = async (uid, date) => {
   }
 };
 
-export const fetchLatestExpensesAPI = async (uid) => {
+export const fetchLatestExpensesAPI = async (uid: string) => {
   try {
     const responseData = await axios.get(
       `${process.env.REACT_APP_BACKEND_URL}api/transactions/user/latestExpenses/${uid}`,
@@ -105,7 +106,7 @@ export const fetchLatestExpensesAPI = async (uid) => {
   }
 };
 
-export const fetchExpensesCategoryAPI = async (uid) => {
+export const fetchExpensesCategoryAPI = async (uid: string) => {
   try {
     const responseData = await axios.get(
       `${process.env.REACT_APP_BACKEND_URL}api/transactions/user/${uid}/expense/category/top5`,

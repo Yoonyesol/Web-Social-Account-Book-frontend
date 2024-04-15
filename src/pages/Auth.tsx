@@ -8,8 +8,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { loginSuccess, setToken, setTokenExpiration, setUserInfo } from "../modules/user";
 import { useRef } from "react";
 import { StoreData } from "../interfaces/StoreData";
+import { AuthFormType } from "../interfaces/UserData";
 
-interface FormData {
+interface AuthResponseData {
   userInfo: {
     userId: string;
     email: string;
@@ -28,7 +29,7 @@ export default function Auth() {
   const [isShowPw, setIsShowPw] = useState(false);
   const [errorMsg, setErrorMsg] = useState(null);
 
-  const [form, setForm] = useState({
+  const [form, setForm] = useState<AuthFormType>({
     name: "",
     email: "",
     password: "",
@@ -54,7 +55,7 @@ export default function Auth() {
     e.preventDefault();
     setIsLoading(true);
 
-    let responseData: FormData;
+    let responseData: AuthResponseData;
     try {
       if (isLoginMode) {
         responseData = await loginAPI(form);

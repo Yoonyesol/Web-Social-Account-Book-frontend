@@ -5,6 +5,7 @@ import { addTransaction, editTransaction } from "../../modules/transactions";
 import { useDispatch, useSelector } from "react-redux";
 import Button from "../../common/Button";
 import { StoreData } from "../../interfaces/StoreData";
+import { TransactionData } from "../../interfaces/TransactionData";
 
 export default function TransactionEditor({ isEdit, selectedData, closeEditor }) {
   const dispatch = useDispatch();
@@ -17,7 +18,7 @@ export default function TransactionEditor({ isEdit, selectedData, closeEditor })
     transaction_type: false,
     category: "",
     title: "",
-    amount: null,
+    amount: 0,
     date: new Date().getTime(),
     memo: "",
   });
@@ -36,7 +37,7 @@ export default function TransactionEditor({ isEdit, selectedData, closeEditor })
   //수정
   const onEditChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setEdited((prevEdited) => ({
+    setEdited((prevEdited: TransactionData) => ({
       ...prevEdited,
       [name]: value === "true" ? true : value === "false" ? false : value,
     }));

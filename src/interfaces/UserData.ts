@@ -12,3 +12,9 @@ export interface UserInfo {
   email: string;
   image: string;
 }
+
+export interface AuthFormType {
+  email: string;
+  name?: string;
+  password: string;
+}

@@ -19,16 +19,18 @@ const rootReducer = combineReducers({
   transactionAnalytics: transactionAnalyticsReducer,
 });
 
-const reducer = persistReducer(
+const reducer = persistReducer<RootState>(
   {
     ...persistConfig,
     transforms: [
       encryptTransform({
-        secretKey: process.env.REACT_APP_PERSISTOR_SECRET_KEY,
+        secretKey: process.env.REACT_APP_PERSISTOR_SECRET_KEY || "",
       }),
     ],
   },
-  rootReducer,
+  rootReducer as any,
 );
 
 export default reducer;
+
+export type RootState = ReturnType<typeof rootReducer>;

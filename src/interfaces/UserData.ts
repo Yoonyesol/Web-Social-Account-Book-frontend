@@ -2,7 +2,7 @@ export interface UserData {
   isLoggedIn: boolean;
   token: string;
   tokenExpiration: string;
-  userInfo: UserInfo;
+  userInfo: UserInfo | null;
 }
 
 export interface UserInfo {

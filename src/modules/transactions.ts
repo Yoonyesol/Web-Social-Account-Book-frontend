@@ -1,37 +1,45 @@
+import { TransactionData, TransactionList } from "../interfaces/TransactionData";
+
 /* ----------------- 액션 타입 ------------------ */
-export const GET = "transactions/GET";
-export const ADD = "transactions/ADD";
-export const EDIT = "transactions/EDIT";
-export const REMOVE = "transactions/REMOVE";
+export const GET = "transactions/GET" as const;
+export const ADD = "transactions/ADD" as const;
+export const EDIT = "transactions/EDIT" as const;
+export const REMOVE = "transactions/REMOVE" as const;
 
 /* ----------------- 액션 생성 함수 ------------------ */
-export const getTransactions = (transactions) => ({
+export const getTransactions = (transactions: TransactionData[]) => ({
   type: GET,
   payload: transactions,
 });
 
-export const addTransaction = (transaction) => ({
+export const addTransaction = (transaction: TransactionData) => ({
   type: ADD,
   payload: transaction,
 });
 
-export const editTransaction = (transaction) => ({
+export const editTransaction = (transaction: TransactionData) => ({
   type: EDIT,
   payload: transaction,
 });
 
-export const removeTransaction = (id) => ({
+export const removeTransaction = (id: string) => ({
   type: REMOVE,
   payload: id,
 });
 
+type TransactionsAction =
+  | ReturnType<typeof getTransactions>
+  | ReturnType<typeof addTransaction>
+  | ReturnType<typeof editTransaction>
+  | ReturnType<typeof removeTransaction>;
+
 /* ----------------- 모듈의 초기 상태 ------------------ */
-const initialState = {
+const initialState: TransactionList = {
   transactions: [],
 };
 
 /* ----------------- 리듀서 ------------------ */
-const transactionReducer = (state = initialState, action) => {
+const transactionReducer = (state: TransactionList = initialState, action: TransactionsAction): TransactionList => {
   switch (action.type) {
     case GET:
       return {

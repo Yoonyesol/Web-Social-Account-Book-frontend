@@ -21,8 +21,8 @@ https://social-account-book-frontend.vercel.app/
 
 ## ⚙️ 기술 스택
 ### ✔️Frond-end
-<img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"> <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=black"> <img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white"> <img src="https://img.shields.io/badge/css3-1572B6?style=for-the-badge&logo=css3&logoColor=white"> <img src="https://img.shields.io/badge/Redux-764ABC?style=for-the-badge&logo=Redux&logoColor=white"> <img src="https://img.shields.io/badge/styledcomponents-DB7093?style=for-the-badge&logo=styledcomponents&logoColor=white">
-
+<img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"> <img src="https://img.shields.io/badge/typescript-3178C6?style=for-the-badge&logo=typescript&logoColor=white">
+<img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=black"> <img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white"> <img src="https://img.shields.io/badge/css3-1572B6?style=for-the-badge&logo=css3&logoColor=white"> <img src="https://img.shields.io/badge/Redux-764ABC?style=for-the-badge&logo=Redux&logoColor=white"> <img src="https://img.shields.io/badge/styledcomponents-DB7093?style=for-the-badge&logo=styledcomponents&logoColor=white">
 ### ✔️Back-end
 <img src="https://img.shields.io/badge/nodedotjs-339933?style=for-the-badge&logo=nodedotjs&logoColor=white"> <img src="https://img.shields.io/badge/express-000000?style=for-the-badge&logo=express&logoColor=white">
 
@@ -92,7 +92,7 @@ https://social-account-book-frontend.vercel.app/
 
 - **3차 개발** (2024.03.15 ~ 진행중)
     - 반복되는 코드를 통합하는 리팩토링 진행중
-    - JavaSctipt -> TypeScript 마이그레이션 진행중
+    - JavaSctipt -> TypeScript 마이그레이션
 
 <br/>
 
@@ -116,6 +116,9 @@ https://social-account-book-frontend.vercel.app/
   * `dispatch`를 이용해 저장소 데이터를 수정했습니다. 
   * `useSelector`를 이용해 직접 저장소에서 데이터를 꺼내오는 방식으로 데이터를 전역적으로 관리하였습니다.
   * 이를 통해 1차 개발에서 발생했던 props drilling 현상을 제거할 수 있었습니다.
+ 
+#### 3차 개발
+* JavaScript로 개발된 프로젝트를 TypeScript로 마이그레이션하면서 TypeScript의 문법을 익히고 TypeScript를 사용해야 하는 이유를 체감할 수 있었습니다.
 
 <br/>
 
@@ -128,7 +131,7 @@ https://social-account-book-frontend.vercel.app/
 
 #### 2차 개발 (추후 개발할 기능)
 * 중복되는 코드 제거 및 리팩토링
-* TS 마이그레이션
+* ~TS 마이그레이션 (완료)~
 * 데이터 패치 실패 시 로딩 강제 종료 구현 (현재는 정상적으로 데이터를 가져올 때까지 계속 로딩이 돌아감)
 * 회원정보 수정 기능 (유저의 비밀번호, 이름 변경이 가능하도록 수정)
 * 회원가입 시 이메일 인증

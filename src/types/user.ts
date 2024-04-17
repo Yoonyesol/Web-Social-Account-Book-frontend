@@ -1,16 +1,21 @@
-export interface UserData {
+export interface UserEntity {
   isLoggedIn: boolean;
   token: string;
   tokenExpiration: string;
-  userInfo: UserInfo | null;
+  userInfo: UserInfoType;
 }
 
-export interface UserInfo {
+export type UserInfoType = {
   userId: string;
   uid?: string;
   name: string;
   email: string;
   image: string;
+};
+
+export interface AuthResponseType {
+  userInfo: UserInfoType;
+  token: string;
 }
 
 export interface AuthFormType {

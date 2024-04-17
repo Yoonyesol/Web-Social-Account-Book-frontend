@@ -4,13 +4,13 @@ import { editTransactionAPI, postTransactionAPI } from "../../utils/transactionA
 import { addTransaction, editTransaction } from "../../modules/transactions";
 import { useDispatch, useSelector } from "react-redux";
 import Button from "../../common/Button";
-import { StoreData } from "../../interfaces/StoreData";
-import { TransactionData } from "../../interfaces/TransactionData";
+import { RootState } from "../../modules/rootReducer";
+import { TransactionEntity } from "../../types";
 
 export default function TransactionEditor({ isEdit, selectedData, closeEditor }) {
   const dispatch = useDispatch();
-  const userId: string = useSelector((state: StoreData) => state.user.userInfo.userId);
-  const token: string = useSelector((state: StoreData) => state.user.token);
+  const userId: string = useSelector((state: RootState) => state.user.userInfo.userId);
+  const token: string = useSelector((state: RootState) => state.user.token);
 
   //추가
   const [form, setForm] = useState({
@@ -37,7 +37,7 @@ export default function TransactionEditor({ isEdit, selectedData, closeEditor })
   //수정
   const onEditChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setEdited((prevEdited: TransactionData) => ({
+    setEdited((prevEdited: TransactionEntity) => ({
       ...prevEdited,
       [name]: value === "true" ? true : value === "false" ? false : value,
     }));

@@ -1,8 +1,8 @@
 export interface TransactionList {
-  transactions: TransactionData[];
+  transactions: TransactionEntity[];
 }
 
-export interface TransactionData {
+export interface TransactionEntity {
   id?: string;
   _id?: string;
   uid?: string;
@@ -14,18 +14,18 @@ export interface TransactionData {
   memo: string;
 }
 
-export interface TransactionAnalyticsData {
-  budget: BudgetData;
+export interface TransactionAnalyticsEntity {
+  budget: BudgetType;
   expense: number;
   income: number;
 }
 
-export interface BudgetData {
+export interface BudgetType {
   monthYear: string;
   amount: number;
 }
 
-export interface BudgetFormType extends BudgetData {
+export interface BudgetFormType extends BudgetType {
   uid: string;
   id: string;
 }

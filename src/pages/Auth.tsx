@@ -7,22 +7,13 @@ import LoadingIndicator from "../common/LoadingIndicator";
 import { useDispatch, useSelector } from "react-redux";
 import { loginSuccess, setToken, setTokenExpiration, setUserInfo } from "../modules/user";
 import { useRef } from "react";
-import { StoreData } from "../interfaces/StoreData";
-import { AuthFormType } from "../interfaces/UserData";
-
-interface AuthResponseData {
-  userInfo: {
-    userId: string;
-    email: string;
-    name: string;
-  };
-  token: string;
-}
+import { RootState } from "../modules/rootReducer";
+import { AuthFormType, AuthResponseType } from "../types";
 
 export default function Auth() {
   const nav = useNavigate();
   const dispatch = useDispatch();
-  const tokenExpiration: string = useSelector((state: StoreData) => state.user.tokenExpiration);
+  const tokenExpiration: string = useSelector((state: RootState) => state.user.tokenExpiration);
 
   const [isLoginMode, setIsLoginMode] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
@@ -55,7 +46,7 @@ export default function Auth() {
     e.preventDefault();
     setIsLoading(true);
 
-    let responseData: AuthResponseData;
+    let responseData: AuthResponseType;
     try {
       if (isLoginMode) {
         responseData = await loginAPI(form);
@@ -68,7 +59,7 @@ export default function Auth() {
       dispatch(setToken(responseData.token));
 
       //만료시간 3시간
-      const tokenExpirationDate = tokenExpiration || new Date(new Date().getTime() + 3 * 1000 * 60 * 60);
+      const tokenExpirationDate = tokenExpiration || new Date(new Date().getTime() + 3 * 1000 * 60 * 60).toString();
       dispatch(setTokenExpiration(tokenExpirationDate));
 
       setIsLoading(false);

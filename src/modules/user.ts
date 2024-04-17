@@ -1,4 +1,4 @@
-import { UserData, UserInfo } from "../interfaces/UserData";
+import { UserEntity, UserInfoType } from "../types";
 
 /* ----------------- 액션 타입 ------------------ */
 export const LOGIN_SUCCESS = "user/LOGIN_SUCCESS" as const;
@@ -10,7 +10,7 @@ export const SET_TOKEN_EXPIRATION = "user/SET_TOKEN_EXPIRATION" as const;
 /* ----------------- 액션 생성 함수 ------------------ */
 export const loginSuccess = () => ({ type: LOGIN_SUCCESS });
 export const logout = () => ({ type: LOGOUT });
-export const setUserInfo = (userInfo: UserInfo) => ({ type: SET_USER_INFO, payload: userInfo });
+export const setUserInfo = (userInfo: UserInfoType) => ({ type: SET_USER_INFO, payload: userInfo });
 export const setToken = (token: string) => ({ type: SET_TOKEN, payload: token });
 export const setTokenExpiration = (expiration: string) => ({ type: SET_TOKEN_EXPIRATION, payload: expiration });
 
@@ -22,20 +22,28 @@ type UserAction =
   | ReturnType<typeof setTokenExpiration>;
 
 /* ----------------- 모듈의 초기 상태 ------------------ */
-const initialState: UserData = {
+
+const initialUserInfo: UserInfoType = {
+  userId: "",
+  name: "",
+  email: "",
+  image: "",
+};
+
+const initialState: UserEntity = {
   isLoggedIn: false,
-  userInfo: null,
+  userInfo: initialUserInfo,
   token: "",
   tokenExpiration: "",
 };
 
 /* ----------------- 리듀서 ------------------ */
-const userReducer = (state: UserData = initialState, action: UserAction): UserData => {
+const userReducer = (state: UserEntity = initialState, action: UserAction): UserEntity => {
   switch (action.type) {
     case LOGIN_SUCCESS:
       return { ...state, isLoggedIn: true };
     case LOGOUT:
-      return { isLoggedIn: false, userInfo: null, token: "", tokenExpiration: "" };
+      return { isLoggedIn: false, userInfo: initialUserInfo, token: "", tokenExpiration: "" };
     case SET_USER_INFO:
       return { ...state, userInfo: action.payload };
     case SET_TOKEN:

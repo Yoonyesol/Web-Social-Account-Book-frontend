@@ -5,9 +5,9 @@ import { useState } from "react";
 import { createCommentAPI, updateCommentAPI } from "../../utils/commentAPI";
 import { useSelector } from "react-redux";
 import LoadingIndicator from "../../common/LoadingIndicator";
-import { UserInfo } from "../../interfaces/UserData";
 import { CommentData } from "./CommentView";
 import { StoreData } from "../../interfaces/StoreData";
+import { UserInfoType } from "../../types";
 
 export interface CommentFormType {
   postId: string;
@@ -19,7 +19,7 @@ export interface CommentFormType {
 interface CommentEditorProps {
   isEdit: boolean;
   postId: string;
-  userInfo: UserInfo;
+  userInfo: UserInfoType;
   comment?: CommentData;
   onCancelEdit?: () => void;
   onFetchData: () => Promise<void>;

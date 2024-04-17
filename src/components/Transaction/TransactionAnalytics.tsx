@@ -10,14 +10,16 @@ import { useDispatch, useSelector } from "react-redux";
 import LoadingIndicator from "../../common/LoadingIndicator";
 import { fetchMonthlyTransactionsAPI } from "../../utils/transactionAPI";
 import { setBudget, setExpense, setIncome } from "../../modules/transactionAnalytics";
-import { TransactionAnalyticsData, TransactionData } from "../../interfaces/TransactionData";
-import { StoreData } from "../../interfaces/StoreData";
+import { RootState } from "../../modules/rootReducer";
+import { TransactionAnalyticsEntity, TransactionEntity } from "../../types";
 
 export default function TransactionAnalytics({ curDate }) {
   const dispatch = useDispatch();
-  const transactionList: TransactionData[] = useSelector((state: StoreData) => state.transactions.transactions);
-  const userId: string = useSelector((state: StoreData) => state.user.userInfo.userId);
-  const transactionAnalytics: TransactionAnalyticsData = useSelector((state: StoreData) => state.transactionAnalytics);
+  const transactionList: TransactionEntity[] = useSelector((state: RootState) => state.transactions.transactions);
+  const userId: string = useSelector((state: RootState) => state.user.userInfo.userId);
+  const transactionAnalytics: TransactionAnalyticsEntity = useSelector(
+    (state: RootState) => state.transactionAnalytics,
+  );
   const [modalOn, setModalOn] = useState(false);
 
   useEffect(() => {

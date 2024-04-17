@@ -10,13 +10,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { removeTransaction } from "../../modules/transactions";
 import ControlOption from "../../common/ControlOption";
 import { day, sortOption } from "../../constants/constant";
-import { StoreData } from "../../interfaces/StoreData";
-import { TransactionData } from "../../interfaces/TransactionData";
+import { RootState } from "../../modules/rootReducer";
+import { TransactionEntity } from "../../types";
 
 export default function TransactionList({ data }) {
   const dispatch = useDispatch();
-  const token: string = useSelector((state: StoreData) => state.user.token);
-  const [selectedData, setSelectedData] = useState<TransactionData>({
+  const token: string = useSelector((state: RootState) => state.user.token);
+  const [selectedData, setSelectedData] = useState<TransactionEntity>({
     _id: "",
     id: "",
     transaction_type: false,
@@ -34,7 +34,7 @@ export default function TransactionList({ data }) {
     setIsEdit(true);
     setOpenEditor(true);
 
-    const item = data.find((transaction: TransactionData) => transaction._id === id);
+    const item = data.find((transaction: TransactionEntity) => transaction._id === id);
 
     const selected = {
       _id: item._id,
@@ -69,7 +69,7 @@ export default function TransactionList({ data }) {
   };
 
   const getSortedTransactionList = () => {
-    const compare = (a: TransactionData, b: TransactionData): number => {
+    const compare = (a: TransactionEntity, b: TransactionEntity): number => {
       if (sortType === "latest") {
         return b.date - a.date;
       } else {
@@ -96,7 +96,7 @@ export default function TransactionList({ data }) {
       </div>
       <ControlOption value={sortType} chooseOption={setSortType} optionList={sortOption} />
       <div className="history">
-        {getSortedTransactionList().map((item: TransactionData) => (
+        {getSortedTransactionList().map((item: TransactionEntity) => (
           <div className="card" key={item._id}>
             <div className="content">
               <div className="tr-data" onClick={() => handleEdit(item._id!)}>

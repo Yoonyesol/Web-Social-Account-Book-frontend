@@ -1,4 +1,4 @@
-import { UserInfo } from "./UserData";
+import { UserEntity } from "../types";
 
 export interface PostData {
   category: string;
@@ -10,6 +10,6 @@ export interface PostData {
   index: number;
   like: string[];
   title: string;
-  writer: UserInfo;
+  writer: UserEntity;
   _id: string;
 }

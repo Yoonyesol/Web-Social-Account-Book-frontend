@@ -5,10 +5,10 @@ import { dateToYearMonthFormat } from "../../constants/function";
 import Button from "../../common/Button";
 import { editBudgetAPI } from "../../utils/userAPI";
 import { setBudget } from "../../modules/transactionAnalytics";
-import { StoreData } from "../../interfaces/StoreData";
+import { RootState } from "../../modules/rootReducer";
 
 const BudgetEditor = ({ closeEditor, curDate, budget }) => {
-  const userId: string = useSelector((state: StoreData) => state.user.userInfo.userId);
+  const userId: string = useSelector((state: RootState) => state.user.userInfo.userId);
   const dispatch = useDispatch();
 
   const [form, setForm] = useState({

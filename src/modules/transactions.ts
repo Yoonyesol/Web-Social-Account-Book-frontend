@@ -1,4 +1,4 @@
-import { TransactionData, TransactionList } from "../interfaces/TransactionData";
+import { TransactionEntity, TransactionList } from "../types";
 
 /* ----------------- 액션 타입 ------------------ */
 export const GET = "transactions/GET" as const;
@@ -7,17 +7,17 @@ export const EDIT = "transactions/EDIT" as const;
 export const REMOVE = "transactions/REMOVE" as const;
 
 /* ----------------- 액션 생성 함수 ------------------ */
-export const getTransactions = (transactions: TransactionData[]) => ({
+export const getTransactions = (transactions: TransactionEntity[]) => ({
   type: GET,
   payload: transactions,
 });
 
-export const addTransaction = (transaction: TransactionData) => ({
+export const addTransaction = (transaction: TransactionEntity) => ({
   type: ADD,
   payload: transaction,
 });
 
-export const editTransaction = (transaction: TransactionData) => ({
+export const editTransaction = (transaction: TransactionEntity) => ({
   type: EDIT,
   payload: transaction,
 });

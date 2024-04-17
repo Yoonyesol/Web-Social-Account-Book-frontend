@@ -7,12 +7,12 @@ import { cardStylePurple, cardStyleRealWhite } from "../common/CardStyles";
 import { useSelector } from "react-redux";
 import { fetchBudgetAPI } from "../utils/userAPI";
 import { fetchMonthlyTransactionsAPI } from "../utils/transactionAPI";
-import { StoreData } from "../interfaces/StoreData";
+import { RootState } from "../modules/rootReducer";
 
 const date = dateToYearMonthFormat(new Date());
 
 export default function ChallengePage() {
-  const userId: string = useSelector((state: StoreData) => state.user.userInfo.userId);
+  const userId: string = useSelector((state: RootState) => state.user.userInfo.userId);
   const [budget, setBudget] = useState(0);
   const [expense, setExpense] = useState(0);
   const [curDate, setCurDate] = useState(new Date());

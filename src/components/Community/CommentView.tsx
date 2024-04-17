@@ -6,23 +6,15 @@ import Button from "../../common/Button";
 import { CommentEditor } from "./CommentEditor";
 import { useSelector } from "react-redux";
 import LoadingIndicator from "../../common/LoadingIndicator";
-import { StoreData } from "../../interfaces/StoreData";
-
-export interface CommentData {
-  _id: string;
-  postId: string;
-  authorId: string;
-  authorName: string;
-  content: string;
-  createdAt: number;
-}
+import { RootState } from "../../modules/rootReducer";
+import { CommentEntity } from "../../types";
 
 export function CommentView({ userInfo, postId }) {
-  const token: string = useSelector((state: StoreData) => state.user.token);
+  const token: string = useSelector((state: RootState) => state.user.token);
 
-  const [data, setData] = useState<CommentData[]>([]);
+  const [data, setData] = useState<CommentEntity[]>([]);
   const [isEdit, setIsEdit] = useState(false);
-  const [editingComment, setEditingComment] = useState<CommentData | null>(null);
+  const [editingComment, setEditingComment] = useState<CommentEntity | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const fetchComments = async () => {
@@ -41,7 +33,7 @@ export function CommentView({ userInfo, postId }) {
     fetchComments();
   }, [postId]);
 
-  const handleEdit = (comment: CommentData) => {
+  const handleEdit = (comment: CommentEntity) => {
     setIsEdit(true);
     setEditingComment(comment);
   };
@@ -75,7 +67,7 @@ export function CommentView({ userInfo, postId }) {
         댓글 | 총 <b>{data.length}</b>개
       </div>
       <div className="comment-container">
-        {data.map((item: CommentData) => (
+        {data.map((item: CommentEntity) => (
           <div key={item._id}>
             {editingComment && editingComment._id === item._id ? (
               <CommentEditor

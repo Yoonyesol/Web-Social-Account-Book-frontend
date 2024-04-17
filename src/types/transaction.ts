@@ -1,3 +1,4 @@
+/* ----------------- 가계부 ------------------ */
 export interface TransactionList {
   transactions: TransactionEntity[];
 }
@@ -14,6 +15,7 @@ export interface TransactionEntity {
   memo: string;
 }
 
+/* ----------------- 가계부 분석 ------------------ */
 export interface TransactionAnalyticsEntity {
   budget: BudgetType;
   expense: number;

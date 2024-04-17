@@ -1,4 +1,4 @@
-import { TransactionAnalyticsData } from "../interfaces/TransactionData";
+import { TransactionAnalyticsEntity } from "../types";
 
 /* ----------------- 액션 타입 ------------------ */
 export const SET_BUDGET = "transactions/SET_BUDGET" as const;
@@ -33,7 +33,7 @@ type TransactionAnalyticsAction =
   | ReturnType<typeof clearTransactionsData>;
 
 /* ----------------- 모듈의 초기 상태 ------------------ */
-const initialState: TransactionAnalyticsData = {
+const initialState: TransactionAnalyticsEntity = {
   budget: { monthYear: "", amount: 0 },
   income: 0,
   expense: 0,
@@ -41,9 +41,9 @@ const initialState: TransactionAnalyticsData = {
 
 /* ----------------- 리듀서 ------------------ */
 const transactionAnalyticsReducer = (
-  state: TransactionAnalyticsData = initialState,
+  state: TransactionAnalyticsEntity = initialState,
   action: TransactionAnalyticsAction,
-): TransactionAnalyticsData => {
+): TransactionAnalyticsEntity => {
   switch (action.type) {
     case SET_BUDGET:
       return {

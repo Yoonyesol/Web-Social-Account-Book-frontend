@@ -1,11 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 
-interface ControlOptionProps {
+type ControlOptionProps = {
   value: string;
   chooseOption: React.Dispatch<React.SetStateAction<string>>;
   optionList: OptionListType[];
-}
+};
 
 interface OptionListType {
   value: string;

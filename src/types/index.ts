@@ -1,3 +1,3 @@
 export * from "./user";
 export * from "./transaction";
-// export * from "./community";
+export * from "./community";

@@ -4,7 +4,7 @@ import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
 import { useSelector } from "react-redux";
 import { cardStyle } from "../../common/CardStyles";
 import { fetchExpensesCategoryAPI } from "../../utils/transactionAPI";
-import { StoreData } from "../../interfaces/StoreData";
+import { RootState } from "../../modules/rootReducer";
 
 const COLORS = ["#0088FE", "#F75C82", "#FFBB28", "#00C49F", "#FF8042", "#AF19FF"];
 
@@ -25,14 +25,14 @@ const CustomTooltip = ({ active, payload }) => {
   }
 };
 
-interface ExpensesCategory {
-  category: string;
-  ratio: number;
-}
-
 export default function CategoryExpense() {
-  const uid: string = useSelector((state: StoreData) => state.user.userInfo.userId);
-  const [data, setData] = useState<ExpensesCategory[]>([]);
+  const uid: string = useSelector((state: RootState) => state.user.userInfo.userId);
+  const [data, setData] = useState<
+    {
+      category: string;
+      ratio: number;
+    }[]
+  >([]);
   const [chartSize, setChartSize] = useState(300);
 
   useEffect(() => {

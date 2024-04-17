@@ -1,6 +1,5 @@
 import axios from "axios";
-import { BudgetData, BudgetFormType } from "../interfaces/TransactionData";
-import { AuthFormType } from "../interfaces/UserData";
+import { AuthFormType, BudgetFormType } from "../types";
 
 export const fetchUserDataAPI = async () => {
   try {

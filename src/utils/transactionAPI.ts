@@ -1,6 +1,6 @@
 // utils/api.js
 import axios from "axios";
-import { TransactionData } from "../interfaces/TransactionData";
+import { TransactionEntity } from "../types";
 
 export const fetchTransactionByTidAPI = async (tid: string) => {
   try {
@@ -22,7 +22,7 @@ export const fetchTransactionsByUidAPI = async (uid: string) => {
   }
 };
 
-export const postTransactionAPI = async (form: TransactionData, token: string) => {
+export const postTransactionAPI = async (form: TransactionEntity, token: string) => {
   try {
     const newData = {
       uid: form.uid,
@@ -45,7 +45,7 @@ export const postTransactionAPI = async (form: TransactionData, token: string) =
   }
 };
 
-export const editTransactionAPI = async (editedData: TransactionData, token: string) => {
+export const editTransactionAPI = async (editedData: TransactionEntity, token: string) => {
   try {
     const newData = {
       date: new Date(editedData.date).getTime(),

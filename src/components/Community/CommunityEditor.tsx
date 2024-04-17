@@ -8,28 +8,16 @@ import { categoryOption } from "../../constants/constant";
 import { createPostAPI, updatePostAPI } from "../../utils/communityAPI";
 import { setDate } from "../../constants/function";
 import LoadingIndicator from "../../common/LoadingIndicator";
-import { StoreData } from "../../interfaces/StoreData";
-import { UserInfo } from "../../interfaces/UserData";
-
-export interface EditPostFormType {
-  id?: string;
-  title: string;
-  content: string;
-  category?: string;
-}
-
-export interface PostFormType extends EditPostFormType {
-  date: Date;
-  writer: string;
-}
+import { RootState } from "../../modules/rootReducer";
+import { EditPostFormType, PostFormType, UserInfoType } from "../../types";
 
 const CommunityEditor = () => {
   let postId = "";
 
   const nav = useNavigate();
   const location = useLocation();
-  const userInfo: UserInfo = useSelector((state: StoreData) => state.user.userInfo);
-  const token: string = useSelector((state: StoreData) => state.user.token);
+  const userInfo: UserInfoType = useSelector((state: RootState) => state.user.userInfo);
+  const token: string = useSelector((state: RootState) => state.user.token);
 
   const [isEdit, setIsEdit] = useState(location.state === null ? false : true);
   const [isLoading, setIsLoading] = useState(false);

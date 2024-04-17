@@ -6,11 +6,11 @@ import { fetchAllPostsAPI } from "../utils/communityAPI";
 import Button from "../common/Button";
 import LoadingIndicator from "../common/LoadingIndicator";
 import { setDate } from "../constants/function";
-import { PostData } from "../interfaces/CommunityData";
+import { PostEntity } from "../types/community";
 
 export default function Community() {
   const nav = useNavigate();
-  const [board, setBoard] = useState<PostData[]>([]);
+  const [board, setBoard] = useState<PostEntity[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1); //현재 페이지수
   const [postsPerPage] = useState<number>(15); //한 페이지당 게시물 수
 
@@ -18,8 +18,8 @@ export default function Community() {
   const indexOfLast = currentPage * postsPerPage;
   const indexOfFirst = indexOfLast - postsPerPage;
 
-  function currentPosts(data: PostData[]) {
-    let currentPosts: PostData[];
+  function currentPosts(data: PostEntity[]) {
+    let currentPosts: PostEntity[];
     currentPosts = data.slice(indexOfFirst, indexOfLast);
     return currentPosts;
   }
@@ -40,7 +40,7 @@ export default function Community() {
     return <LoadingIndicator />;
   }
 
-  const handlePostDetail = (item: PostData) => {
+  const handlePostDetail = (item: PostEntity) => {
     nav(`/community/${item.id}`);
   };
 

@@ -5,28 +5,20 @@ import { useState } from "react";
 import { createCommentAPI, updateCommentAPI } from "../../utils/commentAPI";
 import { useSelector } from "react-redux";
 import LoadingIndicator from "../../common/LoadingIndicator";
-import { CommentData } from "./CommentView";
-import { StoreData } from "../../interfaces/StoreData";
-import { UserInfoType } from "../../types";
+import { RootState } from "../../modules/rootReducer";
+import { CommentEntity, CommentFormType, UserInfoType } from "../../types";
 
-export interface CommentFormType {
-  postId: string;
-  authorId: string;
-  authorName: string;
-  content: string;
-}
-
-interface CommentEditorProps {
+type CommentEditorProps = {
   isEdit: boolean;
   postId: string;
   userInfo: UserInfoType;
-  comment?: CommentData;
+  comment?: CommentEntity;
   onCancelEdit?: () => void;
   onFetchData: () => Promise<void>;
-}
+};
 
 export function CommentEditor({ isEdit, postId, userInfo, comment, onCancelEdit, onFetchData }: CommentEditorProps) {
-  const token: string = useSelector((state: StoreData) => state.user.token);
+  const token: string = useSelector((state: RootState) => state.user.token);
   const [isLoading, setIsLoading] = useState(false);
   const [updatedContent, setUpdatedContent] = useState(isEdit && comment ? comment!.content : "");
 

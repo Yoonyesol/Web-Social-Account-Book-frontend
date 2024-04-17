@@ -13,13 +13,13 @@ import CommunityEditor from "../components/Community/CommunityEditor";
 import ContentView from "../components/Community/ContentView";
 import { loginSuccess, logout, setToken, setTokenExpiration, setUserInfo } from "../modules/user";
 import LoadingIndicator from "../common/LoadingIndicator";
-import { UserData } from "../interfaces/UserData";
-import { StoreData } from "../interfaces/StoreData";
 import { purge } from "../constants/function";
+import { RootState } from "../modules/rootReducer";
+import { UserEntity } from "../types";
 
 function AppRouter() {
   const [isLoading, setIsLoading] = useState(true);
-  const userData: UserData = useSelector((state: StoreData) => state.user);
+  const userData: UserEntity = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
 
   const logoutHandler = useCallback(async () => {

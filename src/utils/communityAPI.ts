@@ -1,5 +1,5 @@
 import axios from "axios";
-import { EditPostFormType, PostFormType } from "../components/Community/CommunityEditor";
+import { EditPostFormType, PostFormType } from "../types";
 
 export const fetchAllPostsAPI = async () => {
   try {

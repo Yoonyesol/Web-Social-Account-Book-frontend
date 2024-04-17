@@ -4,11 +4,11 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { HiArrowNarrowRight, HiOutlineLocationMarker } from "react-icons/hi";
 import { cardStyle } from "../../common/CardStyles";
-import { UserInfo } from "../../interfaces/UserData";
-import { StoreData } from "../../interfaces/StoreData";
+import { UserInfoType } from "../../types";
+import { RootState } from "../../modules/rootReducer";
 
 export default function Profile() {
-  const userInfo: UserInfo = useSelector((state: StoreData) => state.user.userInfo);
+  const userInfo: UserInfoType = useSelector((state: RootState) => state.user.userInfo);
 
   return (
     <Section>

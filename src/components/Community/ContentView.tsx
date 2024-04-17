@@ -9,17 +9,16 @@ import { deletePostAPI, fetchPostByCidAPI, updateLikeAPI } from "../../utils/com
 import { CommentView } from "./CommentView";
 import { MdThumbUp } from "react-icons/md";
 import { FiThumbsUp } from "react-icons/fi";
-import { StoreData } from "../../interfaces/StoreData";
-import { UserInfo } from "../../interfaces/UserData";
-import { PostData } from "../../interfaces/CommunityData";
+import { RootState } from "../../modules/rootReducer";
+import { PostEntity, UserInfoType } from "../../types";
 
 const ContentView = () => {
   const nav = useNavigate();
   const params = useParams();
-  const userInfo: UserInfo = useSelector((state: StoreData) => state.user.userInfo);
-  const token: string = useSelector((state: StoreData) => state.user.token);
+  const userInfo: UserInfoType = useSelector((state: RootState) => state.user.userInfo);
+  const token: string = useSelector((state: RootState) => state.user.token);
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedPost, setSelectedPost] = useState<PostData>();
+  const [selectedPost, setSelectedPost] = useState<PostEntity>();
   const [like, setLike] = useState({ click: false, count: 0, animation: false });
 
   useEffect(() => {

@@ -13,10 +13,10 @@ export type UserInfoType = {
   image: string;
 };
 
-export interface AuthResponseType {
+export type AuthResponseType = {
   userInfo: UserInfoType;
   token: string;
-}
+};
 
 export interface AuthFormType {
   email: string;

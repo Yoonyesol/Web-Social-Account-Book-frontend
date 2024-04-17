@@ -5,11 +5,11 @@ import { RiMailSendFill } from "react-icons/ri";
 import { PiChatTeardropDots } from "react-icons/pi";
 import { MdThumbUp } from "react-icons/md";
 import { useSelector } from "react-redux";
-import { StoreData } from "../../interfaces/StoreData";
+import { RootState } from "../../modules/rootReducer";
 
 const rankingImoji = ["🥇 ", "🥈 ", "🥉 "];
 
-interface ChallengeData {
+interface ChallengeEntity {
   userId: string;
   userName: string;
   userEmail: string;
@@ -18,7 +18,7 @@ interface ChallengeData {
 
 export function ChallengeTable({ data }) {
   let rank = 0;
-  const userId: string = useSelector((state: StoreData) => state.user.userInfo.userId);
+  const userId: string = useSelector((state: RootState) => state.user.userInfo.userId);
 
   return (
     <Section>
@@ -43,7 +43,7 @@ export function ChallengeTable({ data }) {
           </tr>
         </thead>
         <tbody>
-          {data.map((challenge: ChallengeData, idx: number) => (
+          {data.map((challenge: ChallengeEntity, idx: number) => (
             <tr key={challenge.userId} className={challenge.userId === userId ? "my-rank" : ""}>
               <td className="ranking">
                 {challenge.userId === userId ? (rank = idx + 1) : idx + 1}위{idx <= 2 ? rankingImoji[idx] : ""}

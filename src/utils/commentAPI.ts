@@ -1,5 +1,5 @@
 import axios from "axios";
-import { CommentFormType } from "../components/Community/CommentEditor";
+import { CommentFormType } from "../types";
 
 export const fetchAllCommentsByPostIdAPI = async (cid: string) => {
   try {

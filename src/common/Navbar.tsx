@@ -1,10 +1,10 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
-import { StoreData } from "../interfaces/StoreData";
+import { RootState } from "../modules/rootReducer";
 
 export default function Navbar() {
-  const userName: string = useSelector((state: StoreData) => state.user.userInfo.name);
+  const userName: string = useSelector((state: RootState) => state.user.userInfo.name);
   return (
     <Nav>
       <div className="title">

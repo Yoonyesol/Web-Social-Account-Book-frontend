@@ -5,18 +5,11 @@ import { HiArrowNarrowRight } from "react-icons/hi";
 import { cardStyle, cardStyleRealWhite } from "../../common/CardStyles";
 import { useSelector } from "react-redux";
 import { fetchLikedPostByUidAPI } from "../../utils/communityAPI";
-import { StoreData } from "../../interfaces/StoreData";
-import { UserInfo } from "../../interfaces/UserData";
-
-interface Post {
-  _id: string;
-  title: string;
-  writer: UserInfo;
-  content: string;
-}
+import { RootState } from "../../modules/rootReducer";
+import { PostCardType } from "../../types";
 
 export default function PostCard() {
-  const token: string = useSelector((state: StoreData) => state.user.token);
+  const token: string = useSelector((state: RootState) => state.user.token);
   const nav = useNavigate();
   const [data, setData] = useState([]);
 
@@ -39,7 +32,7 @@ export default function PostCard() {
       </div>
       <div className="container">
         {data.length ? (
-          data.map((post: Post) => {
+          data.map((post: PostCardType) => {
             return (
               <div className="card" key={post._id} onClick={() => nav(`/community/${post._id}`)}>
                 <div className="post-title">

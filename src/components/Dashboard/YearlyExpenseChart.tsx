@@ -4,13 +4,7 @@ import { AreaChart, Area, Tooltip, ResponsiveContainer, XAxis } from "recharts";
 import { cardStyle } from "../../common/CardStyles";
 import { fetchLatestExpensesAPI } from "../../utils/transactionAPI";
 import { useSelector } from "react-redux";
-import { StoreData } from "../../interfaces/StoreData";
-
-interface MonthlyExpenses {
-  year: number;
-  month: number;
-  total: number;
-}
+import { RootState } from "../../modules/rootReducer";
 
 const calculateExpenseChangeRate = (previousMonthExpense: number, currentMonthExpense: number): string => {
   if (previousMonthExpense === 0) {
@@ -25,8 +19,14 @@ const calculateExpenseChangeRate = (previousMonthExpense: number, currentMonthEx
 };
 
 export default function YearlyExpenseChart() {
-  const uid: string = useSelector((state: StoreData) => state.user.userInfo.userId);
-  const [data, setData] = useState<MonthlyExpenses[]>([]);
+  const uid: string = useSelector((state: RootState) => state.user.userInfo.userId);
+  const [data, setData] = useState<
+    {
+      year: number;
+      month: number;
+      total: number;
+    }[]
+  >([]);
   const [totalExpense, setTotalExpense] = useState(0);
   const [expenseChangeRate, setExpenseChangeRate] = useState("0");
 

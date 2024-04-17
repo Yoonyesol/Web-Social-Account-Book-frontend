@@ -31,18 +31,14 @@ export interface PostFormType extends EditPostFormType {
 }
 
 /* ----------------- 댓글 ------------------ */
-export interface CommentEntity {
-  _id: string;
-  postId: string;
-  authorId: string;
-  authorName: string;
-  content: string;
-  createdAt: number;
-}
-
 export interface CommentFormType {
   postId: string;
   authorId: string;
   authorName: string;
   content: string;
+}
+
+export interface CommentEntity extends CommentFormType {
+  _id: string;
+  createdAt: number;
 }

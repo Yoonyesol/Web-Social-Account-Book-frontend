@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, ChangeEvent } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import Pagination from "../components/Community/Pagination";
@@ -13,6 +13,8 @@ export default function Community() {
   const [board, setBoard] = useState<PostEntity[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1); //현재 페이지수
   const [postsPerPage] = useState<number>(15); //한 페이지당 게시물 수
+  const [searchKeyword, setSearchKeyword] = useState<string>("");
+  const [searchedBoard, setSearchedBoard] = useState<PostEntity[]>([]);
 
   //페이지 이동
   const indexOfLast = currentPage * postsPerPage;
@@ -36,12 +38,23 @@ export default function Community() {
     fetchAllPosts();
   }, []);
 
-  if (board.length === 0 || !board) {
+  if (!board) {
     return <LoadingIndicator />;
   }
 
   const handlePostDetail = (item: PostEntity) => {
     nav(`/community/${item.id}`);
+  };
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchKeyword(e.target.value);
+  };
+
+  const handleSearchPost = (keyword: string) => {
+    nav(`/community/search/${keyword}`);
+    const filteredData = board.filter((item) => item.title.includes(keyword));
+    setSearchedBoard(filteredData);
+    setCurrentPage(1);
   };
 
   return (
@@ -64,7 +77,7 @@ export default function Community() {
             </tr>
           </thead>
           <tbody>
-            {currentPosts(board).map((item) => (
+            {currentPosts(searchedBoard.length > 0 ? searchedBoard : board).map((item) => (
               <tr key={item._id}>
                 <td className="td-idx">{item.index}</td>
                 <td className="td-category">{item.category}</td>
@@ -87,6 +100,10 @@ export default function Community() {
           paginate={setCurrentPage}
         ></Pagination>
       </div>
+      <Search>
+        <input type="text" value={searchKeyword} onChange={handleChange} />
+        <button onClick={() => handleSearchPost(searchKeyword)}>검색</button>
+      </Search>
     </Section>
   );
 }
@@ -245,5 +262,21 @@ const Section = styled.section`
     .table {
       margin: 10px;
     }
+  }
+`;
+
+const Search = styled.div`
+  margin: 10px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  input {
+    height: 25px;
+  }
+
+  button {
+    margin: 0;
+    height: 25px;
   }
 `;

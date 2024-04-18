@@ -15,24 +15,22 @@ const Pagination = ({ postsPerPage, totalPosts, currentPage, paginate }: Paginat
   }
 
   return (
-    <div>
-      <PageNav>
-        <PageUl className="pagination">
-          {pageNumbers.map((number) => (
-            <PageLi key={number} className={currentPage === number ? "page-item current" : "page-item"}>
-              <PageSpan
-                onClick={() => {
-                  paginate(number);
-                }}
-                className="page-link"
-              >
-                {number}
-              </PageSpan>
-            </PageLi>
-          ))}
-        </PageUl>
-      </PageNav>
-    </div>
+    <PageNav>
+      <PageUl className="pagination">
+        {pageNumbers.map((number) => (
+          <PageLi key={number} className={currentPage === number ? "page-item current" : "page-item"}>
+            <PageSpan
+              onClick={() => {
+                paginate(number);
+              }}
+              className="page-link"
+            >
+              {number}
+            </PageSpan>
+          </PageLi>
+        ))}
+      </PageUl>
+    </PageNav>
   );
 };
 

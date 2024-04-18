@@ -68,6 +68,7 @@ function AppRouter() {
             <Route path="/transactions" element={<Transactions />} />
             <Route path="/challenge" element={<Challenge />} />
             <Route path="/community" element={<Community />} />
+            <Route path="/community/search/:keyword" element={<Community />} />
             <Route path="/community/new" element={<CommunityEditor />} />
             <Route path="/community/:cid" element={<ContentView />} />
             <Route path="/community/:cid/edit" element={<CommunityEditor />} />

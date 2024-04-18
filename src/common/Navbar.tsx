@@ -15,10 +15,6 @@ export default function Navbar() {
           Welcome to <span>CASH DASHBOARD</span>
         </h1>
       </div>
-      {/* <div className="search">
-        <BiSearch />
-        <input type="text" placeholder="Search" />
-      </div> */}
     </Nav>
   );
 }
@@ -49,30 +45,6 @@ const Nav = styled.nav`
     }
   }
 
-  /* .search {
-    background-color: #d3e0f8;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    padding: 1rem 8rem 1rem 1rem;
-    border-radius: 1rem;
-    svg {
-      color: black;
-    }
-    input {
-      background-color: transparent;
-      border: none;
-      color: #6c5a74;
-      font-family: "Permanent Marker", cursive;
-      letter-spacing: 0.3rem;
-      &::placeholder {
-        color: #6c5a74;
-      }
-      &:focus {
-        outline: none;
-      }
-    }
-  } */
   @media screen and (min-width: 280px) and (max-width: 430px) {
     flex-direction: column;
     .title {

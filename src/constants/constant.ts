@@ -9,6 +9,13 @@ export const categoryOption = [
   { value: "이벤트", name: "이벤트" },
 ];
 
+export const searchOption = [
+  { value: "title", name: "제목" },
+  { value: "content", name: "내용" },
+  { value: "title+content", name: "제목+내용" },
+  { value: "writer", name: "작성자" },
+];
+
 /* Transaction */
 export const day = ["일", "월", "화", "수", "목", "금", "토"];
 

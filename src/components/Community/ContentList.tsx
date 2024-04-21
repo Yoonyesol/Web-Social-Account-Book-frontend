@@ -44,7 +44,7 @@ export default function ContentList({ data, isSearch, searchKeyword }) {
             '<b>{searchKeyword}</b>'에 대한 검색결과입니다.
           </div>
         )}
-        <table className="table">
+        <CommunityTable>
           <thead>
             <tr>
               <th>ID</th>
@@ -58,7 +58,9 @@ export default function ContentList({ data, isSearch, searchKeyword }) {
           </thead>
           <tbody>
             {isSearch && (!data || data.length === 0) ? (
-              <div>데이터가 존재하지 않습니다.</div>
+              <td colSpan={7} className="no-data">
+                데이터가 존재하지 않습니다.
+              </td>
             ) : (
               currentPosts(data)!.map((item) => (
                 <tr key={item._id}>
@@ -76,7 +78,7 @@ export default function ContentList({ data, isSearch, searchKeyword }) {
               ))
             )}
           </tbody>
-        </table>
+        </CommunityTable>
         <Pagination
           postsPerPage={postsPerPage}
           totalPosts={data ? data.length : 0}
@@ -109,68 +111,70 @@ const ContentListDiv = styled.div`
     font-size: 14px;
     margin: 0px 10px;
   }
+`;
 
-  .table {
-    font-size: 14px;
+const CommunityTable = styled.table`
+  font-size: 14px;
+  text-align: center;
+  border-collapse: collapse;
+  border: 1px solid #ccc;
+  background: white;
+  margin: 20px 10px;
+
+  th {
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    border-bottom: 1px solid #ccc;
+    background: #efefef;
     text-align: center;
-    border-collapse: collapse;
-    border: 1px solid #ccc;
-    background: white;
-    margin: 20px 10px;
+  }
 
-    th {
-      padding: 10px;
-      font-weight: bold;
-      vertical-align: top;
-      border-bottom: 1px solid #ccc;
-      background: #efefef;
-      text-align: center;
-    }
+  .no-data {
+    vertical-align: middle;
+    text-align: center;
+    height: 50px;
+  }
 
-    .td-category {
-      text-align: start;
-    }
+  .td-category {
+    text-align: start;
+  }
 
-    .td-title {
-      text-align: start;
-      cursor: pointer;
-    }
+  .td-title {
+    text-align: start;
+    cursor: pointer;
+  }
 
-    td {
-      padding: 10px;
-      vertical-align: top;
-      border-bottom: 1px solid #ccc;
-    }
+  td {
+    padding: 10px;
+    vertical-align: top;
+    border-bottom: 1px solid #ccc;
+  }
 
-    svg {
-      width: 1rem;
-      height: 1rem;
-      cursor: pointer;
-    }
+  svg {
+    width: 1rem;
+    height: 1rem;
+    cursor: pointer;
   }
 
   @media screen and (min-width: 280px) and (max-width: 550px) {
-    .table {
-      font-size: 13px;
-    }
+    font-size: 13px;
   }
 
   @media screen and (max-width: 800px) {
-    .table {
-      table-layout: fixed;
-    }
+    table-layout: fixed;
 
-    .table thead {
+    thead {
       display: none;
     }
 
-    .table tr {
+    tr {
       display: block;
       margin-bottom: 10px;
     }
 
-    .table th,
-    .table td {
+    th,
+    td {
       display: block;
       position: relative;
       padding: 10px 0;
@@ -178,7 +182,19 @@ const ContentListDiv = styled.div`
       border-width: 0 0 1px 0;
     }
 
-    .table td:before {
+    .no-data:before {
+      display: none;
+    }
+
+    .no-data {
+      display: flex;
+      border-bottom: none;
+      padding: 0;
+      justify-content: center;
+      align-items: center;
+    }
+
+    td:before {
       display: block;
       position: absolute;
       left: 0;
@@ -188,51 +204,47 @@ const ContentListDiv = styled.div`
       background: #ccc;
     }
 
-    .table {
-      .td-idx {
-        font-weight: bold;
-        background: #b4b3b3;
-      }
-
-      .td-category {
-        text-align: center;
-      }
-
-      .td-title {
-        text-align: center;
-        cursor: pointer;
-      }
+    .td-idx {
+      font-weight: bold;
+      background: #b4b3b3;
     }
 
-    .table td:nth-child(1):before {
+    .td-category {
+      text-align: center;
+    }
+
+    .td-title {
+      text-align: center;
+      cursor: pointer;
+    }
+
+    td:nth-child(1):before {
       content: "ID";
       font-weight: bold;
       background: #b4b3b3;
     }
-    .table td:nth-child(2):before {
+    td:nth-child(2):before {
       content: "카테고리";
     }
-    .table td:nth-child(3):before {
+    td:nth-child(3):before {
       content: "제목";
       height: 100%;
     }
-    .table td:nth-child(4):before {
+    td:nth-child(4):before {
       content: "작성자";
     }
-    .table td:nth-child(5):before {
+    td:nth-child(5):before {
       content: "조회";
     }
-    .table td:nth-child(6):before {
+    td:nth-child(6):before {
       content: "공감";
     }
-    .table td:nth-child(7):before {
+    td:nth-child(7):before {
       content: "작성일";
     }
   }
 
   @media screen and (min-width: 280px) and (max-width: 1080px) {
-    .table {
-      margin: 10px;
-    }
+    margin: 10px;
   }
 `;

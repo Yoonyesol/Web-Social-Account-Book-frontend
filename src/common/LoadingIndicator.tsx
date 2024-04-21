@@ -1,7 +1,30 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import Button from "./Button";
 
 const LoadingIndicator = () => {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setLoading(false);
+    }, 5000);
+
+    return () => clearTimeout(timeout);
+  });
+
+  const handleRefresh = () => {
+    window.location.reload();
+  };
+
+  if (!loading)
+    return (
+      <LoadingFail>
+        <span>데이터 로딩에 실패했습니다. </span>
+        <Button text="새로고침" type="button" onClick={handleRefresh} color="red" />
+      </LoadingFail>
+    );
+
   return (
     <Indicator>
       <div className="lds-dual-ring"></div>
@@ -48,4 +71,12 @@ const Indicator = styled.div`
       transform: rotate(360deg);
     }
   }
+`;
+
+const LoadingFail = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  text-align: center;
+  align-items: center;
 `;

@@ -14,6 +14,7 @@ import { RootState } from "../../modules/rootReducer";
 import { TransactionAnalyticsEntity, TransactionEntity } from "../../types";
 
 export default function TransactionAnalytics({ curDate }) {
+  let remainBudget: number;
   const dispatch = useDispatch();
   const transactionList: TransactionEntity[] = useSelector((state: RootState) => state.transactions.transactions);
   const userId: string = useSelector((state: RootState) => state.user.userInfo.userId);
@@ -56,10 +57,12 @@ export default function TransactionAnalytics({ curDate }) {
 
   if (!transactionAnalytics.budget) {
     return <LoadingIndicator />;
+  } else {
+    remainBudget = transactionAnalytics.budget.amount - transactionAnalytics.expense;
   }
 
   return (
-    <Analytics>
+    <Analytics remainBudget={remainBudget}>
       <div className="analytic budget">
         <div className="title-btn">
           <h4>예산</h4>
@@ -70,7 +73,16 @@ export default function TransactionAnalytics({ curDate }) {
             <BudgetEditor closeEditor={handleCancel} curDate={curDate} budget={transactionAnalytics.budget} />
           </Modal>
         )}
-        <h2>{transactionAnalytics.budget.amount.toLocaleString("ko-KR")}원</h2>
+        <div className="budget-content">
+          <h2>{transactionAnalytics.budget.amount.toLocaleString("ko-KR")}원</h2>
+          <span>
+            {transactionAnalytics.budget.amount !== 0
+              ? remainBudget < 0
+                ? `${remainBudget * -1}원 초과`
+                : `${remainBudget}원 남음`
+              : ""}
+          </span>
+        </div>
       </div>
       <div className="analytic income">
         <h4>수입</h4>
@@ -84,7 +96,7 @@ export default function TransactionAnalytics({ curDate }) {
   );
 }
 
-const Analytics = styled.section`
+const Analytics = styled.section<{ remainBudget: number }>`
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
@@ -94,7 +106,7 @@ const Analytics = styled.section`
 
   .analytic {
     ${cardStyleRealWhite}
-    padding: 1rem 1.5rem 2rem 1.5rem;
+    padding: 1rem 1.5rem 1.5rem 1.5rem;
     width: 100%;
 
     svg {
@@ -109,6 +121,15 @@ const Analytics = styled.section`
 
     h2 {
       text-align: center;
+    }
+
+    .budget-content {
+      text-align: center;
+
+      span {
+        font-size: 0.75rem;
+        color: ${(props) => (props.remainBudget < 0 ? "#f75c82" : "#5d8de6")};
+      }
     }
   }
 

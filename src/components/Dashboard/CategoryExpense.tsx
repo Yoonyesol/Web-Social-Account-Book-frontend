@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { cardStyle } from "../../common/CardStyles";
 import { fetchExpensesCategoryAPI } from "../../utils/transactionAPI";
 import { RootState } from "../../modules/rootReducer";
+import Colors from "../../styles/Colors";
 
 const COLORS = ["#0088FE", "#F75C82", "#FFBB28", "#00C49F", "#FF8042", "#AF19FF"];
 
@@ -14,7 +15,7 @@ const CustomTooltip = ({ active, payload }) => {
       <div
         className="custom-tooltip"
         style={{
-          backgroundColor: "#ffff",
+          backgroundColor: "white",
           padding: "5px",
           border: "1px solid #cccc",
         }}
@@ -111,7 +112,7 @@ const Section = styled.section`
   .title {
     margin-bottom: 2rem;
     h2 {
-      color: #3c76e0;
+      color: ${Colors.BLUE};
       font-family: "Gowun Batang", serif;
       letter-spacing: 0.3rem;
     }

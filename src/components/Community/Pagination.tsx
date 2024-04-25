@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import Colors from "../../styles/Colors";
 
 interface PaginationType {
   postsPerPage: number;
@@ -68,6 +69,6 @@ const PageSpan = styled.span`
   &:hover {
     cursor: pointer;
     color: white;
-    background-color: #8b8fc8;
+    background-color: ${Colors.PURPLE};
   }
 `;

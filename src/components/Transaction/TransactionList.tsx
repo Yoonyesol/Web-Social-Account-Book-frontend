@@ -12,6 +12,7 @@ import ControlOption from "../../common/ControlOption";
 import { day, sortOption } from "../../constants/constant";
 import { RootState } from "../../modules/rootReducer";
 import { TransactionEntity } from "../../types";
+import Colors from "../../styles/Colors";
 
 export default function TransactionList({ data }) {
   const dispatch = useDispatch();
@@ -134,11 +135,11 @@ const Section = styled.section`
     justify-content: space-between;
     svg {
       font-size: 1.8rem;
-      color: #3c76e0;
+      color: ${Colors.BLUE};
       cursor: pointer;
     }
     h2 {
-      color: #3c76e0;
+      color: ${Colors.BLUE};
       font-family: "Gowun Batang", serif;
       letter-spacing: 0.3rem;
     }

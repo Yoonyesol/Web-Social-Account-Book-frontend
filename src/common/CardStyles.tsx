@@ -1,4 +1,5 @@
 import { css } from "styled-components";
+import Colors from "../styles/Colors";
 
 export const cardStyle = css`
   padding: 1rem 2rem;
@@ -25,6 +26,6 @@ export const cardStyleRealWhite = css`
 export const cardStylePurple = css`
   padding: 1rem 2rem 3rem 2rem;
   border-radius: 1rem;
-  background-color: #8b8fc8;
+  background-color: ${Colors.PURPLE};
   color: black;
 `;

@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Button from "../../common/Button";
 import { RootState } from "../../modules/rootReducer";
 import { TransactionEntity } from "../../types";
+import Colors from "../../styles/Colors";
 
 export default function TransactionEditor({ isEdit, selectedData, closeEditor }) {
   const dispatch = useDispatch();
@@ -178,7 +179,7 @@ export default function TransactionEditor({ isEdit, selectedData, closeEditor })
 
 const Section = styled.section`
   .main-title {
-    color: #3c76e0;
+    color: ${Colors.BLUE};
     font-family: "Gowun Batang", serif;
     letter-spacing: 0.3rem;
   }

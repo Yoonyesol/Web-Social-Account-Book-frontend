@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import LoadingIndicator from "../../common/LoadingIndicator";
 import { RootState } from "../../modules/rootReducer";
 import { CommentEntity, CommentFormType, UserInfoType } from "../../types";
+import Colors from "../../styles/Colors";
 
 type CommentEditorProps = {
   isEdit: boolean;
@@ -115,7 +116,7 @@ const Section = styled.section`
     display: flex;
     flex-direction: column;
     padding: 10px 15px;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid ${Colors.BORDER_GRAY};
   }
 
   .editor-comment-writer {

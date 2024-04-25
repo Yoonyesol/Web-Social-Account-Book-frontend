@@ -5,6 +5,7 @@ import { cardStyle } from "../../common/CardStyles";
 import { fetchLatestExpensesAPI } from "../../utils/transactionAPI";
 import { useSelector } from "react-redux";
 import { RootState } from "../../modules/rootReducer";
+import Colors from "../../styles/Colors";
 
 const calculateExpenseChangeRate = (previousMonthExpense: number, currentMonthExpense: number): string => {
   if (previousMonthExpense === 0) {
@@ -71,7 +72,7 @@ export default function YearlyExpenseChart() {
               animationDuration={2000}
               type="monotone"
               dataKey="total"
-              stroke="#3c76e0"
+              stroke={Colors.BLUE}
               fill="purple"
               strokeWidth={0}
             />
@@ -93,7 +94,7 @@ const Section = styled.section`
   .title {
     text-align: center;
     h2 {
-      color: #3c76e0;
+      color: ${Colors.BLUE};
       font-family: "Gowun Batang", serif;
       letter-spacing: 0.3rem;
       margin-bottom: 0.5rem;
@@ -121,7 +122,7 @@ const Section = styled.section`
       border-radius: 1rem;
       transition: 0.3s ease-in-out;
       &:hover {
-        background-color: #8b8fc8;
+        background-color: ${Colors.PURPLE};
       }
       span {
         font-size: 0.9rem;

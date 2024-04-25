@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import { fetchLikedPostByUidAPI } from "../../utils/communityAPI";
 import { RootState } from "../../modules/rootReducer";
 import { PostCardType } from "../../types";
+import Colors from "../../styles/Colors";
 
 export default function PostCard() {
   const token: string = useSelector((state: RootState) => state.user.token);
@@ -76,7 +77,7 @@ const Section = styled.section`
   }
 
   ::-webkit-scrollbar-thumb {
-    background: #8b8fc8;
+    background: ${Colors.PURPLE};
     border-radius: 10px;
   }
 
@@ -86,7 +87,7 @@ const Section = styled.section`
 
   .title {
     h2 {
-      color: #3c76e0;
+      color: ${Colors.BLUE};
       font-family: "Gowun Batang", serif;
       letter-spacing: 0.3rem;
     }
@@ -109,7 +110,7 @@ const Section = styled.section`
       gap: 5px;
 
       .post-title {
-        color: #f75c82;
+        color: ${Colors.RED};
         gap: 15px;
       }
     }
@@ -121,7 +122,7 @@ const Section = styled.section`
     justify-content: flex-end;
     align-items: center;
     text-decoration: none;
-    color: #3c76e0;
+    color: ${Colors.BLUE};
     font-family: "Gowun Batang", serif;
     font-weight: bold;
     margin-top: 1rem;

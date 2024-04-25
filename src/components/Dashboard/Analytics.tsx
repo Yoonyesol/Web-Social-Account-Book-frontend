@@ -9,6 +9,7 @@ import { fetchBudgetAPI } from "../../utils/userAPI";
 import { dateToYearMonthFormat } from "../../constants/function";
 import { fetchMonthlyTransactionsAPI } from "../../utils/transactionAPI";
 import { RootState } from "../../modules/rootReducer";
+import Colors from "../../styles/Colors";
 
 export default function Analytics() {
   const userId: string = useSelector((state: RootState) => state.user.userInfo.userId);
@@ -96,10 +97,10 @@ const Section = styled.section`
     gap: 1rem;
     transition: 0.5s ease-in-out;
     &:hover {
-      background-color: #6c5a74;
+      background-color: ${Colors.DEEP_PURPLE};
       color: white;
       svg {
-        color: #6c5a74;
+        color: ${Colors.DEEP_PURPLE};
       }
     }
     .logo {

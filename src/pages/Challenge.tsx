@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import { fetchBudgetAPI } from "../utils/userAPI";
 import { fetchMonthlyTransactionsAPI } from "../utils/transactionAPI";
 import { RootState } from "../modules/rootReducer";
+import Colors from "../styles/Colors";
 
 const date = dateToYearMonthFormat(new Date());
 
@@ -122,7 +123,7 @@ const Section = styled.section`
     margin-bottom: 2rem;
 
     h2 {
-      color: #3c76e0;
+      color: ${Colors.BLUE};
       font-family: "Gowun Batang", serif;
       letter-spacing: 0.2rem;
     }

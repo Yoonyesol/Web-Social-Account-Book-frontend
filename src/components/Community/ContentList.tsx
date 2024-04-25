@@ -6,6 +6,7 @@ import { setDate } from "../../constants/function";
 import { PostEntity } from "../../types/community";
 import Pagination from "./Pagination";
 import LoadingIndicator from "../../common/LoadingIndicator";
+import Colors from "../../styles/Colors";
 
 export default function ContentList({ data, isSearch, searchKeyword }) {
   const nav = useNavigate();
@@ -96,7 +97,7 @@ const ContentListDiv = styled.div`
     justify-content: center;
 
     h2 {
-      color: #3c76e0;
+      color: ${Colors.BLUE};
       font-family: "Gowun Batang", serif;
       letter-spacing: 0.3rem;
     }
@@ -117,7 +118,7 @@ const CommunityTable = styled.table`
   font-size: 14px;
   text-align: center;
   border-collapse: collapse;
-  border: 1px solid #ccc;
+  border: 1px solid ${Colors.BORDER_GRAY};
   background: white;
   margin: 20px 10px;
 
@@ -125,7 +126,7 @@ const CommunityTable = styled.table`
     padding: 10px;
     font-weight: bold;
     vertical-align: top;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid ${Colors.BORDER_GRAY};
     background: #efefef;
     text-align: center;
   }
@@ -148,7 +149,7 @@ const CommunityTable = styled.table`
   td {
     padding: 10px;
     vertical-align: top;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid ${Colors.BORDER_GRAY};
   }
 
   svg {
@@ -201,7 +202,7 @@ const CommunityTable = styled.table`
       top: 0;
       width: 30%;
       padding: 10px 0;
-      background: #ccc;
+      background: ${Colors.BORDER_GRAY};
     }
 
     .td-idx {

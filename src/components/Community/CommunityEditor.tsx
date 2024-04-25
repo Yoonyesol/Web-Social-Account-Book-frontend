@@ -10,6 +10,7 @@ import { setDate } from "../../constants/function";
 import LoadingIndicator from "../../common/LoadingIndicator";
 import { RootState } from "../../modules/rootReducer";
 import { EditPostFormType, PostFormType, UserInfoType } from "../../types";
+import Colors from "../../styles/Colors";
 
 const CommunityEditor = () => {
   let postId = "";
@@ -178,7 +179,7 @@ const Section = styled.section`
     margin: 0px auto;
     gap: 1.5rem;
     background: #fff;
-    border: 1px solid #ccc;
+    border: 1px solid ${Colors.BORDER_GRAY};
 
     padding: 2rem;
     display: flex;

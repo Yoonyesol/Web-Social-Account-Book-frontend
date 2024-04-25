@@ -6,6 +6,7 @@ import { HiArrowNarrowRight, HiOutlineLocationMarker } from "react-icons/hi";
 import { cardStyle } from "../../common/CardStyles";
 import { UserInfoType } from "../../types";
 import { RootState } from "../../modules/rootReducer";
+import Colors from "../../styles/Colors";
 
 export default function Profile() {
   const userInfo: UserInfoType = useSelector((state: RootState) => state.user.userInfo);
@@ -63,7 +64,7 @@ const Section = styled.section`
     text-align: center;
     h2,
     h5 {
-      color: #3c76e0;
+      color: ${Colors.BLUE};
       font-family: "Gowun Batang", serif;
       letter-spacing: 0.3rem;
     }
@@ -85,7 +86,7 @@ const Section = styled.section`
     justify-content: flex-end;
     align-items: center;
     text-decoration: none;
-    color: #3c76e0;
+    color: ${Colors.BLUE};
     font-family: "Gowun Batang", serif;
     font-weight: bold;
     margin-top: 1rem;

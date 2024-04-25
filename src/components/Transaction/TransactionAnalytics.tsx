@@ -12,6 +12,7 @@ import { fetchMonthlyTransactionsAPI } from "../../utils/transactionAPI";
 import { setBudget, setExpense, setIncome } from "../../modules/transactionAnalytics";
 import { RootState } from "../../modules/rootReducer";
 import { TransactionAnalyticsEntity, TransactionEntity } from "../../types";
+import Colors from "../../styles/Colors";
 
 export default function TransactionAnalytics({ curDate }) {
   let remainBudget: number;
@@ -90,7 +91,7 @@ export default function TransactionAnalytics({ curDate }) {
       </div>
       <div className="analytic outcome">
         <h4>지출</h4>
-        <h2 style={{ color: "#ec444c" }}>{transactionAnalytics.expense.toLocaleString("ko-KR")}원</h2>
+        <h2 style={{ color: `${Colors.RED}` }}>{transactionAnalytics.expense.toLocaleString("ko-KR")}원</h2>
       </div>
     </Analytics>
   );
@@ -128,7 +129,7 @@ const Analytics = styled.section<{ remainBudget: number }>`
 
       span {
         font-size: 0.75rem;
-        color: ${(props) => (props.remainBudget < 0 ? "#f75c82" : "#5d8de6")};
+        color: ${(props) => (props.remainBudget < 0 ? `${Colors.RED}` : `${Colors.BLUE}`)};
       }
     }
   }

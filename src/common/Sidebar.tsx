@@ -10,6 +10,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../modules/user";
 import { useDispatch } from "react-redux";
 import { purge } from "../constants/function";
+import Colors from "../styles/Colors";
 
 function Sidebar() {
   const nav = useNavigate();
@@ -100,7 +101,7 @@ function Sidebar() {
 const Section = styled.section`
   position: fixed;
   left: 0;
-  background-color: #8b8fc8;
+  background-color: ${Colors.PURPLE};
   height: 100vh;
   width: 18vw;
   display: flex;
@@ -158,7 +159,7 @@ const Section = styled.section`
           padding: 0.6rem 1rem;
           border-radius: 0.6rem;
           &:hover {
-            background-color: #6369bd;
+            background-color: ${Colors.DEEP_PURPLE};
             a {
               color: white;
             }
@@ -171,7 +172,7 @@ const Section = styled.section`
           }
         }
         .active {
-          background-color: #6369bd;
+          background-color: ${Colors.DEEP_PURPLE};
           a {
             color: white;
           }
@@ -189,7 +190,7 @@ const Section = styled.section`
     align-items: center;
     &:hover {
       cursor: pointer;
-      background-color: #6369bd;
+      background-color: ${Colors.DEEP_PURPLE};
       color: white;
     }
     a {
@@ -243,7 +244,7 @@ const ResponsiveNav = styled.div<{ state: boolean }>`
   right: -10vw;
   top: 0;
   z-index: 20;
-  background-color: #6369bd;
+  background-color: ${Colors.DEEP_PURPLE};
   height: 100vh;
   width: ${(state) => (state ? "60%" : "0%")};
   transition: 0.4s ease-in-out;
@@ -261,7 +262,7 @@ const ResponsiveNav = styled.div<{ state: boolean }>`
         padding: 0.6rem 1rem;
         border-radius: 0.6rem;
         &:hover {
-          background-color: #e1d0ff;
+          background-color: ${Colors.RIGHT_PURPLE};
           a {
             color: black;
           }
@@ -274,7 +275,7 @@ const ResponsiveNav = styled.div<{ state: boolean }>`
         }
       }
       .active {
-        background-color: #e1d0ff;
+        background-color: ${Colors.RIGHT_PURPLE};
         a {
           color: black;
         }
@@ -293,7 +294,7 @@ const ResponsiveNav = styled.div<{ state: boolean }>`
     color: white;
     &:hover {
       cursor: pointer;
-      background-color: #e1d0ff;
+      background-color: ${Colors.RIGHT_PURPLE};
       color: black;
     }
   }

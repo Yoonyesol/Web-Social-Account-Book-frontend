@@ -9,6 +9,7 @@ import { loginSuccess, setToken, setTokenExpiration, setUserInfo } from "../modu
 import { useRef } from "react";
 import { RootState } from "../modules/rootReducer";
 import { AuthFormType, AuthResponseType } from "../types";
+import Colors from "../styles/Colors";
 
 export default function Auth() {
   const nav = useNavigate();
@@ -179,7 +180,7 @@ const Section = styled.section`
     justify-content: center;
     text-align: center;
     align-items: center;
-    background: #fff;
+    background: white;
     box-shadow: 0 1px 11px rgba(0, 0, 0, 0.27);
     border-radius: 10px;
     padding: 35px;
@@ -193,7 +194,7 @@ const Section = styled.section`
   }
 
   form {
-    border-top: solid 1px #b8b6b6;
+    border-top: solid 1px ${Colors.BORDER_GRAY};
     width: 100%;
   }
 

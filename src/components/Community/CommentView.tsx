@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import LoadingIndicator from "../../common/LoadingIndicator";
 import { RootState } from "../../modules/rootReducer";
 import { CommentEntity } from "../../types";
+import Colors from "../../styles/Colors";
 
 export function CommentView({ userInfo, postId }) {
   const token: string = useSelector((state: RootState) => state.user.token);
@@ -111,14 +112,14 @@ const Section = styled.section`
   }
 
   .comment {
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid ${Colors.BORDER_GRAY};
     display: flex;
     flex-direction: row;
 
     .comment-writer {
       padding: 15px;
       width: 130px;
-      background-color: #e2e1e1;
+      background-color: ${Colors.COMMUNITY_GRAY};
     }
 
     .comment-main {

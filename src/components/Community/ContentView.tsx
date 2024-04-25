@@ -11,6 +11,7 @@ import { MdThumbUp } from "react-icons/md";
 import { FiThumbsUp } from "react-icons/fi";
 import { RootState } from "../../modules/rootReducer";
 import { PostEntity, UserInfoType } from "../../types";
+import Colors from "../../styles/Colors";
 
 const ContentView = () => {
   const nav = useNavigate();
@@ -145,7 +146,7 @@ const ContentView = () => {
 export default ContentView;
 
 const LikeButton = styled.button<{ liked: boolean; animation: boolean }>`
-  background-color: ${({ liked }) => (liked ? "#8b8fc8" : "white")};
+  background-color: ${({ liked }) => (liked ? `${Colors.PURPLE}` : "white")};
   color: ${({ liked }) => (liked ? "white" : "black")};
   font-size: 11px;
   display: flex;
@@ -153,7 +154,7 @@ const LikeButton = styled.button<{ liked: boolean; animation: boolean }>`
   justify-content: center;
   align-items: center;
   gap: 3px;
-  border: 1px solid #ccc;
+  border: 1px solid ${Colors.BORDER_GRAY};
   border-radius: 0.5rem;
   cursor: pointer;
 
@@ -197,11 +198,11 @@ const Section = styled.section`
     display: flex;
     flex-direction: column;
     background: #fff;
-    border: 1px solid #ccc;
+    border: 1px solid ${Colors.BORDER_GRAY};
   }
 
   .title {
-    background-color: #e2e1e1;
+    background-color: ${Colors.COMMUNITY_GRAY};
     padding: 10px;
   }
 
@@ -210,7 +211,7 @@ const Section = styled.section`
     display: flex;
     flex-direction: row;
     gap: 1rem;
-    border-bottom: 1px solid #e2e1e1;
+    border-bottom: 1px solid ${Colors.COMMUNITY_GRAY};
   }
 
   .user-img {
@@ -232,12 +233,12 @@ const Section = styled.section`
 
   .blank {
     height: 50px;
-    background-color: #e2e1e1;
+    background-color: ${Colors.COMMUNITY_GRAY};
   }
 
   .content-view {
     padding: 10px;
-    border-bottom: 1px solid #e2e1e1;
+    border-bottom: 1px solid ${Colors.COMMUNITY_GRAY};
 
     .content-main {
       white-space: pre-wrap;

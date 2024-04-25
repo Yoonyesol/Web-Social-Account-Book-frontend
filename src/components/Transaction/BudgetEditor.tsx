@@ -6,6 +6,7 @@ import Button from "../../common/Button";
 import { editBudgetAPI } from "../../utils/userAPI";
 import { setBudget } from "../../modules/transactionAnalytics";
 import { RootState } from "../../modules/rootReducer";
+import Colors from "../../styles/Colors";
 
 const BudgetEditor = ({ closeEditor, curDate, budget }) => {
   const userId: string = useSelector((state: RootState) => state.user.userInfo.userId);
@@ -70,7 +71,7 @@ export default BudgetEditor;
 
 const Section = styled.section`
   .title {
-    color: #3c76e0;
+    color: ${Colors.BLUE};
     font-family: "Gowun Batang", serif;
     letter-spacing: 0.3rem;
   }

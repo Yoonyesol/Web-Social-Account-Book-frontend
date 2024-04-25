@@ -6,6 +6,7 @@ import { MdPermIdentity } from "react-icons/md";
 import { useSelector } from "react-redux";
 import { RootState } from "../modules/rootReducer";
 import { UserInfoType } from "../types";
+import Colors from "../styles/Colors";
 
 export default function SettingPage() {
   const userInfo: UserInfoType = useSelector((state: RootState) => state.user.userInfo);
@@ -75,7 +76,7 @@ const Section = styled.section`
     justify-content: center;
 
     h2 {
-      color: #3c76e0;
+      color: ${Colors.BLUE};
       font-family: "Gowun Batang", serif;
       letter-spacing: 0.3rem;
     }

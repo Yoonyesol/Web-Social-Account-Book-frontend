@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../modules/rootReducer";
 import { UserInfoType } from "../types";
 import Colors from "../styles/Colors";
+import { themeStyle } from "../styles/Theme";
 
 export default function SettingPage() {
   const userInfo: UserInfoType = useSelector((state: RootState) => state.user.userInfo);
@@ -67,9 +68,7 @@ export default function SettingPage() {
 }
 
 const Section = styled.section`
-  margin-left: 18vw;
-  padding: 2rem;
-  align-items: center;
+  ${themeStyle}
 
   .title {
     display: flex;
@@ -206,8 +205,6 @@ const Section = styled.section`
   }
 
   @media screen and (min-width: 280px) and (max-width: 1080px) {
-    margin-left: 0;
-
     .container {
       margin: 0vw 10vw;
     }

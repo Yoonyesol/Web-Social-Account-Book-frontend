@@ -9,6 +9,7 @@ import { getTransactions } from "../modules/transactions";
 import { fetchTransactionsByUidAPI } from "../utils/transactionAPI";
 import { RootState } from "../modules/rootReducer";
 import { TransactionEntity, UserInfoType } from "../types";
+import { themeStyle } from "../styles/Theme";
 
 export default function Transactions() {
   const transactionList: TransactionEntity[] = useSelector((state: RootState) => state.transactions.transactions);
@@ -72,9 +73,7 @@ export default function Transactions() {
 }
 
 const Section = styled.section`
-  margin-left: 18vw;
-  padding: 2rem;
-  height: 100%;
+  ${themeStyle}
 
   .container {
     margin: 0vw 15vw;
@@ -97,7 +96,6 @@ const Section = styled.section`
   }
 
   @media screen and (min-width: 280px) and (max-width: 1080px) {
-    margin-left: 0;
     .container {
       margin: 0;
     }

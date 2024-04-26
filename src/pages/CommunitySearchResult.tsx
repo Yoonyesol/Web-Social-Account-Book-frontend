@@ -5,6 +5,7 @@ import { fetchSearchedDataAPI } from "../utils/communityAPI";
 import { PostEntity } from "../types/community";
 import SearchBar from "../components/Community/SearchBar";
 import ContentList from "../components/Community/ContentList";
+import { themeStyle } from "../styles/Theme";
 
 export default function CommunitySearchResult() {
   const { option, keyword } = useParams();
@@ -34,15 +35,9 @@ export default function CommunitySearchResult() {
 }
 
 const Section = styled.section`
-  margin-left: 18vw;
-  padding: 2rem;
-  align-items: center;
+  ${themeStyle}
 
   @media screen and (min-width: 280px) and (max-width: 550px) {
     padding: 1rem 0.5rem;
-  }
-
-  @media screen and (min-width: 280px) and (max-width: 1080px) {
-    margin-left: 0;
   }
 `;

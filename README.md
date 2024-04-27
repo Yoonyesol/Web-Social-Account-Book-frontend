@@ -94,6 +94,7 @@ https://social-account-book-frontend.vercel.app/
     - 반복되는 코드를 통합하는 리팩토링 진행중
     - JavaSctipt -> TypeScript 마이그레이션
     - 커뮤니티 게시글 검색 기능(제목, 내용, 제목+내용, 작성자) 구현
+    - styled-components 관련 스타일 코드 리팩토링 진행 중
 
 <br/>
 

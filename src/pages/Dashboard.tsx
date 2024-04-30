@@ -75,6 +75,9 @@ const Section = styled.section`
   }
   @media screen and (min-width: 280px) and (max-width: 1080px) {
     margin-left: 0;
+  }
+
+  @media screen and (min-width: 280px) and (max-width: 1140px) {
     .grid {
       .row_one,
       .row_three {

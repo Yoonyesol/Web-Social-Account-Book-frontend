@@ -43,8 +43,8 @@ export default function Analytics() {
   }, [curDate, userId]);
 
   return (
-    <Section>
-      <div className="analytic">
+    <AnalyticLayout>
+      <AnalyticContainer>
         <div className="content">
           <h5>예산</h5>
           <h2>{budget.toLocaleString("ko-kr")}원</h2>
@@ -52,8 +52,8 @@ export default function Analytics() {
         <div className="logo">
           <BsFillCalendar2WeekFill />
         </div>
-      </div>
-      <div className="analytic">
+      </AnalyticContainer>
+      <AnalyticContainer>
         <div className="logo">
           <IoStatsChart />
         </div>
@@ -61,8 +61,8 @@ export default function Analytics() {
           <h5>수입</h5>
           <h2>{income.toLocaleString("ko-KR")}원</h2>
         </div>
-      </div>
-      <div className="analytic">
+      </AnalyticContainer>
+      <AnalyticContainer>
         <div className="content">
           <h5>지출</h5>
           <h2>{expense.toLocaleString("ko-KR")}원</h2>
@@ -70,8 +70,8 @@ export default function Analytics() {
         <div className="logo">
           <IoStatsChart />
         </div>
-      </div>
-      <div className="analytic">
+      </AnalyticContainer>
+      <AnalyticContainer>
         <div className="logo">
           <BiGroup />
         </div>
@@ -79,44 +79,45 @@ export default function Analytics() {
           <h5>친구 (Coming soon!)</h5>
           <h2>9명</h2>
         </div>
-      </div>
-    </Section>
+      </AnalyticContainer>
+    </AnalyticLayout>
   );
 }
 
-const Section = styled.section`
+const AnalyticLayout = styled.section`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
-  .analytic {
-    ${cardStyle};
-    padding: 1rem;
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    gap: 1rem;
-    transition: 0.5s ease-in-out;
-    &:hover {
-      background-color: ${Colors.DEEP_PURPLE};
-      color: white;
-      svg {
-        color: ${Colors.DEEP_PURPLE};
-      }
-    }
-    .logo {
-      background-color: white;
-      border-radius: 3rem;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 1.5rem;
-      svg {
-        font-size: 1.5rem;
-      }
-    }
-  }
 
   @media screen and (min-width: 280px) and (max-width: 772px) {
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  }
+`;
+
+const AnalyticContainer = styled.div`
+  ${cardStyle};
+  padding: 1rem;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  gap: 1rem;
+  transition: 0.5s ease-in-out;
+  &:hover {
+    background-color: ${Colors.DEEP_PURPLE};
+    color: white;
+    svg {
+      color: ${Colors.DEEP_PURPLE};
+    }
+  }
+  .logo {
+    background-color: white;
+    border-radius: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1.5rem;
+    svg {
+      font-size: 1.5rem;
+    }
   }
 `;

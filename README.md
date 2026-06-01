@@ -100,7 +100,7 @@ https://social-account-book-frontend.vercel.app/
 
 
 ## 🔗 블로그
-개발 기록을 남긴 블로그 링크: https://tinyurl.com/29vmsshy
+개발 기록을 남긴 블로그 링크: https://florescene.tistory.com/category/%EC%9B%B9%20%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8/%F0%9F%91%A8%E2%80%8D%F0%9F%91%A8%E2%80%8D%F0%9F%91%A7%E2%80%8D%F0%9F%91%A7%EC%86%8C%EC%85%9C%20%EA%B0%80%EA%B3%84%EB%B6%80?page=4
 
 <br/>
 

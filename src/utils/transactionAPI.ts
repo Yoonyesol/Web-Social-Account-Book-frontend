@@ -1,10 +1,10 @@
-// utils/api.js
-import axios from "axios";
+// utils/transactionAPI.ts
+import apiClient from "./axiosInstance";
 import { TransactionEntity } from "../types";
 
 export const fetchTransactionByTidAPI = async (tid: string) => {
   try {
-    const responseData = await axios.get(`${process.env.REACT_APP_BACKEND_URL}api/transactions/${tid}`);
+    const responseData = await apiClient.get(`api/transactions/${tid}`);
     return responseData.data.transaction;
   } catch (e) {
     console.log("HTTP request 도중 에러 발생:", e.message);
@@ -14,7 +14,7 @@ export const fetchTransactionByTidAPI = async (tid: string) => {
 
 export const fetchTransactionsByUidAPI = async (uid: string) => {
   try {
-    const responseData = await axios.get(`${process.env.REACT_APP_BACKEND_URL}api/transactions/user/${uid}`);
+    const responseData = await apiClient.get(`api/transactions/user/${uid}`);
     return responseData.data.transactions;
   } catch (e) {
     console.log("HTTP request 도중 에러 발생:", e.message);
@@ -33,7 +33,7 @@ export const postTransactionAPI = async (form: TransactionEntity, token: string)
       amount: form.amount,
       memo: form.memo,
     };
-    const responseData = await axios.post(`${process.env.REACT_APP_BACKEND_URL}api/transactions`, newData, {
+    const responseData = await apiClient.post(`api/transactions`, newData, {
       headers: {
         Authorization: `Bearer ${token}`, // 토큰을 Authorization 헤더에 포함
       },
@@ -55,15 +55,11 @@ export const editTransactionAPI = async (editedData: TransactionEntity, token: s
       amount: editedData.amount,
       memo: editedData.memo,
     };
-    const responseData = await axios.patch(
-      `${process.env.REACT_APP_BACKEND_URL}api/transactions/${editedData.id}`,
-      newData,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+    const responseData = await apiClient.patch(`api/transactions/${editedData.id}`, newData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
       },
-    );
+    });
     return responseData.data.transaction;
   } catch (e) {
     console.log("HTTP request 도중 에러 발생:", e.message);
@@ -73,7 +69,7 @@ export const editTransactionAPI = async (editedData: TransactionEntity, token: s
 
 export const deleteTransactionAPI = async (tid: string, token: string) => {
   try {
-    await axios.delete(`${process.env.REACT_APP_BACKEND_URL}api/transactions/${tid}`, {
+    await apiClient.delete(`api/transactions/${tid}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -86,7 +82,7 @@ export const deleteTransactionAPI = async (tid: string, token: string) => {
 
 export const fetchMonthlyTransactionsAPI = async (uid: string, date: string) => {
   try {
-    const responseData = await axios.get(`${process.env.REACT_APP_BACKEND_URL}api/transactions/${uid}/${date}`);
+    const responseData = await apiClient.get(`api/transactions/${uid}/${date}`);
     return responseData.data;
   } catch (e) {
     console.log("HTTP request 도중 에러 발생:", e.message);
@@ -96,9 +92,7 @@ export const fetchMonthlyTransactionsAPI = async (uid: string, date: string) => 
 
 export const fetchLatestExpensesAPI = async (uid: string) => {
   try {
-    const responseData = await axios.get(
-      `${process.env.REACT_APP_BACKEND_URL}api/transactions/user/latestExpenses/${uid}`,
-    );
+    const responseData = await apiClient.get(`api/transactions/user/latestExpenses/${uid}`);
     return responseData.data;
   } catch (e) {
     console.log("HTTP request 도중 에러 발생:", e.message);
@@ -108,9 +102,7 @@ export const fetchLatestExpensesAPI = async (uid: string) => {
 
 export const fetchExpensesCategoryAPI = async (uid: string) => {
   try {
-    const responseData = await axios.get(
-      `${process.env.REACT_APP_BACKEND_URL}api/transactions/user/${uid}/expense/category/top5`,
-    );
+    const responseData = await apiClient.get(`api/transactions/user/${uid}/expense/category/top5`);
     return responseData.data;
   } catch (e) {
     console.log("HTTP request 도중 에러 발생:", e.message);

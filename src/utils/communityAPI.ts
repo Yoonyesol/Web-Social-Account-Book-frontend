@@ -1,9 +1,9 @@
-import axios from "axios";
+import apiClient from "./axiosInstance";
 import { EditPostFormType, PostFormType } from "../types";
 
 export const fetchAllPostsAPI = async () => {
   try {
-    const responseData = await axios.get(`${process.env.REACT_APP_BACKEND_URL}api/community`);
+    const responseData = await apiClient.get(`api/community`);
     return responseData.data.posts;
   } catch (error) {
     if (error.response) {
@@ -18,7 +18,7 @@ export const fetchAllPostsAPI = async () => {
 
 export const fetchPostByCidAPI = async (cid: string) => {
   try {
-    const responseData = await axios.get(`${process.env.REACT_APP_BACKEND_URL}api/community/${cid}`);
+    const responseData = await apiClient.get(`api/community/${cid}`);
     return responseData.data.post;
   } catch (error) {
     if (error.response) {
@@ -33,7 +33,7 @@ export const fetchPostByCidAPI = async (cid: string) => {
 
 export const fetchPostsByUidAPI = async (uid: string) => {
   try {
-    const responseData = await axios.get(`${process.env.REACT_APP_BACKEND_URL}api/community/${uid}`);
+    const responseData = await apiClient.get(`api/community/${uid}`);
     return responseData.data.posts;
   } catch (error) {
     if (error.response) {
@@ -48,7 +48,7 @@ export const fetchPostsByUidAPI = async (uid: string) => {
 
 export const fetchLikedPostByUidAPI = async (token: string) => {
   try {
-    const responseData = await axios.get(`${process.env.REACT_APP_BACKEND_URL}api/users/likedPosts`, {
+    const responseData = await apiClient.get(`api/users/likedPosts`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -67,9 +67,7 @@ export const fetchLikedPostByUidAPI = async (token: string) => {
 
 export const fetchSearchedDataAPI = async (option: string, keyword: string) => {
   try {
-    const responseData = await axios.get(
-      `${process.env.REACT_APP_BACKEND_URL}api/community/search/${option}/${keyword}`,
-    );
+    const responseData = await apiClient.get(`api/community/search/${option}/${keyword}`);
     return responseData.data.searchedData;
   } catch (error) {
     if (error.response) {
@@ -91,7 +89,7 @@ export const createPostAPI = async (form: PostFormType, token: string) => {
       category: form.category,
       content: form.content,
     };
-    const responseData = await axios.post(`${process.env.REACT_APP_BACKEND_URL}api/community`, newData, {
+    const responseData = await apiClient.post(`api/community`, newData, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -115,7 +113,7 @@ export const updatePostAPI = async (form: EditPostFormType, token: string) => {
       category: form.category,
       content: form.content,
     };
-    await axios.patch(`${process.env.REACT_APP_BACKEND_URL}api/community/${form.id}`, editedData, {
+    await apiClient.patch(`api/community/${form.id}`, editedData, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -133,7 +131,7 @@ export const updatePostAPI = async (form: EditPostFormType, token: string) => {
 
 export const deletePostAPI = async (id: string, token: string) => {
   try {
-    await axios.delete(`${process.env.REACT_APP_BACKEND_URL}api/community/${id}`, {
+    await apiClient.delete(`api/community/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -151,7 +149,7 @@ export const deletePostAPI = async (id: string, token: string) => {
 
 export const updateLikeAPI = async (id: string, token: string) => {
   try {
-    const responseData = await axios.post(`${process.env.REACT_APP_BACKEND_URL}api/community/${id}/like`, null, {
+    const responseData = await apiClient.post(`api/community/${id}/like`, null, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

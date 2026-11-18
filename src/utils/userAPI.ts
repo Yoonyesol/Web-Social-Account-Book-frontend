@@ -1,9 +1,9 @@
-import axios from "axios";
+import apiClient, { publicApiClient } from "./axiosInstance";
 import { AuthFormType, BudgetFormType } from "../types";
 
 export const fetchUserDataAPI = async () => {
   try {
-    const responseData = await axios.get(`${process.env.REACT_APP_BACKEND_URL}api/users`);
+    const responseData = await apiClient.get(`api/users`);
     return responseData.data.users;
   } catch (error) {
     if (error.response) {
@@ -26,7 +26,7 @@ export const signupAPI = async (form: AuthFormType) => {
       email: form.email,
       password: form.password,
     };
-    const responseData = await axios.post(`${process.env.REACT_APP_BACKEND_URL}api/users/signup`, user);
+    const responseData = await publicApiClient.post(`api/users/signup`, user);
     return responseData.data;
   } catch (error) {
     if (error.response) {
@@ -45,7 +45,7 @@ export const loginAPI = async (form: AuthFormType) => {
       email: form.email,
       password: form.password,
     };
-    const responseData = await axios.post(`${process.env.REACT_APP_BACKEND_URL}api/users/login`, user);
+    const responseData = await publicApiClient.post(`api/users/login`, user);
     return responseData.data;
   } catch (error) {
     if (error.response) {
@@ -60,7 +60,7 @@ export const loginAPI = async (form: AuthFormType) => {
 
 export const fetchBudgetAPI = async (uid: string, date: string) => {
   try {
-    const responseData = await axios.get(`${process.env.REACT_APP_BACKEND_URL}api/users/budget/${uid}/${date}`);
+    const responseData = await apiClient.get(`api/users/budget/${uid}/${date}`);
     return responseData.data.budget;
   } catch (error) {
     if (error.response) {
@@ -79,10 +79,7 @@ export const editBudgetAPI = async (editedData: BudgetFormType) => {
       monthYear: editedData.monthYear,
       amount: editedData.amount,
     };
-    const responseData = await axios.patch(
-      `${process.env.REACT_APP_BACKEND_URL}api/users/budget/${editedData.uid}/${editedData.id}`,
-      newData,
-    );
+    const responseData = await apiClient.patch(`api/users/budget/${editedData.uid}/${editedData.id}`, newData);
     return responseData.data.budget;
   } catch (e) {
     console.log("HTTP request 도중 에러 발생:", e.message);

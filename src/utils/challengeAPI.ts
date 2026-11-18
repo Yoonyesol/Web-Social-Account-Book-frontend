@@ -1,8 +1,8 @@
-import axios from "axios";
+import apiClient from "./axiosInstance";
 
 export const fetchBudgetExpenseRatioAPI = async (date: string) => {
   try {
-    const responseData = await axios.get(`${process.env.REACT_APP_BACKEND_URL}api/challenge/${date}`);
+    const responseData = await apiClient.get(`api/challenge/${date}`);
     return responseData.data.challenge;
   } catch (error) {
     if (error.response) {
@@ -17,7 +17,7 @@ export const fetchBudgetExpenseRatioAPI = async (date: string) => {
 
 export const fetchSimilarBudgetExpenseRatioAPI = async (date: string, budget: number) => {
   try {
-    const responseData = await axios.get(`${process.env.REACT_APP_BACKEND_URL}api/challenge/similar/${date}/${budget}`);
+    const responseData = await apiClient.get(`api/challenge/similar/${date}/${budget}`);
     return responseData.data.similarBudgetUsers;
   } catch (error) {
     if (error.response) {

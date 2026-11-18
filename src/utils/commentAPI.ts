@@ -1,9 +1,9 @@
-import axios from "axios";
+import apiClient from "./axiosInstance";
 import { CommentFormType } from "../types";
 
 export const fetchAllCommentsByPostIdAPI = async (cid: string) => {
   try {
-    const responseData = await axios.get(`${process.env.REACT_APP_BACKEND_URL}api/comment/${cid}`);
+    const responseData = await apiClient.get(`api/comment/${cid}`);
     return responseData.data.comments;
   } catch (error) {
     if (error.response) {
@@ -18,7 +18,7 @@ export const fetchAllCommentsByPostIdAPI = async (cid: string) => {
 
 export const fetchAllCommentsByUserIdAPI = async (uid: string) => {
   try {
-    const responseData = await axios.get(`${process.env.REACT_APP_BACKEND_URL}api/comment/user/${uid}`);
+    const responseData = await apiClient.get(`api/comment/user/${uid}`);
     return responseData.data.comments;
   } catch (error) {
     if (error.response) {
@@ -40,7 +40,7 @@ export const createCommentAPI = async (form: CommentFormType, token: string) => 
       content: form.content,
     };
 
-    const responseData = await axios.post(`${process.env.REACT_APP_BACKEND_URL}api/comment`, newData, {
+    const responseData = await apiClient.post(`api/comment`, newData, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -63,7 +63,7 @@ export const updateCommentAPI = async (id: string, content: string, token: strin
     const editedData = {
       content: content,
     };
-    await axios.patch(`${process.env.REACT_APP_BACKEND_URL}api/comment/${id}`, editedData, {
+    await apiClient.patch(`api/comment/${id}`, editedData, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -81,7 +81,7 @@ export const updateCommentAPI = async (id: string, content: string, token: strin
 
 export const deleteCommentAPI = async (id: string, token: string) => {
   try {
-    await axios.delete(`${process.env.REACT_APP_BACKEND_URL}api/comment/${id}`, {
+    await apiClient.delete(`api/comment/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

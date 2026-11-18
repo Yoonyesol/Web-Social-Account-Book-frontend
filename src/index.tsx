@@ -3,13 +3,10 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import { Provider } from "react-redux";
-import { createStore } from "redux";
-import rootReducer from "./modules/rootReducer";
-import { persistStore } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
+import { store, persistor } from "./modules/store";
 
-const store = createStore(rootReducer);
-export const persistor = persistStore(store);
+export { persistor };
 
 const rootContainer = document.getElementById("root");
 if (rootContainer) {

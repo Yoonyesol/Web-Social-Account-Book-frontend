@@ -7,7 +7,8 @@ import ContentList from "../components/Community/ContentList";
 import { themeStyle } from "../styles/Theme";
 
 export default function Community() {
-  const [board, setBoard] = useState<PostEntity[]>([]);
+  const [board, setBoard] = useState<PostEntity[]>();
+  const [loadError, setLoadError] = useState(false);
 
   useEffect(() => {
     const fetchAllPosts = async () => {
@@ -15,7 +16,7 @@ export default function Community() {
         const posts = await fetchAllPostsAPI();
         setBoard(posts);
       } catch (error) {
-        alert("게시글을 불러오지 못했습니다!" + error.message);
+        setLoadError(true);
       }
     };
     fetchAllPosts();
@@ -23,7 +24,11 @@ export default function Community() {
 
   return (
     <Section>
-      <ContentList data={board} isSearch={false} searchKeyword={""} />
+      {loadError ? (
+        <p>게시글을 불러오지 못했습니다.</p>
+      ) : (
+        <ContentList data={board} isSearch={false} searchKeyword={""} />
+      )}
       <SearchBar />
     </Section>
   );

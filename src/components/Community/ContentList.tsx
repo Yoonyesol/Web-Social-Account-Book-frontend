@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "../../common/Button";
 import { setDate } from "../../constants/function";
 import { PostEntity } from "../../types/community";
@@ -13,7 +13,7 @@ export default function ContentList({ data, isSearch, searchKeyword }) {
   const [currentPage, setCurrentPage] = useState<number>(1); //현재 페이지수
   const [postsPerPage] = useState<number>(15); //한 페이지당 게시물 수
 
-  if ((!data || data.length === 0) && !isSearch) {
+  if (!data) {
     return <LoadingIndicator />;
   }
 
@@ -28,10 +28,6 @@ export default function ContentList({ data, isSearch, searchKeyword }) {
       return currentPosts;
     }
   }
-
-  const handlePostDetail = (item: PostEntity) => {
-    nav(`/community/${item.id}`);
-  };
 
   return (
     <ContentListDiv>
@@ -58,22 +54,20 @@ export default function ContentList({ data, isSearch, searchKeyword }) {
             </tr>
           </thead>
           <tbody>
-            {isSearch && (!data || data.length === 0) ? (
-              <td colSpan={7} className="no-data">
-                데이터가 존재하지 않습니다.
-              </td>
+            {data.length === 0 ? (
+              <tr><td colSpan={7} className="no-data">표시할 게시글이 없습니다.</td></tr>
             ) : (
               currentPosts(data)!.map((item) => (
                 <tr key={item._id}>
                   <td className="td-idx">{item.index}</td>
                   <td className="td-category">{item.category}</td>
-                  <td className="td-title" onClick={() => handlePostDetail(item)}>
-                    {item.title}
-                    <b style={{ color: "#f8764c" }}> ({item.comments.length})</b>
+                  <td className="td-title">
+                    <Link to={`/community/${item.id}`}>{item.title}</Link>
+                    <b style={{ color: "#f8764c" }}> ({item.commentCount ?? item.comments?.length ?? 0})</b>
                   </td>
                   <td className="td-writer">{item.writer.name}</td>
                   <td className="td-hit">{item.hit}</td>
-                  <td className="td-like">{item.like.length}</td>
+                  <td className="td-like">{item.likeCount ?? item.like?.length ?? 0}</td>
                   <td className="td-date">{setDate(item.date, false)}</td>
                 </tr>
               ))

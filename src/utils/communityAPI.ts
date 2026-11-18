@@ -67,7 +67,9 @@ export const fetchLikedPostByUidAPI = async (token: string) => {
 
 export const fetchSearchedDataAPI = async (option: string, keyword: string) => {
   try {
-    const responseData = await apiClient.get(`api/community/search/${option}/${keyword}`);
+    const responseData = await apiClient.get(
+      `api/community/search/${encodeURIComponent(option)}/${encodeURIComponent(keyword)}`,
+    );
     return responseData.data.searchedData;
   } catch (error) {
     if (error.response) {
@@ -83,7 +85,7 @@ export const fetchSearchedDataAPI = async (option: string, keyword: string) => {
 export const createPostAPI = async (form: PostFormType, token: string) => {
   try {
     const newData = {
-      writer: form.writer,
+      isPublic: true,
       date: new Date(form.date).getTime(),
       title: form.title,
       category: form.category,

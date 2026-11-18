@@ -10,12 +10,14 @@ export interface PostCardType {
 
 export interface PostEntity extends PostCardType {
   category: string;
-  comments: string[];
+  comments?: string[];
+  commentCount?: number;
   date: string;
   hit: number;
   id: string;
   index: number;
-  like: string[];
+  like?: string[];
+  likeCount?: number;
 }
 
 export interface EditPostFormType {
@@ -38,7 +40,9 @@ export interface CommentFormType {
   content: string;
 }
 
-export interface CommentEntity extends CommentFormType {
+export interface CommentEntity extends Pick<CommentFormType, "authorName" | "content"> {
+  authorId?: string;
+  postId?: string;
   _id: string;
   createdAt: number;
 }

@@ -16,7 +16,7 @@ export default function SearchBar() {
 
   const handleSearchPost = () => {
     if (searchKeyword) {
-      nav(`/community/search/${option}/${searchKeyword}`);
+      nav(`/community/search/${encodeURIComponent(option)}/${encodeURIComponent(searchKeyword)}`);
     }
   };
 

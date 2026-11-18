@@ -1,31 +1,60 @@
 import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import styled from "styled-components";
 import Button from "../../common/Button";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import ControlOption from "../../common/ControlOption";
 import { categoryOption } from "../../constants/constant";
-import { createPostAPI, updatePostAPI } from "../../utils/communityAPI";
+import { createPostAPI, fetchPostByCidAPI, updatePostAPI } from "../../utils/communityAPI";
 import { setDate } from "../../constants/function";
 import LoadingIndicator from "../../common/LoadingIndicator";
 import { RootState } from "../../modules/rootReducer";
-import { EditPostFormType, PostFormType, UserInfoType } from "../../types";
+import { EditPostFormType, PostEntity, PostFormType, UserInfoType } from "../../types";
 import Colors from "../../styles/Colors";
 
-const CommunityEditor = () => {
-  let postId = "";
+export function EditCommunityPost() {
+  const { cid } = useParams();
+  const userId = useSelector((state: RootState) => state.user.userInfo.userId);
+  const [post, setPost] = useState<PostEntity>();
+  const [failed, setFailed] = useState(false);
 
+  useEffect(() => {
+    let active = true;
+    setPost(undefined);
+    setFailed(false);
+    if (cid) {
+      fetchPostByCidAPI(cid).then((data) => {
+        if (!active) return;
+        if (data.writer.uid === userId) setPost(data);
+        else setFailed(true);
+      }).catch(() => {
+        if (active) setFailed(true);
+      });
+    }
+    return () => { active = false; };
+  }, [cid, userId]);
+
+  if (failed) {
+    return <Section><p>수정할 수 있는 게시글을 찾지 못했습니다.</p><Link to="/community">목록으로</Link></Section>;
+  }
+  if (!post || post.id !== cid) return <LoadingIndicator />;
+  return <CommunityEditor key={post.id} post={post} />;
+}
+
+const CommunityEditor = ({ post }: { post?: PostEntity }) => {
   const nav = useNavigate();
-  const location = useLocation();
   const userInfo: UserInfoType = useSelector((state: RootState) => state.user.userInfo);
   const token: string = useSelector((state: RootState) => state.user.token);
 
-  const [isEdit, setIsEdit] = useState(location.state === null ? false : true);
+  const isEdit = Boolean(post);
   const [isLoading, setIsLoading] = useState(false);
-  const [editedData, setEditedData] = useState<EditPostFormType>({ ...location.state });
-  const [selectedCategory, setSelectedCategory] = useState(
-    location.state === null ? categoryOption[0].value : location.state.category,
-  );
+  const [editedData, setEditedData] = useState<EditPostFormType>({
+    id: post?.id,
+    title: post?.title ?? "",
+    content: post?.content ?? "",
+    category: post?.category,
+  });
+  const [selectedCategory, setSelectedCategory] = useState(post?.category ?? categoryOption[0].value);
 
   const [form, setForm] = useState<PostFormType>({
     title: "",
@@ -66,10 +95,9 @@ const CommunityEditor = () => {
     setIsLoading(true);
     if (!isEdit) {
       try {
-        const post = await createPostAPI(form, token);
+        const post = await createPostAPI({ ...form, category: selectedCategory }, token);
         setIsLoading(false);
         alert("저장되었습니다!");
-        postId = post._id;
         nav(`/community/${post._id}`, {
           replace: true,
         });
@@ -98,10 +126,11 @@ const CommunityEditor = () => {
     <Section>
       <div className="container">
         <h3>{isEdit ? "글 수정" : "게시글 등록"}</h3>
+        {!isEdit && <p>새 게시글과 댓글은 로그인하지 않은 방문자도 볼 수 있습니다.</p>}
         <form className="form" onSubmit={onSubmit}>
           <div className="formItem">
             <label className="writer">작성자</label>
-            <input className="formInput" type="text" name="writer" value={userInfo.name} onChange={handleChange} />
+            <input className="formInput" type="text" name="writer" value={userInfo.name} readOnly />
           </div>
           <div className="formItem">
             <label className="category">카테고리</label>
@@ -138,11 +167,11 @@ const CommunityEditor = () => {
           </div>
           {!isEdit && (
             <div className="btn-container">
-              <Button type="submit" text="작성" />
+              <Button type="submit" text="공개로 작성" />
               <Button
                 type="button"
                 onClick={() =>
-                  nav(`/community/${postId}`, {
+                  nav("/community", {
                     replace: true,
                   })
                 }

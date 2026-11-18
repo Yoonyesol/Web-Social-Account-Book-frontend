@@ -5,12 +5,14 @@ import { setDate } from "../../constants/function";
 import Button from "../../common/Button";
 import { CommentEditor } from "./CommentEditor";
 import { useSelector } from "react-redux";
+import { Link, useLocation } from "react-router-dom";
 import LoadingIndicator from "../../common/LoadingIndicator";
 import { RootState } from "../../modules/rootReducer";
 import { CommentEntity } from "../../types";
 import Colors from "../../styles/Colors";
 
 export function CommentView({ userInfo, postId }) {
+  const location = useLocation();
   const token: string = useSelector((state: RootState) => state.user.token);
 
   const [data, setData] = useState<CommentEntity[]>([]);
@@ -89,7 +91,7 @@ export function CommentView({ userInfo, postId }) {
                     <p className="comment-content">{item.content}</p>
                     <p className="comment-date">{setDate(item.createdAt, true)}</p>
                   </div>
-                  {!isEdit && userInfo.userId === item.authorId && (
+                  {token && !isEdit && userInfo.userId === item.authorId && (
                     <div className="btn-container">
                       <Button text="수정" onClick={() => handleEdit(item)} />
                       <Button text="삭제" type="button" color="red" onClick={() => handleRemoveComment(item._id)} />
@@ -100,7 +102,11 @@ export function CommentView({ userInfo, postId }) {
             )}
           </div>
         ))}
-        <CommentEditor isEdit={false} postId={postId} userInfo={userInfo} onFetchData={fetchComments} />
+        {token ? (
+          <CommentEditor isEdit={false} postId={postId} userInfo={userInfo} onFetchData={fetchComments} />
+        ) : (
+          <Link to="/login" state={{ from: location }}>로그인하고 댓글 쓰기</Link>
+        )}
       </div>
     </Section>
   );

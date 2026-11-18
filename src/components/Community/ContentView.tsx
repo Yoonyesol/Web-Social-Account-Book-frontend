@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import Button from "../../common/Button";
 import LoadingIndicator from "../../common/LoadingIndicator";
@@ -16,6 +16,8 @@ import Colors from "../../styles/Colors";
 const ContentView = () => {
   const nav = useNavigate();
   const params = useParams();
+  const location = useLocation();
+  const [loadError, setLoadError] = useState(false);
   const userInfo: UserInfoType = useSelector((state: RootState) => state.user.userInfo);
   const token: string = useSelector((state: RootState) => state.user.token);
   const [isLoading, setIsLoading] = useState(false);
@@ -23,44 +25,50 @@ const ContentView = () => {
   const [like, setLike] = useState({ click: false, count: 0, animation: false });
 
   useEffect(() => {
+    let active = true;
+    setSelectedPost(undefined);
+    setLoadError(false);
     const fetchPostByCid = async () => {
       try {
         if (params.cid) {
           const post = await fetchPostByCidAPI(params.cid);
-          setSelectedPost(post);
+          if (active) setSelectedPost(post);
         }
       } catch (error) {
-        console.log("게시글 정보 API 호출 도중 에러 발생:", error.message);
+        if (active) setLoadError(true);
       }
     };
     fetchPostByCid();
+    return () => { active = false; };
   }, [params.cid]);
 
   //마운트 시 좋아요 클릭상태 업데이트
   useEffect(() => {
     if (selectedPost) {
-      if (selectedPost.like.includes(userInfo.userId)) {
-        setLike({ click: true, count: selectedPost.like.length, animation: false });
-      } else {
-        setLike({ click: false, count: selectedPost.like.length, animation: false });
-      }
+      setLike({
+        click: selectedPost.like?.includes(userInfo.userId) ?? false,
+        count: selectedPost.likeCount ?? selectedPost.like?.length ?? 0,
+        animation: false,
+      });
     }
   }, [userInfo.userId, selectedPost]);
 
-  if (!selectedPost) {
+  if (loadError) {
+    return (
+      <Section>
+        <p>게시글을 볼 수 없습니다.</p>
+        {!token && <Link to="/login" state={{ from: location }}>로그인</Link>}
+        <Link to="/community"> 커뮤니티 목록</Link>
+      </Section>
+    );
+  }
+
+  if (!selectedPost || selectedPost.id !== params.cid) {
     return <LoadingIndicator />;
   }
 
   const handleEditPost = () => {
-    nav(`/community/${selectedPost.id}/edit`, {
-      state: {
-        id: selectedPost.id,
-        category: selectedPost.category,
-        title: selectedPost.title,
-        writer: selectedPost.writer,
-        content: selectedPost.content,
-      },
-    });
+    nav(`/community/${selectedPost.id}/edit`);
   };
 
   const handleRemovePost = async () => {
@@ -81,6 +89,10 @@ const ContentView = () => {
   };
 
   const handleUpdateLike = async () => {
+    if (!token) {
+      nav("/login", { state: { from: location } });
+      return;
+    }
     try {
       await updateLikeAPI(selectedPost.id, token);
       if (like.click) {
@@ -129,7 +141,7 @@ const ContentView = () => {
           </div>
         </div>
         <div className="btn-container">
-          {userInfo.userId === selectedPost.writer.uid && (
+          {token && userInfo.userId === selectedPost.writer.uid && (
             <>
               <Button text="수정" type="button" onClick={handleEditPost} />
               <Button text="삭제" type="button" color="red" onClick={handleRemovePost} />

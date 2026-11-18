@@ -2,7 +2,7 @@ import React, { ChangeEvent, FormEvent, useState } from "react";
 import styled from "styled-components";
 import Button from "../common/Button";
 import { loginAPI, signupAPI } from "../utils/userAPI";
-import { useNavigate } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import LoadingIndicator from "../common/LoadingIndicator";
 import { useDispatch, useSelector } from "react-redux";
 import { loginSuccess, setToken, setTokenExpiration, setUserInfo } from "../modules/user";
@@ -13,6 +13,12 @@ import Colors from "../styles/Colors";
 
 export default function Auth() {
   const nav = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from;
+  const returnTo = typeof from?.pathname === "string" && /^\/(?![\/\\])/.test(from.pathname)
+    ? { pathname: from.pathname, search: from.search, hash: from.hash }
+    : "/";
+  const token = useSelector((state: RootState) => state.user.token);
   const dispatch = useDispatch();
   const tokenExpiration: string = useSelector((state: RootState) => state.user.tokenExpiration);
 
@@ -65,7 +71,7 @@ export default function Auth() {
 
       setIsLoading(false);
       setErrorMsg(null);
-      nav("/", { replace: true });
+      nav(returnTo, { replace: true });
     } catch (err) {
       setIsLoading(false);
       setErrorMsg(err.message || "회원가입 진행 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.");
@@ -76,6 +82,10 @@ export default function Auth() {
     setIsLoginMode((prevMode) => !prevMode);
     setErrorMsg(null);
   };
+
+  if (token) {
+    return <Navigate to={returnTo} replace />;
+  }
 
   if (isLoading) {
     return <LoadingIndicator />;
@@ -160,6 +170,7 @@ export default function Auth() {
             <Button type="submit" text={isLoginMode ? "로그인" : "회원가입"} />
           </div>
         </form>
+        <Link to="/community">커뮤니티 둘러보기</Link>
         <div className="switch-mode">
           <span>{isLoginMode ? "아직 회원이 아니신가요?" : "이미 회원이신가요?"}</span>
           <Button color="red" text={isLoginMode ? "회원가입" : "로그인"} onClick={switchModeHandler} />

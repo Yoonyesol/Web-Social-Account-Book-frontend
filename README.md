@@ -9,8 +9,9 @@
 <br/>
 
 
-## 🚖 서비스 링크
-https://social-account-book-frontend.vercel.app/
+## 🚖 서비스 & 관련 링크
+- **서비스 링크**: https://social-account-book-frontend.vercel.app/
+- **Back-end Repository**: https://github.com/Yoonyesol/Web-Social-Account-Book-backend
 #### 🔐 테스트 계정
 - ID: 112@naver.com
 - PW: qwer1234
